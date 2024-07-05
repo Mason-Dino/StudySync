@@ -50,4 +50,10 @@ for i in range(numClasses):
     print(f"you finished setting up {i + 1} class(es)")
     print("")
 
-print(setup)
+
+json_object = json.dumps(setup, indent=4)
+
+with open("setup.json", "w") as outfile:
+    outfile.write(json_object)
+
+print("Assign Tracker is all setup!!")

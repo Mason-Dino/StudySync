@@ -25,13 +25,29 @@ print(
 theme = input("Please choose a theme from above: ")
 setup["theme"] = theme
 
+print("")
 numClasses = int(input("How many classes do you have (max 10): "))
 
 if numClasses > 10:
     print(f"Because you put {numClasses} classes it is set as 10")
     numClasses = 10
 
+setup["numClass"] = numClasses
+
 print("")
 
 for i in range(numClasses):
-    
+    name = input("What is the class name: ")
+    subject = input("What is the class subject: ")
+
+    id = makeID()
+
+    setup[f"class{i}"] = {}
+    setup[f"class{i}"]["id"] = id
+    setup[f"class{i}"]["name"] = name
+    setup[f"class{i}"]["subject"] = subject
+
+    print(f"you finished setting up {i + 1} class(es)")
+    print("")
+
+print(setup)

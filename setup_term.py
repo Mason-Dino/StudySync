@@ -7,8 +7,6 @@ print("\n")
 
 setup = {}
 
-theme = input("What theme would you like (dark or light): ")
+mode = input("What mode would you like (dark or light): ")
+setup["mode"] = mode
 
-setup["theme"] = theme
-
-print(setup)

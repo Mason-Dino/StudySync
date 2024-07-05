@@ -18,6 +18,6 @@ class Setup_App(customtkinter.CTk):
 
 
 if __name__ == "__main__":
-    app = App()
+    app = Setup_App()
     app.mainloop()
     

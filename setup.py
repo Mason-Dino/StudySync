@@ -9,23 +9,18 @@ class setup(customtkinter.CTk):
 
         self.geometry("400x240")
         self.columnconfigure((0,1,2), weight=1)
-        self.rowconfigure(0, weight=1)
+        self.rowconfigure((0,1), weight=1)
 
         self.side = customtkinter.CTkFrame(master=self, width=75, corner_radius=0)
-        self.side.grid(row=0, column=0, sticky="nswe")
+        self.side.grid(row=0, rowspan=3, column=0, sticky="nswe")
         self.side.columnconfigure(0, weight=1)
         self.side.rowconfigure((0,1), weight=1)
 
         self.logo = customtkinter.CTkLabel(master=self.side, anchor="n", text="Setup", font=customtkinter.CTkFont(size=20, weight="bold"))
         self.logo.grid(row=0, column=0, padx=5, pady=5)
 
-        self.main = customtkinter.CTkFrame(master=self)
-        self.main.grid(row=0, column=1, columnspan=2, padx=10, pady=5, sticky="nswe")
-        self.main.columnconfigure((0,1,2), weight=1)
-        self.main.rowconfigure((0,1), weight=1)
-
-        self.questionFrame1 = customtkinter.CTkFrame(master=self.main)
-        self.questionFrame1.grid(row=0, column=1, padx=5, pady=5, sticky="nswe")
+        self.questionFrame1 = customtkinter.CTkFrame(master=self)
+        self.questionFrame1.grid(row=0, column=1, columnspan=3, padx=5, pady=5, sticky="nswe")
         self.questionFrame1.columnconfigure(0, weight=1)
         self.questionFrame1.rowconfigure((0,1), weight=1)
 
@@ -37,7 +32,7 @@ class setup(customtkinter.CTk):
 
 
         self.pageNum = 1
-        self.nextlast = customtkinter.CTkSegmentedButton(master=self.main, values=["Last", "Next"], command=self.pageFunction)
+        self.nextlast = customtkinter.CTkSegmentedButton(master=self, values=["Last", "Next"], command=self.pageFunction)
         self.nextlast.grid(row=2, column=1, padx=5, pady=5)
 
 

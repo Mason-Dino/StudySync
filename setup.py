@@ -11,11 +11,16 @@ class setup(customtkinter.CTk):
         self.columnconfigure((0,1,2), weight=1)
         self.rowconfigure(0, weight=1)
 
-        self.side = customtkinter.CTkFrame(master=self)
-        self.side.grid(row=0, column=0, padx=5, pady=5, sticky="nswe")
+        self.side = customtkinter.CTkFrame(master=self, width=75, corner_radius=0)
+        self.side.grid(row=0, column=0, sticky="nswe")
+        self.side.columnconfigure(0, weight=1)
+        self.side.rowconfigure((0,1), weight=1)
+
+        self.logo = customtkinter.CTkLabel(master=self.side, anchor="n", text="Setup", font=customtkinter.CTkFont(size=20, weight="bold"))
+        self.logo.grid(row=0, column=0, padx=5, pady=5)
 
         self.main = customtkinter.CTkFrame(master=self)
-        self.main.grid(row=0, column=1, columnspan=2, padx=5, pady=5, sticky="nswe")
+        self.main.grid(row=0, column=1, columnspan=2, padx=10, pady=5, sticky="nswe")
         self.main.columnconfigure((0,1,2), weight=1)
         self.main.rowconfigure((0,1), weight=1)
 
@@ -24,10 +29,6 @@ class setup(customtkinter.CTk):
 
         self.option = customtkinter.CTkOptionMenu(master=self.main, values=["Light", "Dark", "System"])
         self.option.grid(row=1, column=1, padx=5, pady=5)
-
-
-    def button_function(self):
-        print("button pressed")
 
 
 if __name__ == "__main__":

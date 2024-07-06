@@ -7,6 +7,8 @@ class setup(customtkinter.CTk):
     def __init__(self):
         super().__init__()
 
+        self.setupDir = {}
+
         self.geometry("400x240")
         self.columnconfigure((0,1,2), weight=1)
         self.rowconfigure((0,1), weight=1)
@@ -27,7 +29,7 @@ class setup(customtkinter.CTk):
         self.question = customtkinter.CTkLabel(master=self.questionFrame1, text="What mode do you want?")
         self.question.grid(row=0, column=0, padx=5, pady=5)
 
-        self.mode = customtkinter.CTkOptionMenu(master=self.questionFrame1, values=["Light", "Dark", "System"])
+        self.mode = customtkinter.CTkOptionMenu(master=self.questionFrame1, values=["Light", "Dark", "System"], variable=customtkinter.StringVar(value=customtkinter.get_appearance_mode()))
         self.mode.grid(row=1, column=0, padx=5, pady=5)
 
         self.questionFrame2 = customtkinter.CTkFrame(master=self)
@@ -37,7 +39,7 @@ class setup(customtkinter.CTk):
         self.question = customtkinter.CTkLabel(master=self.questionFrame2, text="What theme do you want?")
         self.question.grid(row=0, column=0, padx=5, pady=5)
 
-        self.theme = customtkinter.CTkOptionMenu(master=self.questionFrame2, values=["Purple", "Orange", "Teal", "Red", "Yellow", "Green", "Blue", "Grey"])
+        self.theme = customtkinter.CTkOptionMenu(master=self.questionFrame2, values=["Teal", "Orange", "Purple", "Red", "Yellow", "Green", "Blue", "Grey"])
         self.theme.grid(row=1, column=0, padx=5, pady=5)
 
 
@@ -56,8 +58,15 @@ class setup(customtkinter.CTk):
             self.pageNum += 1
 
             if self.pageNum == 2:
+                self.setupDir["mode"] = self.mode.get()
+
                 self.questionFrame1.destroy()
                 self.questionFrame2.grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
+
+            if self.pageNum == 3:
+                self.setupDir["theme"] = self.theme.get()
+
+                self.questionFrame2.destroy()
 
         elif value == "Last":
             self.pageNum -= 1

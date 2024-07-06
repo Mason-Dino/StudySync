@@ -20,7 +20,7 @@ class setup(customtkinter.CTk):
         self.logo.grid(row=0, column=0, padx=5, pady=5)
 
         self.questionFrame1 = customtkinter.CTkFrame(master=self)
-        self.questionFrame1.grid(row=0, column=1, columnspan=3, padx=5, pady=5, sticky="nswe")
+        self.questionFrame1.grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
         self.questionFrame1.columnconfigure(0, weight=1)
         self.questionFrame1.rowconfigure((0,1), weight=1)
 
@@ -33,7 +33,7 @@ class setup(customtkinter.CTk):
 
         self.pageNum = 1
         self.nextlast = customtkinter.CTkSegmentedButton(master=self, values=["Last", "Next"], command=self.pageFunction)
-        self.nextlast.grid(row=2, column=1, padx=5, pady=5)
+        self.nextlast.grid(row=2, column=1, columnspan=3, padx=5, pady=5, sticky="nswe")
 
 
     def pageFunction(self, value):

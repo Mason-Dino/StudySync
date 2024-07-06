@@ -22,13 +22,18 @@ class setup(customtkinter.CTk):
         self.main = customtkinter.CTkFrame(master=self)
         self.main.grid(row=0, column=1, columnspan=2, padx=10, pady=5, sticky="nswe")
         self.main.columnconfigure((0,1,2), weight=1)
-        self.main.rowconfigure((0,1,2), weight=1)
+        self.main.rowconfigure((0,1), weight=1)
 
-        self.question = customtkinter.CTkLabel(master=self.main, text="What mode do you want?")
-        self.question.grid(row=0, column=1, padx=5, pady=5)
+        self.questionFrame1 = customtkinter.CTkFrame(master=self.main)
+        self.questionFrame1.grid(row=0, column=1, padx=5, pady=5, sticky="nswe")
+        self.questionFrame1.columnconfigure(0, weight=1)
+        self.questionFrame1.rowconfigure((0,1), weight=1)
 
-        self.option = customtkinter.CTkOptionMenu(master=self.main, values=["Light", "Dark", "System"])
-        self.option.grid(row=1, column=1, padx=5, pady=5)
+        self.question = customtkinter.CTkLabel(master=self.questionFrame1, text="What mode do you want?")
+        self.question.grid(row=0, column=0, padx=5, pady=5)
+
+        self.option = customtkinter.CTkOptionMenu(master=self.questionFrame1, values=["Light", "Dark", "System"])
+        self.option.grid(row=1, column=0, padx=5, pady=5)
 
 
         self.pageNum = 1
@@ -38,7 +43,6 @@ class setup(customtkinter.CTk):
 
     def pageFunction(self, value):
         self.nextlast.set(None)
-
 
         if value == "Last" and self.pageNum == 1:
             pass

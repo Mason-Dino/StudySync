@@ -32,12 +32,12 @@ class setup(customtkinter.CTk):
 
 
         self.pageNum = 1
-        self.nextlast = customtkinter.CTkSegmentedButton(master=self, values=["Last", "Next"], command=self.pageFunction)
-        self.nextlast.grid(row=2, column=1, columnspan=3, padx=5, pady=5, sticky="nswe")
+        self.pageButton = customtkinter.CTkSegmentedButton(master=self, values=["Last", "Next"], command=self.page)
+        self.pageButton.grid(row=2, column=1, columnspan=3, padx=5, pady=5, sticky="nswe")
 
 
-    def pageFunction(self, value):
-        self.nextlast.set(None)
+    def page(self, value):
+        self.pageButton.set(None)
 
         if value == "Last" and self.pageNum == 1:
             pass

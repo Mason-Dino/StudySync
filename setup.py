@@ -161,7 +161,7 @@ class setup(customtkinter.CTk):
                     "classSubject": self.classSubject.get(),
                     "classTeacher": self.classTeacher.get()
                 }
-                
+
                 self.className.delete(0, "end")
                 self.className.configure(placeholder_text="What is the class name?")
                 self.classSubject.configure(variable=customtkinter.StringVar(value="Subject"))
@@ -174,6 +174,9 @@ class setup(customtkinter.CTk):
                     self.setupDir["setupComplete"] = True
 
                     json_obj = json.dumps(self.setupDir, indent=4)
+
+                    with open("setup.json", "w") as f:
+                        f.write(json_obj)
 
                     print(json_obj)
 

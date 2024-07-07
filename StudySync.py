@@ -10,10 +10,26 @@ class StudySync(customtkinter.CTk):
     def __init__(self):
         super().__init__()
 
-        self.geometry("400x240")
+        self.geometry("600x360")
+        self.title("StudySync")
 
-        self.button = customtkinter.CTkButton(master=self, text="Button 2", command=self.button_function)
-        self.button.place(relx=0.5, rely=0.5, anchor=customtkinter.CENTER)
+        with open("setup.json", "r") as f:
+            self.setupDir = json.load(f)
+
+        self.numClasses = self.setupDir["numClasses"]
+        print(self.numClasses)
+
+        self.grid_columnconfigure((1,2), weight=1)
+        self.grid_columnconfigure((3), weight=0)
+        self.grid_rowconfigure((0, 1, 2), weight=1)
+
+        self.side = customtkinter.CTkFrame(master=self, corner_radius=0)  # Create the side frame
+        self.side.grid(row=0, rowspan=3, column=0, sticky="nswe")  # Position the side frame
+
+        self.name = customtkinter.CTkLabel(master=self.side, text="StudySync", font=customtkinter.CTkFont(size=20, weight="bold"))
+        self.name.grid(row=0, column=0, padx=15, pady=20)
+
+
 
     def button_function(self):
         print("button pressed")
@@ -35,4 +51,3 @@ if __name__ == "__main__":
     except KeyError:
         app = setup()
         app.mainloop()
-    

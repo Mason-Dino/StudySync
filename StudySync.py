@@ -10,7 +10,7 @@ class StudySync(customtkinter.CTk):
     def __init__(self):
         super().__init__()
 
-        self.geometry("600x360")
+        self.geometry("700x400")
         self.title("StudySync")
 
         with open("setup.json", "r") as f:
@@ -29,10 +29,23 @@ class StudySync(customtkinter.CTk):
         self.name = customtkinter.CTkLabel(master=self.side, text="StudySync", font=customtkinter.CTkFont(size=20, weight="bold"))
         self.name.grid(row=0, column=0, padx=15, pady=20)
 
+        self.classes = customtkinter.CTkScrollableFrame(master=self.side)
+        self.classes.grid(row=1, rowspan=2, column=0, sticky="nswe", padx=15, pady=10)
+
+        for i in range(self.numClasses):
+            self.button = customtkinter.CTkButton(master=self.classes, text="Class " + str(i + 1), command=self.button_function)
+            self.button.grid(row=i + 1, padx=15, pady=10)
+
+        self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=self.settings)
+        self.settingsButton.grid(row=3, column=0, padx=15, pady=5)
+
 
 
     def button_function(self):
         print("button pressed")
+
+    def settings(self):
+        print("selection cleared")
 
 
 if __name__ == "__main__":

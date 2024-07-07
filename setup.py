@@ -161,6 +161,12 @@ class setup(customtkinter.CTk):
                     "classSubject": self.classSubject.get(),
                     "classTeacher": self.classTeacher.get()
                 }
+                
+                self.className.delete(0, "end")
+                self.className.configure(placeholder_text="What is the class name?")
+                self.classSubject.configure(variable=customtkinter.StringVar(value="Subject"))
+                self.classTeacher.delete(0, "end")
+                self.classTeacher.configure(placeholder_text="Who is the teacher/instructor?")
 
                 # If the current class count is equal to the number of classes, print the setup directory as JSON,
                 # display the final page, and reset the class entry widgets
@@ -173,11 +179,6 @@ class setup(customtkinter.CTk):
 
                     self.pageInfo[4].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
 
-                    self.className.delete(0, "end")
-                    self.className.configure(placeholder_text="What is the class name?")
-                    self.classSubject.configure(variable=customtkinter.StringVar(value="Subject"))
-                    self.classTeacher.delete(0, "end")
-                    self.classTeacher.configure(placeholder_text="Who is the teacher/instructor?")
 
         # If the value is "Last", move to the previous page
         elif value == "Last":

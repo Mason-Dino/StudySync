@@ -22,8 +22,9 @@ class setup(customtkinter.CTk):
         self.currentClass = 0  # Current class index
         self.numClasses = 1  # Number of classes
 
-        # Set the size of the window
+        # Set the size of the window and title
         self.geometry("600x360")
+        self.title("Setup")
 
         # Configure the grid to make the frames stick together
         self.grid_columnconfigure((0,1,2), weight=1, uniform="1")  # Column weights and uniform configuration

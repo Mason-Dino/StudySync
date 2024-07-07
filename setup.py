@@ -80,6 +80,7 @@ class setup(customtkinter.CTk):
 
         self.pageInfo = [self.questionFrame1, self.questionFrame2, self.questionFrame3, self.classFrame]
 
+        self.bind("<Return>", lambda e: self.page("Next"))
 
     def page(self, value):
         self.pageButton.set(None)
@@ -108,8 +109,6 @@ class setup(customtkinter.CTk):
                 self.movepage("Next")
 
             if self.pageNum >= 5:
-                print(self.numClasses)
-                print(self.currentClass)
                 self.currentClass += 1
 
                 self.setupDir[f"class{self.currentClass}"] =  {
@@ -134,7 +133,6 @@ class setup(customtkinter.CTk):
 
         elif value == "Last":
             self.pageNum -= 1
-            print(self.pageNum)
 
             self.movepage("Last")
 

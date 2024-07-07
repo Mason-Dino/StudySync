@@ -4,7 +4,7 @@ customtkinter.set_appearance_mode("System")  # Modes: system (default), light, d
 customtkinter.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
 
 
-class Setup_App(customtkinter.CTk):
+class StudySync(customtkinter.CTk):
     def __init__(self):
         super().__init__()
 
@@ -18,6 +18,6 @@ class Setup_App(customtkinter.CTk):
 
 
 if __name__ == "__main__":
-    app = Setup_App()
+    app = StudySync()
     app.mainloop()
     

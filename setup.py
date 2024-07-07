@@ -8,6 +8,8 @@ class setup(customtkinter.CTk):
         super().__init__()
 
         self.setupDir = {}
+        self.classes = False
+        self.pageNum = 1
 
         self.geometry("600x360")
         # Frames aren't staying consistent with the size (they are staying consistent with the grid as of 7/6)
@@ -51,8 +53,8 @@ class setup(customtkinter.CTk):
         self.question = customtkinter.CTkLabel(master=self.questionFrame3, text="How many classes do you have?")
         self.question.grid(row=0, column=0, padx=5, pady=5)
 
-        self.theme = customtkinter.CTkOptionMenu(master=self.questionFrame3, values=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"])
-        self.theme.grid(row=1, column=0, padx=5, pady=5)
+        self.numClass = customtkinter.CTkOptionMenu(master=self.questionFrame3, values=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"])
+        self.numClass.grid(row=1, column=0, padx=5, pady=5)
 
         self.classFrame = customtkinter.CTkFrame(master=self)
         self.classFrame.columnconfigure(0, weight=1)
@@ -65,11 +67,10 @@ class setup(customtkinter.CTk):
                                                         values=["Math", "Science", "English",  "History", "Social Studies", "World Language", "Fine Arts/Music", "Arts", "Physical Education", "Other"])
         self.classSubject.grid(row=1, column=0, padx=5, pady=5)
 
-        self.className = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="Who is the teacher/instructor?", width=200)
-        self.className.grid(row=2, column=0, padx=5, pady=5)
+        self.classTeacher = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="Who is the teacher/instructor?", width=200)
+        self.classTeacher.grid(row=2, column=0, padx=5, pady=5)
 
 
-        self.pageNum = 1
         self.pageButton = customtkinter.CTkSegmentedButton(master=self, values=["Last", "Next"], command=self.page)
         self.pageButton.grid(row=2, column=1, columnspan=3, padx=5, pady=5, sticky="nswe")
 
@@ -87,24 +88,51 @@ class setup(customtkinter.CTk):
 
             if self.pageNum == 2:
                 self.setupDir["mode"] = self.mode.get()
+                self.movepage("Next")
 
             if self.pageNum == 3:
                 self.setupDir["theme"] = self.theme.get()
+                self.movepage("Next")
 
             if self.pageNum == 4:
-                self.setupDir["numClasses"] = int(self.theme.get())
+                self.setupDir["numClasses"] = int(self.numClass.get())
+                self.numClasses = int(self.numClass.get())
+                self.movepage("Next")
 
-            self.pageInfo[self.pageNum - 2].grid_forget()
-            self.pageInfo[self.pageNum -1].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
+                self.classes = True
+
+            elif self.classes == True:
+                print(self.numClasses)
+                for i in range(self.numClasses):
+                    self.setupDir[f"class{i}"] = {}
+                    self.setupDir[f"class{i}"]["name"] = self.className.get()
+                    self.setupDir[f"class{i}"]["subject"] = self.classSubject.get()
+                    self.setupDir[f"class{i}"]["teacher"] = self.classTeacher.get()
+
+                    self.className.delete(0, "end")
+                    self.className.configure(placeholder_text="What is the class name?")
+
+                    self.classSubject.set(None)
+
+                    self.classTeacher.delete(0, "end")
+                    self.classTeacher.configure(placeholder_text="Who is the teacher/instructor?")
+
+                    print("hey")
 
         elif value == "Last":
             self.pageNum -= 1
             print(self.pageNum)
 
-            #self.pageInfo[0].destroy()
+            self.movepage("Last")
+
+    def movepage(self, value):
+        if value == "Next":
+            self.pageInfo[self.pageNum - 2].grid_forget()
+            self.pageInfo[self.pageNum -1].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
+
+        elif value == "Last":
             self.pageInfo[self.pageNum].grid_forget()
             self.pageInfo[self.pageNum - 1].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
-
 
 if __name__ == "__main__":
     App = setup()

@@ -91,20 +91,14 @@ class setup(customtkinter.CTk):
             if self.pageNum == 2:
                 self.setupDir["mode"] = self.mode.get()
 
-                self.pageInfo[self.pageNum - 2].grid_forget()
-                self.pageInfo[self.pageNum -1].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
-
             if self.pageNum == 3:
                 self.setupDir["theme"] = self.theme.get()
-
-                self.pageInfo[self.pageNum - 2].grid_forget()
-                self.pageInfo[self.pageNum - 1].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
 
             if self.pageNum == 4:
                 self.setupDir["numClasses"] = int(self.theme.get())
 
-                self.pageInfo[self.pageNum - 2].grid_forget()
-                self.pageInfo[self.pageNum - 1].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
+            self.pageInfo[self.pageNum - 2].grid_forget()
+            self.pageInfo[self.pageNum -1].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
 
         elif value == "Last":
             self.pageNum -= 1

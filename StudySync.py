@@ -36,7 +36,7 @@ class StudySync(customtkinter.CTk):
         self.classes.grid_columnconfigure(0, weight=1)
         self.classes.grid(row=1, rowspan=2, column=0, sticky="nswe", pady=10)
         for i in range(self.numClasses):
-            self.button = customtkinter.CTkButton(master=self.classes, text="Class " + str(i + 1), command=self.button_function)
+            self.button = customtkinter.CTkButton(master=self.classes, text=self.setupDir[f"class{i+1}"]["className"], command=self.button_function)
             self.button.grid(row=i + 1, column=0, pady=10)
 
         self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=self.settings)

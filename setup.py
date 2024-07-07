@@ -127,7 +127,7 @@ class setup(customtkinter.CTk):
                 else:
                     self.className.delete(0, "end")
                     self.className.configure(placeholder_text="What is the class name?")
-                    self.classSubject.set(None)
+                    self.classSubject.configure(variable=customtkinter.StringVar(value="Subject"))
                     self.classTeacher.delete(0, "end")
                     self.classTeacher.configure(placeholder_text="Who is the teacher/instructor?")
 

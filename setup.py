@@ -10,10 +10,11 @@ class setup(customtkinter.CTk):
         self.setupDir = {}
 
         self.geometry("600x360")
-        self.resizable(False, False)
+        #self.resizable(False, False)
         #self.columnconfigure((0,1,2), weight=1)
         # Frames aren't staying consistent with the size
         self.grid_columnconfigure((0,1,2), weight=1, uniform="1")
+        self.grid_columnconfigure((1,2), weight=2)
         #self.rowconfigure((0,1), weight=1)
         self.grid_rowconfigure((0,1), weight=1)
 

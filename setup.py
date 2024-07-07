@@ -91,25 +91,28 @@ class setup(customtkinter.CTk):
             if self.pageNum == 2:
                 self.setupDir["mode"] = self.mode.get()
 
-                self.questionFrame1.destroy()
+                self.pageInfo[self.pageNum - 2].grid_forget()
                 self.pageInfo[self.pageNum -1].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
 
             if self.pageNum == 3:
                 self.setupDir["theme"] = self.theme.get()
 
-                self.questionFrame2.destroy()
+                self.pageInfo[self.pageNum - 2].grid_forget()
                 self.pageInfo[self.pageNum - 1].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
 
             if self.pageNum == 4:
                 self.setupDir["numClasses"] = int(self.theme.get())
 
-                self.questionFrame3.destroy()
+                self.pageInfo[self.pageNum - 2].grid_forget()
                 self.pageInfo[self.pageNum - 1].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
 
         elif value == "Last":
             self.pageNum -= 1
+            print(self.pageNum)
 
-        print(self.pageNum)
+            #self.pageInfo[0].destroy()
+            self.pageInfo[self.pageNum].grid_forget()
+            self.pageInfo[self.pageNum - 1].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
 
 
 if __name__ == "__main__":

@@ -84,7 +84,11 @@ class setup(customtkinter.CTk):
             pass
 
         elif value == "Next":
-            self.pageNum += 1
+            if self.pageNum > 4:
+                self.pageNum = 5
+
+            else:
+                self.pageNum += 1
 
             if self.pageNum == 2:
                 self.setupDir["mode"] = self.mode.get()
@@ -98,26 +102,10 @@ class setup(customtkinter.CTk):
                 self.setupDir["numClasses"] = int(self.numClass.get())
                 self.numClasses = int(self.numClass.get())
                 self.movepage("Next")
+                print("hey")
 
-                self.classes = True
-
-            elif self.classes == True:
-                print(self.numClasses)
-                for i in range(self.numClasses):
-                    self.setupDir[f"class{i}"] = {}
-                    self.setupDir[f"class{i}"]["name"] = self.className.get()
-                    self.setupDir[f"class{i}"]["subject"] = self.classSubject.get()
-                    self.setupDir[f"class{i}"]["teacher"] = self.classTeacher.get()
-
-                    self.className.delete(0, "end")
-                    self.className.configure(placeholder_text="What is the class name?")
-
-                    self.classSubject.set(None)
-
-                    self.classTeacher.delete(0, "end")
-                    self.classTeacher.configure(placeholder_text="Who is the teacher/instructor?")
-
-                    print("hey")
+            elif self.pageNum >= 5:
+                print(self.pageNum)
 
         elif value == "Last":
             self.pageNum -= 1

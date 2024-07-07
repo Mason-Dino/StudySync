@@ -1,3 +1,4 @@
+from id import makeID
 import customtkinter
 
 customtkinter.set_appearance_mode("System")
@@ -10,6 +11,7 @@ class setup(customtkinter.CTk):
         self.setupDir = {}
         self.classes = False
         self.pageNum = 1
+        self.currentClass = 1
 
         self.geometry("600x360")
         # Frames aren't staying consistent with the size (they are staying consistent with the grid as of 7/6)
@@ -102,10 +104,25 @@ class setup(customtkinter.CTk):
                 self.setupDir["numClasses"] = int(self.numClass.get())
                 self.numClasses = int(self.numClass.get())
                 self.movepage("Next")
-                print("hey")
 
             elif self.pageNum >= 5:
-                print(self.pageNum)
+                print(self.numClasses)
+                print(self.currentClass)
+
+                self.setupDir[f"class{self.currentClass}"] =  {
+                    "id": makeID(),
+                    "className": self.className.get(),
+                    "classSubject": self.classSubject.get(),
+                    "classTeacher": self.classTeacher.get()
+                }
+
+                self.className.delete(0, "end")
+                self.className.configure(placeholder_text="What is the class name?")
+                self.classSubject.set(None)
+                self.classTeacher.delete(0, "end")
+                self.classTeacher.configure(placeholder_text="Who is the teacher/instructor?")
+
+                self.currentClass += 1
 
         elif value == "Last":
             self.pageNum -= 1

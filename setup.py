@@ -165,6 +165,8 @@ class setup(customtkinter.CTk):
                 # If the current class count is equal to the number of classes, print the setup directory as JSON,
                 # display the final page, and reset the class entry widgets
                 if self.currentClass == self.numClasses:
+                    self.setupDir["setupComplete"] = True
+
                     json_obj = json.dumps(self.setupDir, indent=4)
 
                     print(json_obj)

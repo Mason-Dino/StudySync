@@ -79,9 +79,13 @@ class setup(customtkinter.CTk):
         self.pageButton.grid(row=2, column=1, columnspan=3, padx=5, pady=5, sticky="nswe")
 
         self.congratsFrame = customtkinter.CTkFrame(master=self)
-        
+        self.congratsFrame.grid_columnconfigure(0, weight=1)
+        self.congratsFrame.grid_rowconfigure(0, weight=1)
 
-        self.pageInfo = [self.questionFrame1, self.questionFrame2, self.questionFrame3, self.classFrame]
+        self.congrats = customtkinter.CTkLabel(master=self.congratsFrame, text="Congratulations!\nYou have finished the setup!\nClick Next to start using StudySync!")
+        self.congrats.grid(row=0, column=0, padx=5, pady=5, sticky="nswe")
+
+        self.pageInfo = [self.questionFrame1, self.questionFrame2, self.questionFrame3, self.classFrame, self.congratsFrame]
 
         self.bind("<Return>", lambda e: self.page("Next"))
 
@@ -125,6 +129,8 @@ class setup(customtkinter.CTk):
                     json_obj = json.dumps(self.setupDir, indent=4)
 
                     print(json_obj)
+
+                    self.pageInfo[4].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
 
                 else:
                     self.className.delete(0, "end")

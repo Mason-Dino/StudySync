@@ -61,7 +61,7 @@ class setup(customtkinter.CTk):
         self.className = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="What is the class name?", width=200)
         self.className.grid(row=0, column=0, padx=5, pady=5)
 
-        self.classSubject = customtkinter.CTkOptionMenu(master=self.classFrame, width=200,
+        self.classSubject = customtkinter.CTkOptionMenu(master=self.classFrame, width=200, variable=customtkinter.StringVar(value="Subject"),
                                                         values=["Math", "Science", "English",  "History", "Social Studies", "World Language", "Fine Arts/Music", "Arts", "Physical Education", "Other"])
         self.classSubject.grid(row=1, column=0, padx=5, pady=5)
 

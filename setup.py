@@ -76,6 +76,8 @@ class setup(customtkinter.CTk):
         self.pageButton = customtkinter.CTkSegmentedButton(master=self, values=["Last", "Next"], command=self.page)
         self.pageButton.grid(row=2, column=1, columnspan=3, padx=5, pady=5, sticky="nswe")
 
+        self.pageInfo = [self.questionFrame1, self.questionFrame2, self.questionFrame3, self.classFrame]
+
 
     def page(self, value):
         self.pageButton.set(None)
@@ -90,19 +92,19 @@ class setup(customtkinter.CTk):
                 self.setupDir["mode"] = self.mode.get()
 
                 self.questionFrame1.destroy()
-                self.questionFrame2.grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
+                self.pageInfo[self.pageNum -1].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
 
             if self.pageNum == 3:
                 self.setupDir["theme"] = self.theme.get()
 
                 self.questionFrame2.destroy()
-                self.questionFrame3.grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
+                self.pageInfo[self.pageNum - 1].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
 
             if self.pageNum == 4:
                 self.setupDir["numClasses"] = int(self.theme.get())
 
                 self.questionFrame3.destroy()
-                self.classFrame.grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
+                self.pageInfo[self.pageNum - 1].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
 
         elif value == "Last":
             self.pageNum -= 1

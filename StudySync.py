@@ -2,19 +2,22 @@ from setup import setup
 import customtkinter
 import json
 
-customtkinter.set_appearance_mode("System")  # Modes: system (default), light, dark
-customtkinter.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
 
 
 class StudySync(customtkinter.CTk):
     def __init__(self):
         super().__init__()
 
+        with open("setup.json", "r") as f:
+            self.setupDir = json.load(f)
+
         self.geometry("700x400")
         self.title("StudySync")
 
-        with open("setup.json", "r") as f:
-            self.setupDir = json.load(f)
+
+        customtkinter.set_appearance_mode(self.setupDir["mode"])  # Modes: system (default), light, dark
+        customtkinter.set_default_color_theme(f"themes/{self.setupDir['theme'].lower()}.json")  # Themes: blue (default), dark-blue, green
+
 
         self.numClasses = self.setupDir["numClasses"]
         print(self.numClasses)
@@ -29,12 +32,12 @@ class StudySync(customtkinter.CTk):
         self.name = customtkinter.CTkLabel(master=self.side, text="StudySync", font=customtkinter.CTkFont(size=20, weight="bold"))
         self.name.grid(row=0, column=0, padx=15, pady=20)
 
-        self.classes = customtkinter.CTkScrollableFrame(master=self.side)
-        self.classes.grid(row=1, rowspan=2, column=0, sticky="nswe", padx=15, pady=10)
-
+        self.classes = customtkinter.CTkScrollableFrame(master=self.side, height=250, fg_color="gray17")
+        self.classes.grid_columnconfigure(0, weight=1)
+        self.classes.grid(row=1, rowspan=2, column=0, sticky="nswe", pady=10)
         for i in range(self.numClasses):
             self.button = customtkinter.CTkButton(master=self.classes, text="Class " + str(i + 1), command=self.button_function)
-            self.button.grid(row=i + 1, padx=15, pady=10)
+            self.button.grid(row=i + 1, column=0, pady=10)
 
         self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=self.settings)
         self.settingsButton.grid(row=3, column=0, padx=15, pady=5)

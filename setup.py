@@ -9,11 +9,14 @@ class setup(customtkinter.CTk):
 
         self.setupDir = {}
 
-        self.geometry("400x240")
-        self.columnconfigure((0,1,2), weight=1)
-        self.rowconfigure((0,1), weight=1)
+        self.geometry("600x360")
+        self.resizable(False, False)
+        #self.columnconfigure((0,1,2), weight=1)
+        self.grid_columnconfigure((0,1,2), weight=1, uniform="1")
+        #self.rowconfigure((0,1), weight=1)
+        self.grid_rowconfigure((0,1), weight=1)
 
-        self.side = customtkinter.CTkFrame(master=self, width=75, corner_radius=0)
+        self.side = customtkinter.CTkFrame(master=self, corner_radius=0)
         self.side.grid(row=0, rowspan=3, column=0, sticky="nswe")
         self.side.columnconfigure(0, weight=1)
         self.side.rowconfigure((0,1), weight=1)
@@ -42,6 +45,30 @@ class setup(customtkinter.CTk):
         self.theme = customtkinter.CTkOptionMenu(master=self.questionFrame2, values=["Teal", "Orange", "Purple", "Red", "Yellow", "Green", "Blue", "Grey"])
         self.theme.grid(row=1, column=0, padx=5, pady=5)
 
+        self.questionFrame3 = customtkinter.CTkFrame(master=self)
+        self.questionFrame3.columnconfigure(0, weight=1)
+        self.questionFrame3.rowconfigure((0,1), weight=1)
+
+        self.question = customtkinter.CTkLabel(master=self.questionFrame3, text="How many classes do you have?")
+        self.question.grid(row=0, column=0, padx=5, pady=5)
+
+        self.theme = customtkinter.CTkOptionMenu(master=self.questionFrame3, values=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"])
+        self.theme.grid(row=1, column=0, padx=5, pady=5)
+
+        self.classFrame = customtkinter.CTkFrame(master=self)
+        self.classFrame.columnconfigure(0, weight=1)
+        self.classFrame.rowconfigure((0,1,2), weight=1)
+
+        self.className = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="What is the class name?", width=200)
+        self.className.grid(row=0, column=0, padx=5, pady=5)
+
+        self.classSubject = customtkinter.CTkOptionMenu(master=self.classFrame, width=200,
+                                                        values=["Math", "Science", "English",  "History", "Social Studies", "World Language", "Fine Arts/Music", "Arts", "Physical Education", "Other"])
+        self.classSubject.grid(row=1, column=0, padx=5, pady=5)
+
+        self.className = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="Who is the teacher/instructor?", width=200)
+        self.className.grid(row=2, column=0, padx=5, pady=5)
+
 
         self.pageNum = 1
         self.pageButton = customtkinter.CTkSegmentedButton(master=self, values=["Last", "Next"], command=self.page)
@@ -67,6 +94,13 @@ class setup(customtkinter.CTk):
                 self.setupDir["theme"] = self.theme.get()
 
                 self.questionFrame2.destroy()
+                self.questionFrame3.grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
+
+            if self.pageNum == 4:
+                self.setupDir["numClasses"] = int(self.theme.get())
+
+                self.questionFrame3.destroy()
+                self.classFrame.grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
 
         elif value == "Last":
             self.pageNum -= 1

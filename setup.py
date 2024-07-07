@@ -2,8 +2,6 @@ from id import makeID
 import customtkinter
 import json
 
-customtkinter.set_appearance_mode("System")
-customtkinter.set_default_color_theme("themes/teal.json")
 
 class setup(customtkinter.CTk):
     def __init__(self):
@@ -12,6 +10,10 @@ class setup(customtkinter.CTk):
         """
         # Call the constructor of the parent class
         super().__init__()
+
+        # Set the appearance mode and default color theme
+        customtkinter.set_appearance_mode("System")
+        customtkinter.set_default_color_theme("themes/teal.json")
 
         # Initialize the attributes
         self.setupDir = {}  # Dictionary to store the setup directory
@@ -100,7 +102,7 @@ class setup(customtkinter.CTk):
         self.congrats.grid(row=0, column=0, padx=5, pady=5, sticky="nswe")  # Position the congratulations label
 
         # Store the frames for the page function
-        self.page
+        self.pageInfo = [self.questionFrame1, self.questionFrame2, self.questionFrame3, self.classFrame, self.congratsFrame]
 
     def page(self, value):
         """

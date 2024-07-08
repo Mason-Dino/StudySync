@@ -35,8 +35,9 @@ class StudySync(customtkinter.CTk):
         self.classes = customtkinter.CTkScrollableFrame(master=self.side, height=250, fg_color="gray17")
         self.classes.grid_columnconfigure(0, weight=1)
         self.classes.grid(row=1, rowspan=2, column=0, sticky="nswe", pady=10)
+        self.classFunction = [self.class1, self.class2, self.class3, self.class4, self.class5, self.class6, self.class7, self.class8, self.class9, self.class10]
         for i in range(self.numClasses):
-            self.button = customtkinter.CTkButton(master=self.classes, text=self.setupDir[f"class{i+1}"]["className"], command=self.button_function)
+            self.button = customtkinter.CTkButton(master=self.classes, text=self.setupDir[f"class{i+1}"]["className"], command=self.classFunction[i])
             self.button.grid(row=i + 1, column=0, pady=10)
 
         self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=self.settings)
@@ -49,6 +50,36 @@ class StudySync(customtkinter.CTk):
 
     def settings(self):
         print("selection cleared")
+
+    def class1(self):
+        print(self.setupDir["class1"]["className"])
+
+    def class2(self):
+        print(self.setupDir["class2"]["className"])      
+
+    def class3(self):
+        print(self.setupDir["class3"]["className"])
+
+    def class4(self):
+        print(self.setupDir["class4"]["className"])
+
+    def class5(self):
+        print(self.setupDir["class5"]["className"])
+
+    def class6(self):
+        print(self.setupDir["class6"]["className"])
+
+    def class7(self):
+        print(self.setupDir["class7"]["className"])
+
+    def class8(self):
+        print(self.setupDir["class8"]["className"])
+
+    def class9(self):
+        print(self.setupDir["class9"]["className"])
+
+    def class10(self):
+        print(self.setupDir["class10"]["className"])
 
 
 if __name__ == "__main__":

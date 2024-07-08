@@ -32,18 +32,31 @@ class StudySync(customtkinter.CTk):
         self.name = customtkinter.CTkLabel(master=self.side, text="StudySync", font=customtkinter.CTkFont(size=20, weight="bold"))
         self.name.grid(row=0, column=0, padx=15, pady=20)
 
-        self.classes = customtkinter.CTkScrollableFrame(master=self.side, height=250, fg_color="gray17")
-        self.classes.grid_columnconfigure(0, weight=1)
-        self.classes.grid(row=1, rowspan=2, column=0, sticky="nswe", pady=10)
+        self.infoFrame = customtkinter.CTkFrame(master=self.side, height=250, fg_color="gray17")
+        self.infoFrame.grid_columnconfigure(0, weight=1)
+        self.infoFrame.grid(row=1, rowspan=2, column=0, sticky="nswe", pady=10)
         self.classFunction = [self.class1, self.class2, self.class3, self.class4, self.class5, self.class6, self.class7, self.class8, self.class9, self.class10]
-        for i in range(self.numClasses):
-            self.button = customtkinter.CTkButton(master=self.classes, text=self.setupDir[f"class{i+1}"]["className"], command=self.classFunction[i])
-            self.button.grid(row=i + 1, column=0, pady=10)
+        
+        self.classes = customtkinter.CTkButton(master=self.infoFrame, text="Home")
+        self.classes.grid(row=0, column=0, padx=15, pady=5)
+
+        self.assignments = customtkinter.CTkButton(master=self.infoFrame, text="Classes")
+        self.assignments.grid(row=1, column=0, padx=15, pady=5)
+
+        self.assignments = customtkinter.CTkButton(master=self.infoFrame, text="Assignments")
+        self.assignments.grid(row=2, column=0, padx=15, pady=5)
+
+        self.assignments = customtkinter.CTkButton(master=self.infoFrame, text="Due Today")
+        self.assignments.grid(row=3, column=0, padx=15, pady=7)
+
+        self.assignments = customtkinter.CTkButton(master=self.infoFrame, text="Deu Within 7 Days")
+        self.assignments.grid(row=4, column=0, padx=15, pady=5)
 
         self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=self.settings)
-        self.settingsButton.grid(row=3, column=0, padx=15, pady=5)
+        self.settingsButton.grid(row=3, column=0, padx=15, pady=70)
 
-
+        self.content = customtkinter.CTkFrame(master=self)
+        self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
 
     def button_function(self):
         print("button pressed")

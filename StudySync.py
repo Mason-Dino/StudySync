@@ -41,17 +41,17 @@ class StudySync(customtkinter.CTk):
         self.infoFrame.grid(row=1, rowspan=2, column=0, sticky="nswe", pady=10)
         self.classFunction = [self.class1, self.class2, self.class3, self.class4, self.class5, self.class6, self.class7, self.class8, self.class9, self.class10]
         
-        self.classes = customtkinter.CTkButton(master=self.infoFrame, text="Home")
-        self.classes.grid(row=0, column=0, padx=15, pady=5)
+        self.home = customtkinter.CTkButton(master=self.infoFrame, text="Home")
+        self.home.grid(row=0, column=0, padx=15, pady=5)
 
-        self.assignments = customtkinter.CTkButton(master=self.infoFrame, text="Classes")
-        self.assignments.grid(row=1, column=0, padx=15, pady=5)
+        self.classes = customtkinter.CTkButton(master=self.infoFrame, text="Classes")
+        self.classes.grid(row=1, column=0, padx=15, pady=5)
 
         self.assignments = customtkinter.CTkButton(master=self.infoFrame, text="Assignments")
         self.assignments.grid(row=2, column=0, padx=15, pady=5)
 
-        self.assignments = customtkinter.CTkButton(master=self.infoFrame, text="Due Today")
-        self.assignments.grid(row=3, column=0, padx=15, pady=7)
+        self.due = customtkinter.CTkButton(master=self.infoFrame, text="Due soon")
+        self.due.grid(row=3, column=0, padx=15, pady=7)
 
         self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=self.settings, image=self.image)
         self.settingsButton.grid(row=3, column=0, padx=15, pady=70)

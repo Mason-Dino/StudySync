@@ -30,7 +30,6 @@ class StudySync(customtkinter.CTk):
 
 
         self.numClasses = self.setupDir["numClasses"]
-        print(self.numClasses)
 
         self.grid_columnconfigure((1,2), weight=1)
         self.grid_columnconfigure((3), weight=0)

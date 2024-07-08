@@ -53,9 +53,6 @@ class StudySync(customtkinter.CTk):
         self.assignments = customtkinter.CTkButton(master=self.infoFrame, text="Due Today")
         self.assignments.grid(row=3, column=0, padx=15, pady=7)
 
-        self.assignments = customtkinter.CTkButton(master=self.infoFrame, text="Due Within 7 Days")
-        self.assignments.grid(row=4, column=0, padx=15, pady=5)
-
         self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=self.settings, image=self.image)
         self.settingsButton.grid(row=3, column=0, padx=15, pady=70)
 

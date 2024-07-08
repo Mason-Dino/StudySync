@@ -15,6 +15,9 @@ class StudySync(customtkinter.CTk):
         self.geometry("700x400")
         self.title("StudySync")
 
+        icon_path = os.path.join(os.path.dirname(__file__), "icons")
+        self.image = customtkinter.CTkImage(light_image=Image.open(os.path.join(icon_path, "settings.png")), dark_image=Image.open(os.path.join(icon_path, "settings.png")), size=(20, 20))
+        
 
         customtkinter.set_appearance_mode(self.setupDir["mode"])  # Modes: system (default), light, dark
         customtkinter.set_default_color_theme(f"themes/{self.setupDir['theme'].lower()}.json")  # Themes: blue (default), dark-blue, green
@@ -33,7 +36,7 @@ class StudySync(customtkinter.CTk):
         self.name = customtkinter.CTkLabel(master=self.side, text="StudySync", font=customtkinter.CTkFont(size=20, weight="bold"))
         self.name.grid(row=0, column=0, padx=15, pady=20)
 
-        self.infoFrame = customtkinter.CTkFrame(master=self.side, height=250, fg_color="gray17")
+        self.infoFrame = customtkinter.CTkFrame(master=self.side, height=250, fg_color=["gray86","gray17"])
         self.infoFrame.grid_columnconfigure(0, weight=1)
         self.infoFrame.grid(row=1, rowspan=2, column=0, sticky="nswe", pady=10)
         self.classFunction = [self.class1, self.class2, self.class3, self.class4, self.class5, self.class6, self.class7, self.class8, self.class9, self.class10]
@@ -53,7 +56,7 @@ class StudySync(customtkinter.CTk):
         self.assignments = customtkinter.CTkButton(master=self.infoFrame, text="Due Within 7 Days")
         self.assignments.grid(row=4, column=0, padx=15, pady=5)
 
-        self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=self.settings)
+        self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=self.settings, image=self.image)
         self.settingsButton.grid(row=3, column=0, padx=15, pady=70)
 
         self.content = customtkinter.CTkFrame(master=self)

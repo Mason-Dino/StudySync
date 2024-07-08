@@ -1,4 +1,9 @@
+from tabs.assignments import assignments
 from tabs.setting import settings
+from tabs.classes import classes
+from tabs.home import home
+from tabs.due import due
+
 from setup import setup
 from PIL import Image
 import customtkinter

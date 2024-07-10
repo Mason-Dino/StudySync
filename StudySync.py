@@ -59,7 +59,8 @@ class StudySync(customtkinter.CTk):
         self.due.grid(row=3, column=0, padx=15, pady=7)
 
         self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=lambda:settings(self), image=self.image)
-        self.settingsButton.grid(row=3, column=0, padx=15, pady=100)
+        #self.settingsButton.grid(row=3, column=0, padx=15, pady=100)
+        self.settingsButton.place(relx=.09, rely=.9)
 
         home(self)
 

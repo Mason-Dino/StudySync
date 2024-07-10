@@ -167,9 +167,9 @@ class setup(customtkinter.CTk):
                 # Create a dictionary to store the details of the current class
                 class_details = {
                     "id": makeID(),  # Generate a unique ID for the class
-                    "className": self.className.get(),  # Store the class name
-                    "classSubject": self.classSubject.get(),  # Store the class subject
-                    "classTeacher": self.classTeacher.get()  # Store the class teacher/instructor
+                    "name": self.className.get(),  # Store the class name
+                    "subject": self.classSubject.get(),  # Store the class subject
+                    "teacher": self.classTeacher.get()  # Store the class teacher/instructor
                 }
 
                 # Add the current class to the setup directory

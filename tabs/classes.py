@@ -31,16 +31,16 @@ def classes(self):
             c += 1
 
             if c == numClasses:
-                self.button = customtkinter.CTkButton(master=self.classFrame, text=f"Class {c}")
+                self.button = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"])
                 self.button.grid(row=row, column=0, columnspan=2, pady=10)
 
             elif c % 2 == 0:
-                self.button = customtkinter.CTkButton(master=self.classFrame, text=f"Class {c}")
+                self.button = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"])
                 self.button.grid(row=row, column=1, pady=10)
                 row += 1
 
             else:
-                self.button = customtkinter.CTkButton(master=self.classFrame, text=f"Class {c}")
+                self.button = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"])
                 self.button.grid(row=row, column=0, pady=10)
             
             #print(f"{c} {row}")

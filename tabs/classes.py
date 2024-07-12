@@ -36,14 +36,31 @@ def classes(self):
 
             elif c % 2 == 0:
                 self.button = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"])
-                self.button.grid(row=row, column=1, pady=10)
+                self.button.grid(row=row, column=1, pady=15)
                 row += 1
 
             else:
                 self.button = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"])
-                self.button.grid(row=row, column=0, pady=10)
+                self.button.grid(row=row, column=0, pady=15)
             
             #print(f"{c} {row}")
+
+    elif odd == False:
+        c = 0
+        row = 0
+
+        while (c < numClasses):
+            c += 1
+
+            if c % 2 == 0: 
+                self.button = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"])
+                self.button.grid(row=row, column=0, pady=15)
+                row += 1
+
+            else:
+                self.button = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"])
+                self.button.grid(row=row, column=1, pady=15)
+            
 
     #self.test = customtkinter.CTkLabel(master=self.content, text="Classes")
     #self.test.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)

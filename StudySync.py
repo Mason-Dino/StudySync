@@ -1,6 +1,6 @@
 from tabs.assignments import assignments
+from tabs.classes import classes, isodd
 from tabs.setting import settings
-from tabs.classes import classes
 from tabs.home import home
 from tabs.due import due
 
@@ -49,7 +49,7 @@ class StudySync(customtkinter.CTk):
         self.home = customtkinter.CTkButton(master=self.infoFrame, text="Home", command=lambda:home(self))
         self.home.grid(row=0, column=0, padx=15, pady=5)
 
-        self.classes = customtkinter.CTkButton(master=self.infoFrame, text="Classes", command=lambda:classes(self))
+        self.classes = customtkinter.CTkButton(master=self.infoFrame, text="Classes", command=lambda: self.classesMain())
         self.classes.grid(row=1, column=0, padx=15, pady=5)
 
         self.assignments = customtkinter.CTkButton(master=self.infoFrame, text="Assignments", command=lambda:assignments(self))
@@ -99,6 +99,10 @@ class StudySync(customtkinter.CTk):
 
     def class10(self):
         print(self.setupDir["class10"]["className"])
+
+    def classesMain(self):
+        classes(self)
+        print("hey")
 
 
 if __name__ == "__main__":

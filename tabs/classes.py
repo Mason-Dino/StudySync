@@ -50,25 +50,29 @@ def classes(self):
             #print(f"{c} {row}")
 
     elif odd == False:
-        c = 0
+        self.c = 0
         row = 0
 
-        while (c < numClasses):
-            c += 1
-            print(c)
+        while (self.c < numClasses):
 
-            if c == 1:
-                classButton = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], command=lambda: classScreen(c))
-                classButton.grid(row=row, column=0, pady=15)
+            self.c += 1
+            print(self.c)
 
-            elif c % 2 == 0: 
-                classButton = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], command=lambda: classScreen(c))
-                classButton.grid(row=row, column=1, pady=15)
+            if self.c == 1:
+                classButton[self.c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{self.c}"]["name"], command=lambda: classScreen(classButton[self.c]._text))
+                classButton[self.c].grid(row=row, column=0, pady=15)
+                print(classButton[self.c]._text)
+
+            elif self.c % 2 == 0: 
+                classButton[self.c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{self.c}"]["name"], command=lambda: classScreen(self.c))
+                classButton[self.c].grid(row=row, column=1, pady=15)
                 row += 1
 
             else:
-                classButton = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], command=lambda: classScreen(c))
-                classButton.grid(row=row, column=0, pady=15)
+                classButton[self.c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{self.c}"]["name"], command=lambda: classScreen(self.c))
+                classButton[self.c].grid(row=row, column=0, pady=15)
+
+        c = 1
 
         #print(classButton)
 

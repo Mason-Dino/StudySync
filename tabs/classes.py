@@ -50,35 +50,62 @@ def classes(self):
             #print(f"{c} {row}")
 
     elif odd == False:
-        self.c = 0
+        c = 0
         row = 0
 
-        while (self.c < numClasses):
+        while (c < numClasses):
 
-            self.c += 1
-            print(self.c)
+            c += 1
+            print(c)
 
-            if self.c == 1:
-                classButton[self.c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{self.c}"]["name"], command=lambda: classScreen(classButton[self.c]._text))
-                classButton[self.c].grid(row=row, column=0, pady=15)
-                print(classButton[self.c]._text)
+            if c == 1:
+                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"])
+                classButton[c].grid(row=row, column=0, pady=15)
+                print(classButton[c]._text)
 
-            elif self.c % 2 == 0: 
-                classButton[self.c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{self.c}"]["name"], command=lambda: classScreen(self.c))
-                classButton[self.c].grid(row=row, column=1, pady=15)
+            elif c % 2 == 0: 
+                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"])
+                classButton[c].grid(row=row, column=1, pady=15)
                 row += 1
 
             else:
-                classButton[self.c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{self.c}"]["name"], command=lambda: classScreen(self.c))
-                classButton[self.c].grid(row=row, column=0, pady=15)
-
-        c = 1
+                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"])
+                classButton[c].grid(row=row, column=0, pady=15)
 
         #print(classButton)
 
     for i in range(numClasses):
-        print(f"class{i+1}")
-        #classButton[f"class{i+1}"].configure(command=lambda: classScreen(i+1))
+        print(i)
+
+        if i == 0:
+            classButton[i+1].configure(command=lambda: classScreen(1))
+
+        elif i == 1:
+            classButton[i+1].configure(command=lambda: classScreen(2))
+
+        elif i == 2:
+            classButton[i+1].configure(command=lambda: classScreen(3))
+
+        elif i == 3:
+            classButton[i+1].configure(command=lambda: classScreen(4))
+
+        elif i == 4:
+            classButton[i+1].configure(command=lambda: classScreen(5))
+
+        elif i == 5:
+            classButton[i+1].configure(command=lambda: classScreen(6))
+
+        elif i == 6:
+            classButton[i+1].configure(command=lambda: classScreen(7))
+
+        elif i == 7:
+            classButton[i+1].configure(command=lambda: classScreen(8))
+
+        elif i == 8:
+            classButton[i+1].configure(command=lambda: classScreen(9))
+
+        elif i == 9:
+            classButton[i+1].configure(command=lambda: classScreen(10))
             
 
 def classScreen(button):

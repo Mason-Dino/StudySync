@@ -24,7 +24,7 @@ def classes(self):
     odd = isodd(numClasses)
 
 
-    #working on getting the text of the button
+    # Error when I click a class button it only prints the number of classes and not that correct class number
     classButton = {}
 
     if odd == True:
@@ -57,15 +57,19 @@ def classes(self):
             c += 1
 
             if c % 2 == 0: 
-                classButton[f"class{c}"] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], command=lambda: classScreen(classButton[f"class{c}"]))
+                classButton[f"class{c}"] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], command=lambda: classScreen(c))
                 classButton[f"class{c}"].grid(row=row, column=0, pady=15)
                 row += 1
 
             else:
-                classButton[f"class{c}"] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], command=lambda: classScreen(classButton[f"class{c}"]))
+                classButton[f"class{c}"] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], command=lambda: classScreen(c))
                 classButton[f"class{c}"].grid(row=row, column=1, pady=15)
 
         print(classButton)
+
+    for i in range(numClasses):
+        print(f"class{i+1}")
+        classButton[f"class{i+1}"].configure(command=lambda: classScreen(i+1))
             
 
 def classScreen(button):

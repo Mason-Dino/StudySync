@@ -41,8 +41,8 @@ def home(self):
     self.button = customtkinter.CTkButton(master=self.content, text="Add Task")
     self.button.grid(row=4, column=1, sticky="nsew", padx=10, pady=10)
 
-    self.task = customtkinter.CTkScrollableFrame(master=self.content, fg_color="transparent", height=100)
-    self.task.grid(row=5, column=0, columnspan=3, sticky="nsew", pady=10)
+    self.task = customtkinter.CTkScrollableFrame(master=self.content, corner_radius=6)
+    self.task.grid(row=5, column=1, sticky="nsew")
 
     for i in range(20):
         self.taskEvent = customtkinter.CTkLabel(master=self.task, text=f"Task {i+1}")

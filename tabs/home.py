@@ -6,7 +6,7 @@ def home(self):
     self.content = customtkinter.CTkFrame(master=self)
     self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
 
-    self.content.grid_columnconfigure(0, weight=1)
+    self.content.grid_columnconfigure((0,1,2), weight=1)
 
     with open("setup.json", "r") as f:
         self.setupDir = json.load(f)
@@ -24,8 +24,6 @@ def home(self):
 
     for i in range(self.classNum):
         classNameValues.append(self.setupDir[f"class{i+1}"]["name"])
-
-    
 
     self.className = customtkinter.CTkOptionMenu(master=self.content, values=classNameValues, variable=customtkinter.StringVar(value="Pick Class"))
     self.className.grid(row=2, column=2, sticky="nsew", padx=10, pady=10)

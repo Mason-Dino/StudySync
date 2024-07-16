@@ -8,7 +8,9 @@ def datebase():
     c.execute("""CREATE TABLE IF NOT EXISTS tasks (
         id integer PRIMARY KEY,
         task text,
-        time text
+        due text,
+        parentID text,
+        classID text,
         )""")
     conn.commit()
     conn.close()

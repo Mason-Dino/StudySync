@@ -23,8 +23,6 @@ def classes(self):
     numClasses = int(self.setupDir["numClasses"])
     odd = isodd(numClasses)
 
-
-    # Error when I click a class button it only prints the number of classes and not that correct class number
     classButton = {}
 
     if odd == True:

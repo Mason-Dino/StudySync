@@ -45,22 +45,17 @@ def classes(self):
             else:
                 classButton[f"class{c}"] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width)
                 classButton[f"class{c}"].grid(row=row, column=0, pady=15)
-            
-            #print(f"{c} {row}")
 
     elif odd == False:
         c = 0
         row = 0
 
         while (c < numClasses):
-
             c += 1
-            print(c)
 
             if c == 1:
                 classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width)
                 classButton[c].grid(row=row, column=0, pady=15)
-                print(classButton[c]._text)
 
             elif c % 2 == 0: 
                 classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width)
@@ -71,11 +66,7 @@ def classes(self):
                 classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width)
                 classButton[c].grid(row=row, column=0, pady=15)
 
-        #print(classButton)
-
     for i in range(numClasses):
-        print(i)
-
         configScreen(i, classButton)
 
 def configScreen(c, classButton):

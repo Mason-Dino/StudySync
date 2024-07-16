@@ -102,7 +102,6 @@ class StudySync(customtkinter.CTk):
 
     def classesMain(self):
         classes(self)
-        print("hey")
 
 
 if __name__ == "__main__":

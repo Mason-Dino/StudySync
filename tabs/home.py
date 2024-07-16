@@ -44,11 +44,18 @@ def home(self):
 
     self.task = customtkinter.CTkScrollableFrame(master=self.content, corner_radius=6, fg_color="transparent")
     self.task.grid(row=5, column=0, columnspan=3, sticky="nsew", padx=3)
+    self.task.grid_columnconfigure(0, weight=1)
 
-    for i in range(20):
-        if i % 5 == 0:
-            customtkinter.CTkLabel(master=self.task, text=f"Task {i+1}").grid(row=i)
-        else:
-            customtkinter.CTkLabel(master=self.task, text=f"\tTask {i+1}").grid(row=i)
+    for i in range(10):
+        self.taskFrame = customtkinter.CTkFrame(master=self.task, fg_color=["gray88", "gray19"])
+        self.taskFrame.grid(row=i, column=0, sticky="nsew", padx=3, pady=2)
 
-    customtkinter.CTkLabel(master=self.task, text=f"Task {i+1}").grid(row=21)
+        self.info = customtkinter.CTkLabel(master=self.taskFrame, text="Homework", font=customtkinter.CTkFont(size=20, weight="bold"))
+        self.info.grid(row=0, column=0, padx=3)
+
+        self.due = customtkinter.CTkLabel(master=self.taskFrame, text="Due: 7/16/2024")
+        self.due.grid(row=1, column=0, padx=0)
+
+        self.done = customtkinter.CTkButton(master=self.taskFrame, text="Done", width=50)
+        #self.done.grid(row=0, rowspan=2, column=1, padx=3, sticky="e")
+        self.done.place(relx=.99, rely=0.25, anchor="ne")

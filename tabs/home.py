@@ -46,5 +46,9 @@ def home(self):
     self.task.grid(row=5, column=0, columnspan=3, sticky="nsew", padx=3)
 
     for i in range(20):
-        self.taskEvent = customtkinter.CTkLabel(master=self.task, text=f"Task {i+1}")
-        self.taskEvent.grid(row=i, column=0, sticky="nsew")
+        if i % 5 == 0:
+            customtkinter.CTkLabel(master=self.task, text=f"Task {i+1}").grid(row=i)
+        else:
+            customtkinter.CTkLabel(master=self.task, text=f"\tTask {i+1}").grid(row=i)
+
+    customtkinter.CTkLabel(master=self.task, text=f"Task {i+1}").grid(row=21)

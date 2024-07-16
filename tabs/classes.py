@@ -24,6 +24,7 @@ def classes(self):
     odd = isodd(numClasses)
 
     classButton = {}
+    width = 200
 
     if odd == True:
         c = 0
@@ -57,17 +58,17 @@ def classes(self):
             print(c)
 
             if c == 1:
-                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"])
+                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width)
                 classButton[c].grid(row=row, column=0, pady=15)
                 print(classButton[c]._text)
 
             elif c % 2 == 0: 
-                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"])
+                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width)
                 classButton[c].grid(row=row, column=1, pady=15)
                 row += 1
 
             else:
-                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"])
+                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width)
                 classButton[c].grid(row=row, column=0, pady=15)
 
         #print(classButton)

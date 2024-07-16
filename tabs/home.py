@@ -3,10 +3,11 @@ import datetime
 import json
 
 def home(self):
-    self.content = customtkinter.CTkFrame(master=self)
+    self.content = customtkinter.CTkFrame(master=self, corner_radius=6)
     self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
 
     self.content.grid_columnconfigure((0,1,2), weight=1)
+    self.content.grid_rowconfigure((5), weight=1)
 
     with open("setup.json", "r") as f:
         self.setupDir = json.load(f)
@@ -41,9 +42,9 @@ def home(self):
     self.button = customtkinter.CTkButton(master=self.content, text="Add Task")
     self.button.grid(row=4, column=1, sticky="nsew", padx=10, pady=10)
 
-    self.task = customtkinter.CTkScrollableFrame(master=self.content, corner_radius=6)
-    self.task.grid(row=5, column=1, sticky="nsew")
+    self.task = customtkinter.CTkScrollableFrame(master=self.content, corner_radius=6, fg_color="transparent")
+    self.task.grid(row=5, column=0, columnspan=3, sticky="nsew", padx=3)
 
     for i in range(20):
         self.taskEvent = customtkinter.CTkLabel(master=self.task, text=f"Task {i+1}")
-        self.taskEvent.grid(row=i, column=0, sticky="nsew", padx=10)
+        self.taskEvent.grid(row=i, column=0, sticky="nsew")

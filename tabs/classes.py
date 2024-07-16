@@ -77,36 +77,10 @@ def classes(self):
     for i in range(numClasses):
         print(i)
 
-        if i == 0:
-            classButton[i+1].configure(command=lambda: classScreen(1))
+        configScreen(i, classButton)
 
-        elif i == 1:
-            classButton[i+1].configure(command=lambda: classScreen(2))
-
-        elif i == 2:
-            classButton[i+1].configure(command=lambda: classScreen(3))
-
-        elif i == 3:
-            classButton[i+1].configure(command=lambda: classScreen(4))
-
-        elif i == 4:
-            classButton[i+1].configure(command=lambda: classScreen(5))
-
-        elif i == 5:
-            classButton[i+1].configure(command=lambda: classScreen(6))
-
-        elif i == 6:
-            classButton[i+1].configure(command=lambda: classScreen(7))
-
-        elif i == 7:
-            classButton[i+1].configure(command=lambda: classScreen(8))
-
-        elif i == 8:
-            classButton[i+1].configure(command=lambda: classScreen(9))
-
-        elif i == 9:
-            classButton[i+1].configure(command=lambda: classScreen(10))
-            
+def configScreen(c, classButton):
+    classButton[c+1].configure(command=lambda: classScreen(classButton[c+1]._text))
 
 def classScreen(button):
     print(button)

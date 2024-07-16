@@ -70,36 +70,6 @@ class StudySync(customtkinter.CTk):
     def settings(self):
         print("selection cleared")
 
-    def class1(self):
-        print(self.setupDir["class1"]["className"])
-
-    def class2(self):
-        print(self.setupDir["class2"]["className"])      
-
-    def class3(self):
-        print(self.setupDir["class3"]["className"])
-
-    def class4(self):
-        print(self.setupDir["class4"]["className"])
-
-    def class5(self):
-        print(self.setupDir["class5"]["className"])
-
-    def class6(self):
-        print(self.setupDir["class6"]["className"])
-
-    def class7(self):
-        print(self.setupDir["class7"]["className"])
-
-    def class8(self):
-        print(self.setupDir["class8"]["className"])
-
-    def class9(self):
-        print(self.setupDir["class9"]["className"])
-
-    def class10(self):
-        print(self.setupDir["class10"]["className"])
-
     def classesMain(self):
         classes(self)
 

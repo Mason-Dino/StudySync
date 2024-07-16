@@ -49,6 +49,7 @@ def home(self):
     for i in range(10):
         self.taskFrame = customtkinter.CTkFrame(master=self.task, fg_color=["gray88", "gray19"])
         self.taskFrame.grid(row=i, column=0, sticky="nsew", padx=3, pady=2)
+        self.taskFrame.bind("<Button-1>", makeTask)
 
         self.info = customtkinter.CTkLabel(master=self.taskFrame, text="Homework", font=customtkinter.CTkFont(size=20, weight="bold"))
         self.info.grid(row=0, column=0, padx=3)
@@ -59,3 +60,8 @@ def home(self):
         self.done = customtkinter.CTkButton(master=self.taskFrame, text="Done", width=50)
         #self.done.grid(row=0, rowspan=2, column=1, padx=3, sticky="e")
         self.done.place(relx=.99, rely=0.25, anchor="ne")
+
+    #self.bind("<Button-1>", makeTask)
+
+def makeTask(self):
+    print("make task")

@@ -24,7 +24,9 @@ def home(self):
     self.progressbar.grid(row=0, column=0, columnspan=3, sticky="nsew", padx=10, pady=10)
     self.progressbar.set(0)
 
-    self.taskName = customtkinter.CTkEntry(master=self.content, placeholder_text="Task Name")
+    var = customtkinter.StringVar()
+
+    self.taskName = customtkinter.CTkEntry(master=self.content, placeholder_text="Task Name", textvariable=var)
     self.taskName.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
 
     for i in range(self.classNum):
@@ -53,18 +55,19 @@ def home(self):
     for i in range(10):
         self.taskFrame[i] = {}
 
-        taskName = random.choice(["Homework","Test    ", "Lab     ", "reading  "])
+        taskName = random.choice(["Homework","Test", "Lab", "reading"])
 
         self.taskFrame[i]["frame"] = customtkinter.CTkFrame(master=self.task, fg_color=["gray88", "gray19"])
         self.taskFrame[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=3, pady=2)
         #self.taskFrame[i].bind("<Button-1>", lambda: makeTask(self, i))
 
-        self.info = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text=taskName, font=customtkinter.CTkFont(size=20, weight="bold"), anchor=customtkinter.W)
-        #self.info.place(relx=0, anchor="e")
-        self.info.grid(row=0, column=0, padx=3)
+        self.info = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text="zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz", font=customtkinter.CTkFont(size=20, weight="bold"), anchor="w", justify="left", width=400)
+        #self.info.place(relx=.01, rely=.1, anchor="nw")
+        self.info.grid(row=0, column=0, padx=5)
 
-        self.due = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text="Due: 7/16/2024")
-        self.due.grid(row=1, column=0, padx=3)
+
+        self.due = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text="Due: 7/16/2024", anchor="w", justify="left", width=400)
+        self.due.grid(row=1, column=0, padx=5)
 
         self.taskFrame[i]["done"] = customtkinter.CTkButton(master=self.taskFrame[i]["frame"], text="Done", width=50, command=lambda: finishTask(self, i))
         #self.done.grid(row=0, rowspan=2, column=1, padx=3, sticky="e")
@@ -78,5 +81,5 @@ def makeTask(self):
 def finishTask(self, i):
     print("finish task")
     print(i)
-    self.taskFrame[0]["frame"].destroy()
+    self.taskFrame[0]["done"].destroy()
     self.progressbar.step()

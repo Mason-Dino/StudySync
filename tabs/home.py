@@ -2,6 +2,8 @@ import customtkinter
 import datetime
 import json
 
+import random
+
 def home(self):
     self.taskFrame = {}
 
@@ -41,7 +43,7 @@ def home(self):
     self.year.grid(row=3, column=2, sticky="nsew", padx=10, pady=10)
 
 
-    self.button = customtkinter.CTkButton(master=self.content, text="Add Task")
+    self.button = customtkinter.CTkButton(master=self.content, text="Add Task", command=lambda: makeTask(self))
     self.button.grid(row=4, column=1, sticky="nsew", padx=10, pady=10)
 
     self.task = customtkinter.CTkScrollableFrame(master=self.content, corner_radius=6, fg_color="transparent")
@@ -49,27 +51,32 @@ def home(self):
     self.task.grid_columnconfigure(0, weight=1)
 
     for i in range(10):
-        self.taskFrame[i] = customtkinter.CTkFrame(master=self.task, fg_color=["gray88", "gray19"])
-        self.taskFrame[i].grid(row=i, column=0, sticky="nsew", padx=3, pady=2)
+        self.taskFrame[i] = {}
+
+        taskName = random.choice(["Homework","Test    ", "Lab     ", "reading  "])
+
+        self.taskFrame[i]["frame"] = customtkinter.CTkFrame(master=self.task, fg_color=["gray88", "gray19"])
+        self.taskFrame[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=3, pady=2)
         #self.taskFrame[i].bind("<Button-1>", lambda: makeTask(self, i))
 
-        self.info = customtkinter.CTkLabel(master=self.taskFrame[i], text="Homework", font=customtkinter.CTkFont(size=20, weight="bold"))
+        self.info = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text=taskName, font=customtkinter.CTkFont(size=20, weight="bold"), anchor=customtkinter.W)
+        #self.info.place(relx=0, anchor="e")
         self.info.grid(row=0, column=0, padx=3)
 
-        self.due = customtkinter.CTkLabel(master=self.taskFrame[i], text="Due: 7/16/2024")
-        self.due.grid(row=1, column=0, padx=0)
+        self.due = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text="Due: 7/16/2024")
+        self.due.grid(row=1, column=0, padx=3)
 
-        self.done = customtkinter.CTkButton(master=self.taskFrame[i], text="Done", width=50, command=lambda: finishTask(self, i))
+        self.taskFrame[i]["done"] = customtkinter.CTkButton(master=self.taskFrame[i]["frame"], text="Done", width=50, command=lambda: finishTask(self, i))
         #self.done.grid(row=0, rowspan=2, column=1, padx=3, sticky="e")
-        self.done.place(relx=.99, rely=0.25, anchor="ne")
+        self.taskFrame[i]["done"].place(relx=.99, rely=0.25, anchor="ne")
 
     #self.bind("<Button-1>", makeTask)
 
-def makeTask(self, i):
+def makeTask(self):
     print("make task")
-    print(i)
 
 def finishTask(self, i):
     print("finish task")
     print(i)
+    self.taskFrame[0]["frame"].destroy()
     self.progressbar.step()

@@ -14,3 +14,6 @@ def datebase():
         )""")
     conn.commit()
     conn.close()
+
+def addMainTask(taskName, className, day, month, year):
+    print("hey")

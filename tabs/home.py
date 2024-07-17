@@ -1,5 +1,6 @@
 from tkinter import messagebox
 from task import addMainTask
+from id import makeID
 import customtkinter
 import datetime
 import json
@@ -91,7 +92,18 @@ def makeTask(self):
 
     else:
         print(taskName, className, day, month, year)
-        addMainTask(taskName, className, day, month, year)
+
+        with open("setup.json", "r") as f:
+            self.setupDir = json.load(f)
+
+        self.classNum = self.setupDir["numClasses"]
+
+        for i in range(self.classNum):
+            if self.setupDir[f"class{i+1}"]["name"] == className:
+                id = self.setupDir[f"class{i+1}"]["id"]
+
+        taskID = makeID(20)
+        addMainTask(taskName, taskID, className, id, day, month, year)
 
 def finishTask(self, i):
     print("finish task")

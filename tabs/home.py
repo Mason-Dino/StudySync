@@ -3,6 +3,8 @@ import datetime
 import json
 
 def home(self):
+    self.taskFrame = {}
+
     self.content = customtkinter.CTkFrame(master=self, corner_radius=6)
     self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
 
@@ -47,21 +49,22 @@ def home(self):
     self.task.grid_columnconfigure(0, weight=1)
 
     for i in range(10):
-        self.taskFrame = customtkinter.CTkFrame(master=self.task, fg_color=["gray88", "gray19"])
-        self.taskFrame.grid(row=i, column=0, sticky="nsew", padx=3, pady=2)
-        self.taskFrame.bind("<Button-1>", makeTask)
+        self.taskFrame[i] = customtkinter.CTkFrame(master=self.task, fg_color=["gray88", "gray19"])
+        self.taskFrame[i].grid(row=i, column=0, sticky="nsew", padx=3, pady=2)
+        #self.taskFrame[i].bind("<Button-1>", lambda: makeTask(self, i))
 
-        self.info = customtkinter.CTkLabel(master=self.taskFrame, text="Homework", font=customtkinter.CTkFont(size=20, weight="bold"))
+        self.info = customtkinter.CTkLabel(master=self.taskFrame[i], text="Homework", font=customtkinter.CTkFont(size=20, weight="bold"))
         self.info.grid(row=0, column=0, padx=3)
 
-        self.due = customtkinter.CTkLabel(master=self.taskFrame, text="Due: 7/16/2024")
+        self.due = customtkinter.CTkLabel(master=self.taskFrame[i], text="Due: 7/16/2024")
         self.due.grid(row=1, column=0, padx=0)
 
-        self.done = customtkinter.CTkButton(master=self.taskFrame, text="Done", width=50)
+        self.done = customtkinter.CTkButton(master=self.taskFrame[i], text="Done", width=50, command=lambda: makeTask(self, i))
         #self.done.grid(row=0, rowspan=2, column=1, padx=3, sticky="e")
         self.done.place(relx=.99, rely=0.25, anchor="ne")
 
     #self.bind("<Button-1>", makeTask)
 
-def makeTask(self):
+def makeTask(self, i):
     print("make task")
+    print(i)

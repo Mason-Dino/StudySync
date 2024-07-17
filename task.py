@@ -8,7 +8,9 @@ def database():
     c.execute("""CREATE TABLE IF NOT EXISTS tasks (
         id text PRIMARY KEY,
         task text,
-        due text,
+        day integer,
+        month integer,
+        year integer,
         parentID text,
         ClassName text,
         classID text
@@ -25,7 +27,7 @@ def addMainTask(taskName, taskID, className, classID, day, month, year):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
-    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?)", (taskID, taskName, f'{year}-{month}-{day}', "None", className, classID))
+    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, "None", className, classID))
     conn.commit()
     conn.close()
 

@@ -1,3 +1,4 @@
+from task import database
 from id import makeID
 import customtkinter
 import json
@@ -173,6 +174,8 @@ class setup(customtkinter.CTk):
                     "subject": self.classSubject.get(),  # Store the class subject
                     "teacher": self.classTeacher.get()  # Store the class teacher/instructor
                 }
+
+                database()
 
                 # Add the current class to the setup directory
                 self.setupDir[f"class{self.currentClass}"] = class_details

@@ -59,7 +59,7 @@ def home(self):
         self.due = customtkinter.CTkLabel(master=self.taskFrame[i], text="Due: 7/16/2024")
         self.due.grid(row=1, column=0, padx=0)
 
-        self.done = customtkinter.CTkButton(master=self.taskFrame[i], text="Done", width=50, command=lambda: makeTask(self, i))
+        self.done = customtkinter.CTkButton(master=self.taskFrame[i], text="Done", width=50, command=lambda: finishTask(self, i))
         #self.done.grid(row=0, rowspan=2, column=1, padx=3, sticky="e")
         self.done.place(relx=.99, rely=0.25, anchor="ne")
 
@@ -67,4 +67,8 @@ def home(self):
 
 def makeTask(self, i):
     print("make task")
+    print(i)
+
+def finishTask(self, i):
+    print("finish task")
     print(i)

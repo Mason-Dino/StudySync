@@ -72,3 +72,4 @@ def makeTask(self, i):
 def finishTask(self, i):
     print("finish task")
     print(i)
+    self.progressbar.step()

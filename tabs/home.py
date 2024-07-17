@@ -1,3 +1,5 @@
+from tkinter import messagebox
+from task import addMainTask
 import customtkinter
 import datetime
 import json
@@ -24,9 +26,7 @@ def home(self):
     self.progressbar.grid(row=0, column=0, columnspan=3, sticky="nsew", padx=10, pady=10)
     self.progressbar.set(0)
 
-    var = customtkinter.StringVar()
-
-    self.taskName = customtkinter.CTkEntry(master=self.content, placeholder_text="Task Name", textvariable=var)
+    self.taskName = customtkinter.CTkEntry(master=self.content, placeholder_text="Task Name (max: 35)")
     self.taskName.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
 
     for i in range(self.classNum):
@@ -61,7 +61,7 @@ def home(self):
         self.taskFrame[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=3, pady=2)
         #self.taskFrame[i].bind("<Button-1>", lambda: makeTask(self, i))
 
-        self.info = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text="zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz", font=customtkinter.CTkFont(size=20, weight="bold"), anchor="w", justify="left", width=400)
+        self.info = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text=taskName, font=customtkinter.CTkFont(size=20, weight="bold"), anchor="w", justify="left", width=400)
         #self.info.place(relx=.01, rely=.1, anchor="nw")
         self.info.grid(row=0, column=0, padx=5)
 
@@ -77,6 +77,21 @@ def home(self):
 
 def makeTask(self):
     print("make task")
+    taskName = self.taskName.get()
+    className = self.className.get()
+    day = self.day.get()
+    month = self.month.get()
+    year = self.year.get()
+
+    if len(taskName) > 35:
+        messagebox.showerror(title="Error", message="Task name too long")
+
+    elif len(taskName) == 0 or className == "Pick Class" or day == "" or month == "" or year == "":
+        messagebox.showerror(title="Error", message="You are missing a required field")
+
+    else:
+        print(taskName, className, day, month, year)
+        addMainTask(taskName, className, day, month, year)
 
 def finishTask(self, i):
     print("finish task")

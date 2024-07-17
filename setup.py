@@ -105,6 +105,8 @@ class setup(customtkinter.CTk):
         # Store the frames for the page function
         self.pageInfo = [self.questionFrame1, self.questionFrame2, self.questionFrame3, self.classFrame, self.congratsFrame]
 
+        self.protocol("WM_DELETE_WINDOW", self.close)
+
     def page(self, value):
         """
         This function is used to move to the next or last page based on the value passed in.
@@ -240,6 +242,9 @@ class setup(customtkinter.CTk):
             
             # Move the last page to the current position
             self.pageInfo[self.pageNum - 1].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
+
+    def close(self):
+        exit()
 
 if __name__ == "__main__":
     App = setup()

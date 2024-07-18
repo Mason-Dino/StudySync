@@ -156,6 +156,7 @@ cython_debug/
 
 # Misc Files:
 setup.json
+setup-backup.json
 *.db
 
 # PyCharm

@@ -17,25 +17,44 @@ def settings(self):
     self.appearanceFrame.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
     self.appearanceFrame.grid_columnconfigure((1), weight=1)
 
-    self.appearance = customtkinter.CTkOptionMenu(master=self.appearanceFrame, values=["System", "Light", "Dark"], command=changeAppearanceMode)
+    self.appearance = customtkinter.CTkOptionMenu(master=self.appearanceFrame, values=["System", "Light", "Dark"], command=changeAppearanceMode, width=200)
     self.appearance.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.currentAppearance = customtkinter.CTkLabel(master=self.appearanceFrame, text="Current Appearance Mode: " + self.setupDir["mode"])
+    self.currentAppearance = customtkinter.CTkLabel(master=self.appearanceFrame, text="Appearance Mode: " + self.setupDir["mode"])
     self.currentAppearance.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
+    self.themeFrame = customtkinter.CTkFrame(master=self.content)
+    self.themeFrame.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+    self.themeFrame.grid_columnconfigure((1), weight=1)
+
+    self.theme = customtkinter.CTkOptionMenu(master=self.themeFrame, values=["Teal", "Orange", "Purple", "Red", "Yellow", "Green", "Blue", "Grey"], command=changeAppearanceMode, width=200)
+    self.theme.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.currentTheme = customtkinter.CTkLabel(master=self.themeFrame, text="Current Theme: " + self.setupDir["mode"])
+    self.currentTheme.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
     self.classEditFrame = customtkinter.CTkFrame(master=self.content)
-    self.classEditFrame.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+    self.classEditFrame.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
     self.classEditFrame.grid_columnconfigure((1), weight=1)
 
     for i in range(self.setupDir["numClasses"]):
         classes.append(self.setupDir[f"class{i+1}"]["name"])
 
-    self.classEdit = customtkinter.CTkOptionMenu(master=self.classEditFrame, values=classes, command=editClass)
+    self.classEdit = customtkinter.CTkOptionMenu(master=self.classEditFrame, values=classes, command=lambda x: editClass(self, x), width=200)
     self.classEdit.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.dueFrame = customtkinter.CTkFrame(master=self.content)
-    self.dueFrame.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
-    self.dueFrame.grid_columnconfigure((1), weight=1)
+    self.newClassName = customtkinter.CTkEntry(master=self.classEditFrame, placeholder_text="New Class Name", textvariable=customtkinter.StringVar(value=classes[0]))
+    self.newClassName.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
+    self.classEditButtons = customtkinter.CTkFrame(master=self.classEditFrame, fg_color="transparent")
+    self.classEditButtons.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
+    self.classEditButtons.grid_columnconfigure((0,1), weight=1)
+
+    self.edit = customtkinter.CTkButton(master=self.classEditButtons, text="Edit Class", command=lambda: editClass(self, self.newClassName.get()))
+    self.edit.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.delete = customtkinter.CTkButton(master=self.classEditButtons, text="Delete Class", command=lambda: deleteClass(self, self.classEdit.get()))
+    self.delete.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
 
 def changeAppearanceMode(new_appearance_mode: str):
@@ -48,6 +67,18 @@ def changeAppearanceMode(new_appearance_mode: str):
     with open("setup.json", "w") as f:
         json.dump(setupDir, f, indent=4)
 
-def editClass(new_class: str):
+def editClass(self, new_class: str):
     with open("setup.json", "r") as f:
         setupDir = json.load(f)
+
+    for i in range(setupDir["numClasses"]):
+        if setupDir[f"class{i+1}"]["name"] == new_class:
+            classNum = i + 1
+
+            currentClassName = setupDir[f"class{classNum}"]["name"]
+            currentClassID = setupDir[f"class{classNum}"]["id"]
+
+            self.newClassName.configure(textvariable=customtkinter.StringVar(value=currentClassName))
+
+def deleteClass(self, className: str):
+    print("hey")

@@ -33,11 +33,14 @@ def addMainTask(taskName, taskID, className, classID, day, month, year):
     conn.commit()
     conn.close()
 
-def getMainTasks():
+def getMainTasks(organize: str = None):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
-    c.execute("SELECT * FROM tasks WHERE parentID = 'None'")
+    if organize == None:
+        organize = ""
+
+    c.execute(f"SELECT * FROM tasks WHERE parentID = 'None' {organize}")
     rows = c.fetchall()
     conn.close()
 

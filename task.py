@@ -11,6 +11,7 @@ def database():
         day integer,
         month integer,
         year integer,
+        date integer,
         parentID text,
         ClassName text,
         classID text
@@ -23,11 +24,12 @@ def database():
 
 def addMainTask(taskName, taskID, className, classID, day, month, year):
     print(taskName, taskID, className, classID, day, month, year)
+    dateNum = int(f"{month}" + f"{day}" + f"{year}")
 
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
-    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, "None", className, classID))
+    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, dateNum, "None", className, classID))
     conn.commit()
     conn.close()
 

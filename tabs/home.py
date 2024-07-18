@@ -1,5 +1,5 @@
+from task import addMainTask, getMainTasks
 from tkinter import messagebox
-from task import addMainTask
 from id import makeID
 import customtkinter
 import datetime
@@ -53,16 +53,16 @@ def home(self):
     self.task.grid(row=5, column=0, columnspan=3, sticky="nsew", padx=3)
     self.task.grid_columnconfigure(0, weight=1)
 
-    for i in range(10):
-        self.taskFrame[i] = {}
+    task = getMainTasks()
 
-        taskName = random.choice(["Homework","Test", "Lab", "reading"])
+    for i in range(len(task)):
+        self.taskFrame[i] = {}
 
         self.taskFrame[i]["frame"] = customtkinter.CTkFrame(master=self.task, fg_color=["gray88", "gray19"])
         self.taskFrame[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=3, pady=2)
         #self.taskFrame[i].bind("<Button-1>", lambda: makeTask(self, i))
 
-        self.info = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text=taskName, font=customtkinter.CTkFont(size=20, weight="bold"), anchor="w", justify="left", width=400)
+        self.info = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text=task[i][1], font=customtkinter.CTkFont(size=20, weight="bold"), anchor="w", justify="left", width=400)
         #self.info.place(relx=.01, rely=.1, anchor="nw")
         self.info.grid(row=0, column=0, padx=5)
 
@@ -97,13 +97,25 @@ def makeTask(self):
             self.setupDir = json.load(f)
 
         self.classNum = self.setupDir["numClasses"]
+        id = ""
 
         for i in range(self.classNum):
             if self.setupDir[f"class{i+1}"]["name"] == className:
                 id = self.setupDir[f"class{i+1}"]["id"]
 
+        if id == "":
+            id = "0000000000"
+
         taskID = makeID(20)
         addMainTask(taskName, taskID, className, id, day, month, year)
+
+        self.taskName.delete(0, "end")
+        self.className.set("Pick Class")
+        self.day.delete(0, "end")
+        self.month.delete(0, "end")
+        self.year.delete(0, "end")
+
+        home(self)
 
 def finishTask(self, i):
     print("finish task")

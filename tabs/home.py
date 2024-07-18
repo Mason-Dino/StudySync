@@ -69,19 +69,18 @@ def home(self):
 
             self.taskFrame[i]["frame"] = customtkinter.CTkFrame(master=self.task, fg_color=["gray88", "gray19"])
             self.taskFrame[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=3, pady=2)
-            #self.taskFrame[i].bind("<Button-1>", lambda: makeTask(self, i))
 
-            self.info = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text=task[i][1], font=customtkinter.CTkFont(size=20, weight="bold"), anchor="w", justify="left", width=400)
+            self.taskFrame[i]["info"] = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text=task[i][1], font=customtkinter.CTkFont(size=20, weight="bold"), anchor="w", justify="left", width=400)
             #self.info.place(relx=.01, rely=.1, anchor="nw")
-            self.info.grid(row=0, column=0, padx=5)
+            self.taskFrame[i]["info"].grid(row=0, column=0, padx=5)
 
             date = datetime.datetime(int(task[i][4]), int(task[i][3]), int(task[i][2]))
             if date.day < datetime.datetime.now().day and date.month <= datetime.datetime.now().month and date.year <= datetime.datetime.now().year:
-                self.info.configure(text_color="red")
+                self.taskFrame[i]["info"].configure(text_color="red")
 
 
-            self.due = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text=f"Due: {task[i][3]}/{task[i][2]}/{task[i][4]}", anchor="w", justify="left", width=400)
-            self.due.grid(row=1, column=0, padx=5)
+            self.taskFrame[i]["due"] = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text=f"Due: {task[i][3]}/{task[i][2]}/{task[i][4]}", anchor="w", justify="left", width=400)
+            self.taskFrame[i]["due"].grid(row=1, column=0, padx=5)
 
             self.taskFrame[i]["done"] = customtkinter.CTkButton(master=self.taskFrame[i]["frame"], text="Done", width=50, command=lambda: finishTask(self, i))
             #self.done.grid(row=0, rowspan=2, column=1, padx=3, sticky="e")
@@ -94,6 +93,9 @@ def home(self):
 
 def makeButtonWork(self, i):
     self.taskFrame[i]["done"].configure(command=lambda: finishTask(self, self.taskFrame[i]["frame"], self.taskFrame[i]["id"]))
+    self.taskFrame[i]["frame"].bind("<Button-1>", lambda event: print("hey1"))
+    self.taskFrame[i]["info"].bind("<Button-1>", lambda event: print("hey2"))
+    self.taskFrame[i]["due"].bind("<Button-1>", lambda event: print("hey3"))
 
 def makeTask(self):
     taskName = self.taskName.get()
@@ -155,3 +157,7 @@ def finishTask(self, frame, id):
 
         self.error = customtkinter.CTkLabel(master=self.task, text="No tasks found", font=customtkinter.CTkFont(size=15, weight="bold"))
         self.error.grid(row=0, column=0, sticky="nsew")
+
+def showMainTask(self, event):
+    print("showing main task")
+    print(event)

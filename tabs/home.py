@@ -3,6 +3,7 @@ from tkinter import messagebox
 from id import makeID
 import customtkinter
 import datetime
+import sqlite3
 import json
 
 import random
@@ -57,6 +58,7 @@ def home(self):
 
     for i in range(len(task)):
         self.taskFrame[i] = {}
+        self.taskFrame[i]["id"] = task[i][0]
 
         self.taskFrame[i]["frame"] = customtkinter.CTkFrame(master=self.task, fg_color=["gray88", "gray19"])
         self.taskFrame[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=3, pady=2)
@@ -74,7 +76,13 @@ def home(self):
         #self.done.grid(row=0, rowspan=2, column=1, padx=3, sticky="e")
         self.taskFrame[i]["done"].place(relx=.99, rely=0.25, anchor="ne")
 
+    for i in range(len(task)):
+        makeButtonWork(self, i)
+
     #self.bind("<Button-1>", makeTask)
+
+def makeButtonWork(self, i):
+    self.taskFrame[i]["done"].configure(command=lambda: finishTask(self, self.taskFrame[i]["frame"], self.taskFrame[i]["id"]))
 
 def makeTask(self):
     print("make task")
@@ -117,8 +125,14 @@ def makeTask(self):
 
         home(self)
 
-def finishTask(self, i):
+def finishTask(self, frame, id):
     print("finish task")
-    print(i)
-    self.taskFrame[0]["done"].destroy()
-    self.progressbar.step()
+    frame.destroy()
+
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    c.execute(f"DELETE FROM tasks WHERE id='{id}'")
+
+    conn.commit()
+    conn.close()

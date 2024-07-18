@@ -148,3 +148,12 @@ def finishTask(self, frame, id):
     conn.close()
 
     self.progressbar.step()
+
+    task = getMainTasks()
+    print(task)
+    if task == []:
+        print("hey")
+        self.task.grid_rowconfigure(0, weight=1)
+
+        self.error = customtkinter.CTkLabel(master=self.task, text="No tasks found", font=customtkinter.CTkFont(size=15, weight="bold"))
+        self.error.grid(row=0, column=0, sticky="nsew")

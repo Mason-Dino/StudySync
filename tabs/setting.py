@@ -1,4 +1,5 @@
 import customtkinter
+from tkinter import messagebox
 import json
 
 
@@ -27,10 +28,10 @@ def settings(self):
     self.themeFrame.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
     self.themeFrame.grid_columnconfigure((1), weight=1)
 
-    self.theme = customtkinter.CTkOptionMenu(master=self.themeFrame, values=["Teal", "Orange", "Purple", "Red", "Yellow", "Green", "Blue", "Grey"], command=changeAppearanceMode, width=200)
+    self.theme = customtkinter.CTkOptionMenu(master=self.themeFrame, values=["Teal", "Orange", "Purple", "Red", "Yellow", "Green", "Blue", "Grey"], command=changeTheme, width=200, variable=customtkinter.StringVar(value=self.setupDir["theme"]))
     self.theme.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.currentTheme = customtkinter.CTkLabel(master=self.themeFrame, text="Current Theme: " + self.setupDir["mode"])
+    self.currentTheme = customtkinter.CTkLabel(master=self.themeFrame, text="Current Theme: " + self.setupDir["theme"])
     self.currentTheme.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
     self.classEditFrame = customtkinter.CTkFrame(master=self.content)
@@ -66,6 +67,17 @@ def changeAppearanceMode(new_appearance_mode: str):
     setupDir["mode"] = new_appearance_mode
     with open("setup.json", "w") as f:
         json.dump(setupDir, f, indent=4)
+
+
+def changeTheme(new_theme: str):
+    with open("setup.json", "r") as f:
+        setupDir = json.load(f)
+
+    setupDir["theme"] = new_theme
+    with open("setup.json", "w") as f:
+        json.dump(setupDir, f, indent=4)
+
+    messagebox.showinfo("Success", "Theme Changed!\nRestart StudySync for changes to take effect.")
 
 def editClass(self, new_class: str):
     with open("setup.json", "r") as f:

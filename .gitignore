@@ -158,6 +158,7 @@ cython_debug/
 setup.json
 setup-backup.json
 *.db
+test.py
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can

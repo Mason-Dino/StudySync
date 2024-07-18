@@ -247,6 +247,8 @@ class setup(customtkinter.CTk):
             self.pageInfo[self.pageNum - 1].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
 
     def close(self):
+        self.destroy()
+        self.congrats.configure(text="hey")
         exit()
 
 if __name__ == "__main__":

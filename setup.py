@@ -198,6 +198,9 @@ class setup(customtkinter.CTk):
                 if self.currentClass == self.numClasses:
                     self.setupDir["setupComplete"] = True  # Set the setup complete flag in the setup directory
 
+                    self.setupDir["progress"] = 0
+                    self.setupDir["level"] = 0
+
                     # Convert the setup directory to JSON format and store it in a variable
                     json_obj = json.dumps(self.setupDir, indent=4)
 

@@ -75,6 +75,10 @@ def home(self):
             #self.info.place(relx=.01, rely=.1, anchor="nw")
             self.info.grid(row=0, column=0, padx=5)
 
+            date = datetime.datetime(int(task[i][4]), int(task[i][3]), int(task[i][2]))
+            if date.day < datetime.datetime.now().day and date.month <= datetime.datetime.now().month and date.year <= datetime.datetime.now().year:
+                self.info.configure(text_color="red")
+
 
             self.due = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text=f"Due: {task[i][3]}/{task[i][2]}/{task[i][4]}", anchor="w", justify="left", width=400)
             self.due.grid(row=1, column=0, padx=5)

@@ -1,4 +1,4 @@
-from task import addMainTask, getMainTasks
+from task import addMainTask, getMainTasks, finishMainTask
 from tkinter import messagebox
 from id import makeID
 import customtkinter
@@ -21,12 +21,13 @@ def home(self):
         self.setupDir = json.load(f)
 
     self.classNum = self.setupDir["numClasses"]
+    self.progress = self.setupDir["progress"]
 
     classNameValues = ["None"]
 
     self.progressbar = customtkinter.CTkProgressBar(master=self.content)
     self.progressbar.grid(row=0, column=0, columnspan=3, sticky="nsew", padx=10, pady=10)
-    self.progressbar.set(0)
+    self.progressbar.set(self.progress)
 
     self.taskName = customtkinter.CTkEntry(master=self.content, placeholder_text="Task Name (max: 35)")
     self.taskName.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
@@ -139,17 +140,9 @@ def makeTask(self):
         home(self)
 
 def finishTask(self, frame, id):
-    frame.destroy()
+    #frame.destroy()
 
-    conn = sqlite3.connect('study.db')
-    c = conn.cursor()
-
-    c.execute(f"DELETE FROM tasks WHERE id='{id}'")
-
-    conn.commit()
-    conn.close()
-
-    self.progressbar.step()
+    finishMainTask(self, id)
 
     task = getMainTasks()
     if task == []:

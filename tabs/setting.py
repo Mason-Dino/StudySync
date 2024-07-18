@@ -47,8 +47,16 @@ def settings(self):
     self.newClassName = customtkinter.CTkEntry(master=self.classEditFrame, placeholder_text="New Class Name", textvariable=customtkinter.StringVar(value=classes[0]))
     self.newClassName.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
+    self.newClassType = customtkinter.CTkOptionMenu(master=self.classEditFrame, 
+                                                    values=["Math", "Science", "English",  "History", "Social Studies", "World Language", "Fine Arts/Music", "Arts", "Physical Education", "Other"], 
+                                                    width=200, variable=customtkinter.StringVar(value=self.setupDir["class1"]["subject"]))
+    self.newClassType.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.newInstructor = customtkinter.CTkEntry(master=self.classEditFrame, placeholder_text="Instructor Name", textvariable=customtkinter.StringVar(value=self.setupDir["class1"]["teacher"]))
+    self.newInstructor.grid(row=1, column=1, sticky="nsew", padx=10, pady=10)
+
     self.classEditButtons = customtkinter.CTkFrame(master=self.classEditFrame, fg_color="transparent")
-    self.classEditButtons.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
+    self.classEditButtons.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
     self.classEditButtons.grid_columnconfigure((0,1), weight=1)
 
     self.edit = customtkinter.CTkButton(master=self.classEditButtons, text="Edit Class", command=lambda: editClass(self, self.newClassName.get()))
@@ -87,10 +95,10 @@ def editClass(self, new_class: str):
         if setupDir[f"class{i+1}"]["name"] == new_class:
             classNum = i + 1
 
-            currentClassName = setupDir[f"class{classNum}"]["name"]
-            currentClassID = setupDir[f"class{classNum}"]["id"]
+    self.newClassName.configure(textvariable=customtkinter.StringVar(value=setupDir[f"class{classNum}"]["name"]))
+    self.newInstructor.configure(textvariable=customtkinter.StringVar(value=setupDir[f"class{classNum}"]["teacher"]))
+    self.newClassType.configure(variable=customtkinter.StringVar(value=setupDir[f"class{classNum}"]["subject"]))
 
-            self.newClassName.configure(textvariable=customtkinter.StringVar(value=currentClassName))
 
 def deleteClass(self, className: str):
     print("hey")

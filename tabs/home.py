@@ -93,9 +93,9 @@ def home(self):
 
 def makeButtonWork(self, i):
     self.taskFrame[i]["done"].configure(command=lambda: finishTask(self, self.taskFrame[i]["frame"], self.taskFrame[i]["id"]))
-    self.taskFrame[i]["frame"].bind("<Button-1>", lambda event: print("hey1"))
-    self.taskFrame[i]["info"].bind("<Button-1>", lambda event: print("hey2"))
-    self.taskFrame[i]["due"].bind("<Button-1>", lambda event: print("hey3"))
+    self.taskFrame[i]["frame"].bind("<Button-1>", lambda event: showMainTask(self, event, self.taskFrame[i]["id"]))
+    self.taskFrame[i]["info"].bind("<Button-1>", lambda event: showMainTask(self, event, self.taskFrame[i]["id"]))
+    self.taskFrame[i]["due"].bind("<Button-1>", lambda event: showMainTask(self, event, self.taskFrame[i]["id"]))
 
 def makeTask(self):
     taskName = self.taskName.get()
@@ -158,6 +158,7 @@ def finishTask(self, frame, id):
         self.error = customtkinter.CTkLabel(master=self.task, text="No tasks found", font=customtkinter.CTkFont(size=15, weight="bold"))
         self.error.grid(row=0, column=0, sticky="nsew")
 
-def showMainTask(self, event):
+def showMainTask(self, event, id):
     print("showing main task")
     print(event)
+    print(id)

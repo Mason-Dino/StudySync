@@ -5,6 +5,8 @@ import json
 
 def settings(self):
     classes = []
+    overallPadyOutside = 8
+    overallPadyInside = 9
 
     self.content = customtkinter.CTkFrame(master=self)
     self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
@@ -15,7 +17,7 @@ def settings(self):
         self.setupDir = json.load(f)
 
     self.appearanceFrame = customtkinter.CTkFrame(master=self.content)
-    self.appearanceFrame.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+    self.appearanceFrame.grid(row=0, column=0, sticky="nsew", padx=10, pady=overallPadyOutside)
     self.appearanceFrame.grid_columnconfigure((1), weight=1)
 
     self.appearance = customtkinter.CTkOptionMenu(master=self.appearanceFrame, values=["System", "Light", "Dark"], command=changeAppearanceMode, width=200)
@@ -25,7 +27,7 @@ def settings(self):
     self.currentAppearance.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
     self.themeFrame = customtkinter.CTkFrame(master=self.content)
-    self.themeFrame.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+    self.themeFrame.grid(row=1, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
     self.themeFrame.grid_columnconfigure((1), weight=1)
 
     self.theme = customtkinter.CTkOptionMenu(master=self.themeFrame, values=["Teal", "Orange", "Purple", "Red", "Yellow", "Green", "Blue", "Grey"], command=changeTheme, width=200, variable=customtkinter.StringVar(value=self.setupDir["theme"]))
@@ -35,7 +37,7 @@ def settings(self):
     self.currentTheme.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
     self.classEditFrame = customtkinter.CTkFrame(master=self.content)
-    self.classEditFrame.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
+    self.classEditFrame.grid(row=2, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
     self.classEditFrame.grid_columnconfigure((1), weight=1)
 
     for i in range(self.setupDir["numClasses"]):
@@ -66,8 +68,14 @@ def settings(self):
     self.delete.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
     self.level = customtkinter.CTkFrame(master=self.content)
-    self.level.grid(row=3, column=0, sticky="nsew", padx=10, pady=10)
+    self.level.grid(row=3, column=0, sticky="nsew", padx=10, pady=overallPadyOutside)
+    self.level.grid_columnconfigure((0,1), weight=1)
 
+    self.currentProgress = customtkinter.CTkLabel(master=self.level, text="Current Progress: " + str(round(round(self.setupDir["progress"], 3) * 100, 2)) + "%")
+    self.currentProgress.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+    
+    self.currentLevel = customtkinter.CTkLabel(master=self.level, text="Current Level: " + str(self.setupDir["level"]))
+    self.currentLevel.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
 def changeAppearanceMode(new_appearance_mode: str):
     customtkinter.set_appearance_mode(new_appearance_mode)

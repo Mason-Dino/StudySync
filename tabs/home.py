@@ -96,7 +96,6 @@ def makeButtonWork(self, i):
     self.taskFrame[i]["done"].configure(command=lambda: finishTask(self, self.taskFrame[i]["frame"], self.taskFrame[i]["id"]))
 
 def makeTask(self):
-    print("make task")
     taskName = self.taskName.get()
     className = self.className.get()
     day = self.day.get()
@@ -113,8 +112,6 @@ def makeTask(self):
         messagebox.showerror(title="Error", message="Invalid date")
 
     else:
-        print(taskName, className, day, month, year)
-
         with open("setup.json", "r") as f:
             self.setupDir = json.load(f)
 
@@ -140,7 +137,6 @@ def makeTask(self):
         home(self)
 
 def finishTask(self, frame, id):
-    print("finish task")
     frame.destroy()
 
     conn = sqlite3.connect('study.db')
@@ -154,9 +150,7 @@ def finishTask(self, frame, id):
     self.progressbar.step()
 
     task = getMainTasks()
-    print(task)
     if task == []:
-        print("hey")
         self.task.grid_rowconfigure(0, weight=1)
 
         self.error = customtkinter.CTkLabel(master=self.task, text="No tasks found", font=customtkinter.CTkFont(size=15, weight="bold"))

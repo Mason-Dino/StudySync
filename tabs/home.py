@@ -56,28 +56,35 @@ def home(self):
 
     task = getMainTasks("ORDER BY date ASC")
 
-    for i in range(len(task)):
-        self.taskFrame[i] = {}
-        self.taskFrame[i]["id"] = task[i][0]
+    if task == []:
+        self.task.grid_rowconfigure(0, weight=1)
 
-        self.taskFrame[i]["frame"] = customtkinter.CTkFrame(master=self.task, fg_color=["gray88", "gray19"])
-        self.taskFrame[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=3, pady=2)
-        #self.taskFrame[i].bind("<Button-1>", lambda: makeTask(self, i))
+        self.error = customtkinter.CTkLabel(master=self.task, text="No tasks found", font=customtkinter.CTkFont(size=15, weight="bold"))
+        self.error.grid(row=0, column=0, sticky="nsew")
 
-        self.info = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text=task[i][1], font=customtkinter.CTkFont(size=20, weight="bold"), anchor="w", justify="left", width=400)
-        #self.info.place(relx=.01, rely=.1, anchor="nw")
-        self.info.grid(row=0, column=0, padx=5)
+    else:
+        for i in range(len(task)):
+            self.taskFrame[i] = {}
+            self.taskFrame[i]["id"] = task[i][0]
+
+            self.taskFrame[i]["frame"] = customtkinter.CTkFrame(master=self.task, fg_color=["gray88", "gray19"])
+            self.taskFrame[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=3, pady=2)
+            #self.taskFrame[i].bind("<Button-1>", lambda: makeTask(self, i))
+
+            self.info = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text=task[i][1], font=customtkinter.CTkFont(size=20, weight="bold"), anchor="w", justify="left", width=400)
+            #self.info.place(relx=.01, rely=.1, anchor="nw")
+            self.info.grid(row=0, column=0, padx=5)
 
 
-        self.due = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text=f"Due: {task[i][3]}/{task[i][2]}/{task[i][4]}", anchor="w", justify="left", width=400)
-        self.due.grid(row=1, column=0, padx=5)
+            self.due = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text=f"Due: {task[i][3]}/{task[i][2]}/{task[i][4]}", anchor="w", justify="left", width=400)
+            self.due.grid(row=1, column=0, padx=5)
 
-        self.taskFrame[i]["done"] = customtkinter.CTkButton(master=self.taskFrame[i]["frame"], text="Done", width=50, command=lambda: finishTask(self, i))
-        #self.done.grid(row=0, rowspan=2, column=1, padx=3, sticky="e")
-        self.taskFrame[i]["done"].place(relx=.99, rely=0.25, anchor="ne")
+            self.taskFrame[i]["done"] = customtkinter.CTkButton(master=self.taskFrame[i]["frame"], text="Done", width=50, command=lambda: finishTask(self, i))
+            #self.done.grid(row=0, rowspan=2, column=1, padx=3, sticky="e")
+            self.taskFrame[i]["done"].place(relx=.99, rely=0.25, anchor="ne")
 
-    for i in range(len(task)):
-        makeButtonWork(self, i)
+        for i in range(len(task)):
+            makeButtonWork(self, i)
 
     #self.bind("<Button-1>", makeTask)
 
@@ -97,6 +104,9 @@ def makeTask(self):
 
     elif len(taskName) == 0 or className == "Pick Class" or day == "" or month == "" or year == "":
         messagebox.showerror(title="Error", message="You are missing a required field")
+
+    elif day.isdigit() == False or month.isdigit() == False or year.isdigit() == False:
+        messagebox.showerror(title="Error", message="Invalid date")
 
     else:
         print(taskName, className, day, month, year)
@@ -136,3 +146,5 @@ def finishTask(self, frame, id):
 
     conn.commit()
     conn.close()
+
+    self.progressbar.step()

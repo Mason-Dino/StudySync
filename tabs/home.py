@@ -140,7 +140,7 @@ def makeTask(self):
         home(self)
 
 def finishTask(self, frame, id):
-    #frame.destroy()
+    frame.destroy()
 
     finishMainTask(self, id)
 

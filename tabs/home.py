@@ -53,7 +53,7 @@ def home(self):
     self.task.grid(row=5, column=0, columnspan=3, sticky="nsew", padx=3)
     self.task.grid_columnconfigure(0, weight=1)
 
-    task = getMainTasks()
+    task = getMainTasks("ORDER BY date ASC")
 
     for i in range(len(task)):
         self.taskFrame[i] = {}
@@ -67,7 +67,7 @@ def home(self):
         self.info.grid(row=0, column=0, padx=5)
 
 
-        self.due = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text="Due: 7/16/2024", anchor="w", justify="left", width=400)
+        self.due = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text=f"Due: {task[i][3]}/{task[i][2]}/{task[i][4]}", anchor="w", justify="left", width=400)
         self.due.grid(row=1, column=0, padx=5)
 
         self.taskFrame[i]["done"] = customtkinter.CTkButton(master=self.taskFrame[i]["frame"], text="Done", width=50, command=lambda: finishTask(self, i))

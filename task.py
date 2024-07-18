@@ -65,7 +65,7 @@ def finishMainTask(self, id):
     self.progressbar.step()
 
     after = self.progressbar.get()
-    print(before, after)
+    
     if before > after:
         self.setupDir["level"] += 1
         print("level up")

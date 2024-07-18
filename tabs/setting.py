@@ -59,11 +59,14 @@ def settings(self):
     self.classEditButtons.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
     self.classEditButtons.grid_columnconfigure((0,1), weight=1)
 
-    self.edit = customtkinter.CTkButton(master=self.classEditButtons, text="Edit Class", command=lambda: editClass(self, self.newClassName.get()))
+    self.edit = customtkinter.CTkButton(master=self.classEditButtons, text="Edit Class", command=lambda: editClassSave(self, self.newClassName.get()))
     self.edit.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
     self.delete = customtkinter.CTkButton(master=self.classEditButtons, text="Delete Class", command=lambda: deleteClass(self, self.classEdit.get()))
     self.delete.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
+    self.level = customtkinter.CTkFrame(master=self.content)
+    self.level.grid(row=3, column=0, sticky="nsew", padx=10, pady=10)
 
 
 def changeAppearanceMode(new_appearance_mode: str):
@@ -102,3 +105,22 @@ def editClass(self, new_class: str):
 
 def deleteClass(self, className: str):
     print("hey")
+
+def editClassSave(self, newClassName: str):
+    print(newClassName)
+
+    oldClassName = self.classEdit.get()
+
+    with open("setup.json", "r") as f:
+        setupDir = json.load(f)
+
+    for i in range(setupDir["numClasses"]):
+        if setupDir[f"class{i+1}"]["name"] == oldClassName:
+            setupDir[f"class{i+1}"]["name"] = newClassName
+            setupDir[f"class{i+1}"]["teacher"] = self.newInstructor.get()
+            setupDir[f"class{i+1}"]["subject"] = self.newClassType.get()
+
+    with open("setup.json", "w") as f:
+        json.dump(setupDir, f, indent=4)
+
+    messagebox.showinfo("Success", "Class Edited!")

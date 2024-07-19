@@ -129,9 +129,7 @@ def deleteClass(self, className: str):
     with open("setup.json", "w") as f:
         json.dump(setupDir, f, indent=4)
 
-    #messagebox.showinfo("Success", "Class Deleted!")
-    print("class delete")
-    #print(deleteNum)
+    messagebox.showinfo("Success", "Class Deleted!")
 
 def editClassSave(self, newClassName: str):
     print(newClassName)

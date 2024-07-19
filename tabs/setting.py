@@ -121,8 +121,11 @@ def deleteClass(self, className: str):
             del setupDir[f"class{i+1}"]
 
     for i in range(deleteNum, setupDir["numClasses"]):
-        print(i)
+        tempClass = setupDir[f"class{i+1}"]
+        setupDir[f"class{i}"] = tempClass
+        del setupDir[f"class{i+1}"]
 
+    setupDir["numClasses"] -= 1
     with open("setup.json", "w") as f:
         json.dump(setupDir, f, indent=4)
 

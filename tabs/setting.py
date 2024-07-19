@@ -112,7 +112,23 @@ def editClass(self, new_class: str):
 
 
 def deleteClass(self, className: str):
-    print("hey")
+    with open("setup.json", "r") as f:
+        setupDir = json.load(f)
+
+    for i in range(setupDir["numClasses"]):
+        if setupDir[f"class{i+1}"]["name"] == className:
+            deleteNum = i + 1
+            del setupDir[f"class{i+1}"]
+
+    for i in range(deleteNum, setupDir["numClasses"]):
+        print(i)
+
+    with open("setup.json", "w") as f:
+        json.dump(setupDir, f, indent=4)
+
+    #messagebox.showinfo("Success", "Class Deleted!")
+    print("class delete")
+    #print(deleteNum)
 
 def editClassSave(self, newClassName: str):
     print(newClassName)

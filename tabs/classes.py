@@ -1,6 +1,8 @@
 import customtkinter
 import json
 
+from screen.classroom import classroom
+
 def isodd(value: int):
     return ((value % 2) == 1)
 
@@ -67,10 +69,11 @@ def classes(self):
                 classButton[c].grid(row=row, column=0, pady=15)
 
     for i in range(numClasses):
-        configScreen(i, classButton)
+        configScreen(self, i, classButton)
 
-def configScreen(c, classButton):
-    classButton[c+1].configure(command=lambda: classScreen(classButton[c+1]._text))
+def configScreen(self, c, classButton):
+    classButton[c+1].configure(command=lambda: classScreen(self, classButton[c+1]._text))
 
-def classScreen(button):
+def classScreen(self, button):
     print(button)
+    classroom(self, "id", button)

@@ -5,7 +5,7 @@ import json
 
 def settings(self):
     classes = []
-    overallPadyOutside = 8
+    overallPadyOutside = 9
     overallPadyInside = 9
 
     self.content = customtkinter.CTkScrollableFrame(master=self)

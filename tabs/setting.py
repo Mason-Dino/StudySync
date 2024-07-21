@@ -202,5 +202,10 @@ def loadFile():
         if setupDir["setupComplete"] == False or setupDir["setupComplete"] == None:
             messagebox.showwarning(title="Error", message="Not a valid setup file")
 
+        else:
+            with open("setup.json", "w") as f:
+                json.dump(setupDir, f, indent=4)
+            messagebox.showinfo(title="Success", message="Setup file loaded!")
+
     except KeyError:
         messagebox.showerror(title="Error", message="\tNot a valid setup file file\n\tPlease select a valid setup file\n\tOld setup file is still in use.")

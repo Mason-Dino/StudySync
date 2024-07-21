@@ -1,5 +1,5 @@
 from tabs.assignments import assignments
-from tabs.classes import classes, isodd
+from tabs.classes import classes
 from tabs.setting import settings
 from tabs.home import home
 from tabs.due import due

@@ -188,3 +188,19 @@ def saveFile():
     if file_path:
         # Do something with the selected file path
         print("Selected file:", file_path)
+
+def loadFile():
+    file_path = filedialog.askopenfilename(filetypes=(("JSON Files", "*.json"), ("All Files", "*.*")))
+    if file_path:
+        # Do something with the selected file path
+        print("Selected file:", file_path)
+
+    with open(file_path, "r") as f:
+        setupDir = json.load(f)
+
+    try:
+        if setupDir["setupComplete"] == False or setupDir["setupComplete"] == None:
+            messagebox.showwarning(title="Error", message="Not a valid setup file")
+
+    except KeyError:
+        messagebox.showerror(title="Error", message="\tNot a valid setup file file\n\tPlease select a valid setup file\n\tOld setup file is still in use.")

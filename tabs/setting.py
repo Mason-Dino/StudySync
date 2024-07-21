@@ -1,5 +1,6 @@
 import customtkinter
 from tkinter import messagebox
+from tkinter import filedialog
 import json
 
 
@@ -94,6 +95,9 @@ def settings(self):
     self.availableClasses = customtkinter.CTkLabel(master=self.level, text="Available Classes: " + str(10 -self.setupDir["numClasses"]))
     self.availableClasses.grid(row=1, column=1, sticky="nsew", padx=10, pady=10)
 
+    self.open = customtkinter.CTkButton(master=self.content, text="File", command=open_file_dialog)
+    self.open.grid(row=4, column=0, sticky="nsew", padx=10, pady=overallPadyOutside)
+
 def changeAppearanceMode(new_appearance_mode: str):
     customtkinter.set_appearance_mode(new_appearance_mode)
 
@@ -166,3 +170,9 @@ def editClassSave(self, newClassName: str):
         json.dump(setupDir, f, indent=4)
 
     messagebox.showinfo("Success", "Class Edited!")
+
+def open_file_dialog():
+    file_path = filedialog.askdirectory()  # Use askopenfilenames() for multiple files
+    if file_path:
+        # Do something with the selected file path
+        print("Selected file:", file_path)

@@ -88,6 +88,12 @@ def settings(self):
     self.currentLevel = customtkinter.CTkLabel(master=self.level, text="Current Level: " + str(self.setupDir["level"]))
     self.currentLevel.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
+    self.currentClasses = customtkinter.CTkLabel(master=self.level, text="Current Classes: " + str(self.setupDir["numClasses"]))
+    self.currentClasses.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.availableClasses = customtkinter.CTkLabel(master=self.level, text="Available Classes: " + str(10 -self.setupDir["numClasses"]))
+    self.availableClasses.grid(row=1, column=1, sticky="nsew", padx=10, pady=10)
+
 def changeAppearanceMode(new_appearance_mode: str):
     customtkinter.set_appearance_mode(new_appearance_mode)
 

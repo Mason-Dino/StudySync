@@ -5,10 +5,10 @@ import datetime
 def due(self):
     self.content = customtkinter.CTkFrame(master=self)
     self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
+    self.content.grid_rowconfigure((0, 1, 2, 3, 4, 5, 6), weight=1)
 
     date = datetime.datetime.today()
     daysToMonday = date.weekday()
-    print(monday)
 
     monday = date - datetime.timedelta(days=daysToMonday)
     tuesday = date - datetime.timedelta(days=daysToMonday - 1)
@@ -17,3 +17,10 @@ def due(self):
     friday = date - datetime.timedelta(days=daysToMonday - 4)
     saturday = date - datetime.timedelta(days=daysToMonday - 5)
     sunday = date - datetime.timedelta(days=daysToMonday - 6)
+
+    weekdays = [monday, tuesday, wednesday, thursday, friday, saturday, sunday]
+
+    for day in weekdays:
+        dayText = f"{day.strftime('%m')}/{day.strftime('%d')}"
+        self.labelDay = customtkinter.CTkLabel(master=self.content, text=dayText)
+        self.labelDay.grid(row=weekdays.index(day), column=0, sticky="nsew", padx=10, pady=10)

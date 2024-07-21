@@ -203,6 +203,18 @@ def loadFile():
             messagebox.showwarning(title="Error", message="Not a valid setup file")
 
         else:
+            numClass = setupDir["numClasses"]
+            mode = setupDir["mode"]
+            theme = setupDir["theme"]
+            progress = setupDir["progress"]
+            level = setupDir["level"]
+
+            for i in range(numClass):
+                id = setupDir[f"class{i+1}"]["id"]
+                name = setupDir[f"class{i+1}"]["name"]
+                teacher = setupDir[f"class{i+1}"]["teacher"]
+                subject = setupDir[f"class{i+1}"]["subject"]
+
             with open("setup.json", "w") as f:
                 json.dump(setupDir, f, indent=4)
             messagebox.showinfo(title="Success", message="Setup file loaded!")

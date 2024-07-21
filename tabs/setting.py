@@ -102,10 +102,10 @@ def settings(self):
     self.saveFrame.grid_columnconfigure((0, 1), weight=1)
 
     self.saveSetup = customtkinter.CTkButton(master=self.saveFrame, text="Save Setup File", command=saveFile)
-    self.saveSetup.grid(row=4, column=0, sticky="nsew", padx=10, pady=overallPadyOutside)
+    self.saveSetup.grid(row=0, column=0, sticky="nsew", padx=10, pady=overallPadyOutside)
 
     self.loadSetup = customtkinter.CTkButton(master=self.saveFrame, text="Load Setup File", command=loadFile)
-    self.loadSetup.grid(row=4, column=1, sticky="nsew", padx=10, pady=overallPadyOutside)
+    self.loadSetup.grid(row=0, column=1, sticky="nsew", padx=10, pady=overallPadyOutside)
 
 def changeAppearanceMode(new_appearance_mode: str):
     customtkinter.set_appearance_mode(new_appearance_mode)

@@ -159,6 +159,8 @@ setup.json
 setup-backup.json
 *.db
 test.py
+Output/*
+InstallSetup.iss
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can

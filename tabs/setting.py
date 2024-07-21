@@ -101,8 +101,11 @@ def settings(self):
     self.saveFrame.grid(row=4, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
     self.saveFrame.grid_columnconfigure((0, 1), weight=1)
 
-    self.open = customtkinter.CTkButton(master=self.saveFrame, text="File", command=open_file_dialog)
-    self.open.grid(row=4, column=0, sticky="nsew", padx=10, pady=overallPadyOutside)
+    self.saveSetup = customtkinter.CTkButton(master=self.saveFrame, text="Save Setup File", command=saveFile)
+    self.saveSetup.grid(row=4, column=0, sticky="nsew", padx=10, pady=overallPadyOutside)
+
+    self.loadSetup = customtkinter.CTkButton(master=self.saveFrame, text="Load Setup File", command=loadFile)
+    self.loadSetup.grid(row=4, column=1, sticky="nsew", padx=10, pady=overallPadyOutside)
 
 def changeAppearanceMode(new_appearance_mode: str):
     customtkinter.set_appearance_mode(new_appearance_mode)
@@ -177,7 +180,7 @@ def editClassSave(self, newClassName: str):
 
     messagebox.showinfo("Success", "Class Edited!")
 
-def open_file_dialog():
+def saveFile():
     file_path = filedialog.askdirectory()  # Use askopenfilenames() for multiple files
     #file_path = filedialog.asksaveasfilename()
     current = os.getcwd()

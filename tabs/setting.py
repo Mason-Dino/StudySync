@@ -1,6 +1,8 @@
+from version import getMainVersion, getUserVersion
 from tkinter import messagebox
 from tkinter import filedialog
 import customtkinter
+import webbrowser
 import shutil
 import json
 import os
@@ -234,4 +236,15 @@ def loadFile():
         messagebox.showerror(title="Error", message="\tNot a valid setup file file\n\tPlease select a valid setup file\n\tOld setup file is still in use.")
 
 def checkVersion(self):
-    print("check version")
+    userVersion = getUserVersion()
+    version = getMainVersion()
+
+    if version == userVersion:
+        messagebox.showinfo(title="Success", message="StudySync is up to date!")
+    else:
+        self.checkVersion.configure(text="Update StudySync", command=lambda: updateStudySync(self))
+        messagebox.showwarning(title="Warning", message='StudySync is not up to date!\nClick the "Update StudySync" button to update.')
+
+
+def updateStudySync(self):
+    webbrowser.open("https://github.com/Mason-Dino/StudySync/releases/latest")

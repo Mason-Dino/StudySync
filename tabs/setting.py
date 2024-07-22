@@ -12,6 +12,7 @@ def settings(self):
     classes = []
     overallPadyOutside = 9
     overallPadyInside = 9
+    RowI = 0
 
     self.content = customtkinter.CTkScrollableFrame(master=self)
     self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
@@ -21,9 +22,12 @@ def settings(self):
     with open("setup.json", "r") as f:
         self.setupDir = json.load(f)
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     self.appearanceFrame = customtkinter.CTkFrame(master=self.content, fg_color=["gray88", "gray19"])
-    self.appearanceFrame.grid(row=0, column=0, sticky="nsew", padx=10, pady=overallPadyOutside)
+    self.appearanceFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyOutside)
     self.appearanceFrame.grid_columnconfigure((1), weight=1)
+
+    RowI += 1
 
     self.appearance = customtkinter.CTkOptionMenu(master=self.appearanceFrame, values=["System", "Light", "Dark"], command=changeAppearanceMode, width=200)
     self.appearance.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
@@ -31,9 +35,13 @@ def settings(self):
     self.currentAppearance = customtkinter.CTkLabel(master=self.appearanceFrame, text="Appearance Mode: " + self.setupDir["mode"])
     self.currentAppearance.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     self.themeFrame = customtkinter.CTkFrame(master=self.content, fg_color=["gray88", "gray19"])
-    self.themeFrame.grid(row=1, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
+    self.themeFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
     self.themeFrame.grid_columnconfigure((1), weight=1)
+
+    RowI += 1
 
     self.theme = customtkinter.CTkOptionMenu(master=self.themeFrame, values=["Teal", "Orange", "Purple", "Red", "Yellow", "Green", "Blue", "Grey"], command=changeTheme, width=200, variable=customtkinter.StringVar(value=self.setupDir["theme"]))
     self.theme.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
@@ -41,9 +49,13 @@ def settings(self):
     self.currentTheme = customtkinter.CTkLabel(master=self.themeFrame, text="Current Theme: " + self.setupDir["theme"])
     self.currentTheme.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     self.classEditFrame = customtkinter.CTkFrame(master=self.content, fg_color=["gray88", "gray19"])
-    self.classEditFrame.grid(row=2, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
+    self.classEditFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
     self.classEditFrame.grid_columnconfigure((1), weight=1)
+
+    RowI += 1
 
     for i in range(self.setupDir["numClasses"]):
         classes.append(self.setupDir[f"class{i+1}"]["name"])
@@ -83,9 +95,24 @@ def settings(self):
     self.delete = customtkinter.CTkButton(master=self.classEditButtons, text="Delete Class", command=lambda: deleteClass(self, self.classEdit.get()))
     self.delete.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    self.addClassFrame = customtkinter.CTkFrame(master=self.content, fg_color=["gray88", "gray19"])
+    self.addClassFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
+    self.addClassFrame.grid_columnconfigure((0), weight=1)
+
+    RowI += 1
+
+    self.addClass = customtkinter.CTkButton(master=self.addClassFrame, text="Add Class", command=lambda: addClass(self))
+    self.addClass.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     self.level = customtkinter.CTkFrame(master=self.content, fg_color=["gray88", "gray19"])
-    self.level.grid(row=3, column=0, sticky="nsew", padx=10, pady=overallPadyOutside)
+    self.level.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyOutside)
     self.level.grid_columnconfigure((0,1), weight=1)
+
+    RowI += 1
 
     self.currentProgress = customtkinter.CTkLabel(master=self.level, text="Current Progress: " + str(round(round(self.setupDir["progress"], 3) * 100, 2)) + "%")
     self.currentProgress.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
@@ -99,9 +126,13 @@ def settings(self):
     self.availableClasses = customtkinter.CTkLabel(master=self.level, text="Available Classes: " + str(10 -self.setupDir["numClasses"]))
     self.availableClasses.grid(row=1, column=1, sticky="nsew", padx=10, pady=10)
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     self.saveFrame = customtkinter.CTkFrame(master=self.content, fg_color=["gray88", "gray19"])
-    self.saveFrame.grid(row=4, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
+    self.saveFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
     self.saveFrame.grid_columnconfigure((0, 1), weight=1)
+
+    RowI += 1
 
     self.saveSetup = customtkinter.CTkButton(master=self.saveFrame, text="Save Setup File", command=saveFile)
     self.saveSetup.grid(row=0, column=0, sticky="nsew", padx=10, pady=overallPadyOutside)
@@ -109,9 +140,13 @@ def settings(self):
     self.loadSetup = customtkinter.CTkButton(master=self.saveFrame, text="Load Setup File", command=loadFile)
     self.loadSetup.grid(row=0, column=1, sticky="nsew", padx=10, pady=overallPadyOutside)
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     self.versionFrame = customtkinter.CTkFrame(master=self.content, fg_color=["gray88", "gray19"])
-    self.versionFrame.grid(row=5, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
+    self.versionFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
     self.versionFrame.grid_columnconfigure((0, 1), weight=1)
+
+    RowI += 1
 
     self.checkVersion = customtkinter.CTkButton(master=self.versionFrame, text="Check for Updates", command=lambda: checkVersion(self))
     self.checkVersion.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
@@ -246,3 +281,6 @@ def checkVersion(self):
 
 def updateStudySync(self):
     webbrowser.open("https://github.com/Mason-Dino/StudySync/releases/latest")
+
+def addClass(self):
+    print("Add Class")

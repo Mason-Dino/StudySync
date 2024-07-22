@@ -1,0 +1,23 @@
+import requests
+import json
+
+def getMainVersion():
+    test = requests.get("https://mason-dino.github.io/StudySync/")
+    decode = test.content.decode("utf-8")
+    res = json.loads(decode)
+
+    return res["mainVersion"]
+
+def getLittleVersion():
+    test = requests.get("https://mason-dino.github.io/StudySync/")
+    decode = test.content.decode("utf-8")
+    res = json.loads(decode)
+
+    return res["version"]
+
+def getUserVersion():
+    with open("setup.json", "r") as f:
+        setupDir = json.load(f)
+
+    return setupDir["version"]
+

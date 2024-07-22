@@ -3,9 +3,9 @@ import datetime
 
 
 def due(self):
-    self.content = customtkinter.CTkFrame(master=self)
+    self.content = customtkinter.CTkScrollableFrame(master=self)
     self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
-    self.content.grid_rowconfigure((0, 1, 2, 3, 4, 5, 6), weight=1)
+    #self.content.grid_rowconfigure((0, 1, 2, 3, 4, 5, 6), weight=1)
 
     date = datetime.datetime.today()
     daysToMonday = date.weekday()
@@ -22,5 +22,9 @@ def due(self):
 
     for day in weekdays:
         dayText = f"{day.strftime('%m')}/{day.strftime('%d')}"
-        self.labelDay = customtkinter.CTkLabel(master=self.content, text=dayText)
+
+        self.dayFrame = customtkinter.CTkFrame(master=self.content)
+        self.dayFrame.grid(row=weekdays.index(day), column=0, sticky="nsew", padx=10)
+
+        self.labelDay = customtkinter.CTkLabel(master=self.dayFrame, text=dayText, height=100, fg_color=["gray88", "gray19"])
         self.labelDay.grid(row=weekdays.index(day), column=0, sticky="nsew", padx=10, pady=10)

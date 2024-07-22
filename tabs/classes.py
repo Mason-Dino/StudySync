@@ -2,6 +2,7 @@ import customtkinter
 import json
 
 from screen.classroom import classroom
+from icon import loadIcon
 
 def isodd(value: int):
     return ((value % 2) == 1)
@@ -36,16 +37,16 @@ def classes(self):
             c += 1
 
             if c == numClasses:
-                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width)
+                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
                 classButton[c].grid(row=row, column=0, columnspan=2, pady=10)
 
             elif c % 2 == 0:
-                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width)
+                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
                 classButton[c].grid(row=row, column=1, pady=15)
                 row += 1
 
             else:
-                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width)
+                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
                 classButton[c].grid(row=row, column=0, pady=15)
 
     elif odd == False:
@@ -56,16 +57,16 @@ def classes(self):
             c += 1
 
             if c == 1:
-                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width)
+                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
                 classButton[c].grid(row=row, column=0, pady=15)
 
             elif c % 2 == 0: 
-                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width)
+                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
                 classButton[c].grid(row=row, column=1, pady=15)
                 row += 1
 
             else:
-                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width)
+                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
                 classButton[c].grid(row=row, column=0, pady=15)
 
     for i in range(numClasses):

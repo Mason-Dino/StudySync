@@ -1,6 +1,7 @@
 from version import getMainVersion, getUserVersion
 from tkinter import messagebox
 from tkinter import filedialog
+from icon import getIcons
 import customtkinter
 import webbrowser
 import shutil
@@ -74,8 +75,14 @@ def settings(self):
                                                     width=200)
     self.newClassType.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
 
+    self.newClassIcon = customtkinter.CTkOptionMenu(master=self.classEditFrame, values=getIcons(), width=200)
+    self.newClassIcon.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
+
     self.newInstructor = customtkinter.CTkEntry(master=self.classEditFrame, placeholder_text="Instructor Name", textvariable=customtkinter.StringVar(value="Instructor Name"))
     self.newInstructor.grid(row=1, column=1, sticky="nsew", padx=10, pady=10)
+
+    self.newEmail = customtkinter.CTkEntry(master=self.classEditFrame, placeholder_text="Instructor Email", textvariable=customtkinter.StringVar(value="Instructor Email"))
+    self.newEmail.grid(row=2, column=1, sticky="nsew", padx=10, pady=10)
 
     if classes == ["No Classes Available"]:
         self.newInstructor.configure(textvariable=customtkinter.StringVar(value="No Classes Available"))
@@ -83,10 +90,12 @@ def settings(self):
 
     else:
         self.newInstructor.configure(textvariable=customtkinter.StringVar(value=self.setupDir["class1"]["teacher"]))
+        self.newEmail.configure(textvariable=customtkinter.StringVar(value=self.setupDir["class1"]["email"]))
         self.newClassType.configure(variable=customtkinter.StringVar(value=self.setupDir["class1"]["subject"]))
+        self.newClassIcon.configure(variable=customtkinter.StringVar(value=self.setupDir["class1"]["icon"]))
 
     self.classEditButtons = customtkinter.CTkFrame(master=self.classEditFrame, fg_color="transparent")
-    self.classEditButtons.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
+    self.classEditButtons.grid(row=3, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
     self.classEditButtons.grid_columnconfigure((0,1), weight=1)
 
     self.edit = customtkinter.CTkButton(master=self.classEditButtons, text="Edit Class", command=lambda: editClassSave(self, self.newClassName.get()))
@@ -187,6 +196,8 @@ def editClass(self, new_class: str):
     self.newClassName.configure(textvariable=customtkinter.StringVar(value=setupDir[f"class{classNum}"]["name"]))
     self.newInstructor.configure(textvariable=customtkinter.StringVar(value=setupDir[f"class{classNum}"]["teacher"]))
     self.newClassType.configure(variable=customtkinter.StringVar(value=setupDir[f"class{classNum}"]["subject"]))
+    self.newEmail.configure(textvariable=customtkinter.StringVar(value=setupDir[f"class{classNum}"]["email"]))
+    self.newClassIcon.configure(variable=customtkinter.StringVar(value=setupDir[f"class{classNum}"]["icon"]))
 
 
 def deleteClass(self, className: str):
@@ -221,7 +232,10 @@ def editClassSave(self, newClassName: str):
         if setupDir[f"class{i+1}"]["name"] == oldClassName:
             setupDir[f"class{i+1}"]["name"] = newClassName
             setupDir[f"class{i+1}"]["teacher"] = self.newInstructor.get()
+            setupDir[f"class{i+1}"]["email"] = self.newEmail.get()
             setupDir[f"class{i+1}"]["subject"] = self.newClassType.get()
+            setupDir[f"class{i+1}"]["icon"] = self.newClassIcon.get()
+
 
     with open("setup.json", "w") as f:
         json.dump(setupDir, f, indent=4)

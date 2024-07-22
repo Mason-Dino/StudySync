@@ -88,7 +88,7 @@ class setup(customtkinter.CTk):
                                                         values=["Math", "Science", "English",  "History", "Social Studies", "World Language", "Fine Arts/Music", "Arts", "Physical Education", "Other"])  # Create the class subject option menu
         self.classSubject.grid(row=1, column=0, padx=5, pady=5)  # Position the class subject option menu
 
-        self.classIcon = customtkinter.CTkOptionMenu(master=self.classFrame, values=getIcons(), width=200)  # Create the class icon entry
+        self.classIcon = customtkinter.CTkOptionMenu(master=self.classFrame, values=getIcons(), width=200, variable=customtkinter.StringVar(value="Icon"))  # Create the class icon entry
         self.classIcon.grid(row=1, column=1, padx=5, pady=5)  # Position the class icon entry
 
         self.classTeacher = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="Who is the teacher/instructor?", width=200)  # Create the class teacher/instructor entry
@@ -174,12 +174,26 @@ class setup(customtkinter.CTk):
                 # Increment the current class count
                 self.currentClass += 1
 
+                if self.classIcon.get() == "Icon":
+                    icon = "Other"
+
+                else:
+                    icon = self.classIcon.get()
+
+                if self.classSubject.get() == "Subject":
+                    subject = "Other"
+
+                else:
+                    subject = self.classSubject.get()
+
                 # Create a dictionary to store the details of the current class
                 class_details = {
                     "id": makeID(),  # Generate a unique ID for the class
                     "name": self.className.get(),  # Store the class name
-                    "subject": self.classSubject.get(),  # Store the class subject
-                    "teacher": self.classTeacher.get()  # Store the class teacher/instructor
+                    "subject": subject,  # Store the class subject
+                    "icon": icon,  # Store the class icon
+                    "teacher": self.classTeacher.get(),  # Store the class teacher/instructor
+                    "email": self.classTeacherEmail.get(),  # Store the class email
                 }
 
                 database()
@@ -199,6 +213,14 @@ class setup(customtkinter.CTk):
                 self.classTeacher.delete(0, "end")
                 # Reconfigure the class teacher/instructor entry widget to display the placeholder text
                 self.classTeacher.configure(placeholder_text="Who is the teacher/instructor?")
+
+                # Clear the class email entry widget
+                self.classTeacherEmail.delete(0, "end")
+                # Reconfigure the class email entry widget to display the placeholder text
+                self.classTeacherEmail.configure(placeholder_text="What is the email?")
+
+                # Reset the class icon option menu to display the default value
+                self.classIcon.configure(variable=customtkinter.StringVar(value="Icon"))
 
                 # If the current class count is equal to the number of classes, print the setup directory as JSON,
                 # display the final page, and reset the class entry widgets

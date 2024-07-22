@@ -2,6 +2,7 @@ from tabs.assignments import assignments
 from tabs.classes import classes
 from tabs.setting import settings
 from tabs.home import home
+from icon import loadIcon
 from tabs.due import due
 
 from setup import setup
@@ -22,8 +23,7 @@ class StudySync(customtkinter.CTk):
         self.title("StudySync")
 
         icon_path = os.path.join(os.path.dirname(__file__), "icons")
-        self.image = customtkinter.CTkImage(light_image=Image.open(os.path.join(icon_path, "settings.png")), dark_image=Image.open(os.path.join(icon_path, "settings.png")), size=(20, 20))
-        
+        self.settingImage = loadIcon("settings")
 
         customtkinter.set_appearance_mode(self.setupDir["mode"])  # Modes: system (default), light, dark
         customtkinter.set_default_color_theme(f"themes/{self.setupDir['theme'].lower()}.json")  # Themes: blue (default), dark-blue, green
@@ -57,7 +57,7 @@ class StudySync(customtkinter.CTk):
         self.due = customtkinter.CTkButton(master=self.infoFrame, text="Due soon", command=lambda:due(self))
         self.due.grid(row=3, column=0, padx=15, pady=7)
 
-        self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=lambda:settings(self), image=self.image)
+        self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=lambda:settings(self), image=self.settingImage)
         #self.settingsButton.grid(row=3, column=0, padx=15, pady=100)
         self.settingsButton.place(relx=.09, rely=.9)
 

@@ -1,3 +1,5 @@
+import customtkinter
+from PIL import Image
 import os
 
 def getIcons():
@@ -15,6 +17,10 @@ def getIcons():
     icons.append("Other")
 
     return icons
+
+def loadIcon(icon):
+    icon = icon.replace(" ", "_")
+    return customtkinter.CTkImage(light_image=Image.open(f"./icons/{icon}.png"), dark_image=Image.open(f"./icons/{icon}.png"), size=(20, 20))
 
 if __name__ == "__main__":
     print(getIcons())

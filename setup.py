@@ -1,5 +1,6 @@
 from task import database
 from id import makeID
+from icon import getIcons
 import customtkinter
 import json
 
@@ -77,18 +78,24 @@ class setup(customtkinter.CTk):
 
         # Create the class frame
         self.classFrame = customtkinter.CTkFrame(master=self)  # Create the class frame
-        self.classFrame.grid_columnconfigure(0, weight=1)  # Column weight
+        self.classFrame.grid_columnconfigure((0,1), weight=1)  # Column weight
         self.classFrame.grid_rowconfigure((0,1,2), weight=1)  # Row weights
 
         self.className = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="What is the class name?", width=200)  # Create the class name entry
-        self.className.grid(row=0, column=0, padx=5, pady=5)  # Position the class name entry
+        self.className.grid(row=0, column=0, columnspan=3, padx=5, pady=5)  # Position the class name entry
 
         self.classSubject = customtkinter.CTkOptionMenu(master=self.classFrame, width=200, variable=customtkinter.StringVar(value="Subject"),
                                                         values=["Math", "Science", "English",  "History", "Social Studies", "World Language", "Fine Arts/Music", "Arts", "Physical Education", "Other"])  # Create the class subject option menu
         self.classSubject.grid(row=1, column=0, padx=5, pady=5)  # Position the class subject option menu
 
+        self.classIcon = customtkinter.CTkOptionMenu(master=self.classFrame, values=getIcons(), width=200)  # Create the class icon entry
+        self.classIcon.grid(row=1, column=1, padx=5, pady=5)  # Position the class icon entry
+
         self.classTeacher = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="Who is the teacher/instructor?", width=200)  # Create the class teacher/instructor entry
         self.classTeacher.grid(row=2, column=0, padx=5, pady=5)  # Position the class teacher/instructor entry
+
+        self.classTeacherEmail = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="What is their email?", width=200)  # Create the class teacher/instructor email entry 
+        self.classTeacherEmail.grid(row=2, column=1, padx=5, pady=5)  # Position the class teacher/instructor email entry
 
 
         # Create the page buttons

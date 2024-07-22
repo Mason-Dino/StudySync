@@ -107,6 +107,17 @@ def settings(self):
     self.loadSetup = customtkinter.CTkButton(master=self.saveFrame, text="Load Setup File", command=loadFile)
     self.loadSetup.grid(row=0, column=1, sticky="nsew", padx=10, pady=overallPadyOutside)
 
+    self.versionFrame = customtkinter.CTkFrame(master=self.content, fg_color=["gray88", "gray19"])
+    self.versionFrame.grid(row=5, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
+    self.versionFrame.grid_columnconfigure((0, 1), weight=1)
+
+    self.checkVersion = customtkinter.CTkButton(master=self.versionFrame, text="Check for Updates", command=lambda: checkVersion(self))
+    self.checkVersion.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.version = customtkinter.CTkLabel(master=self.versionFrame, text="  Current Version: " + self.setupDir["version"] + "  ")
+    self.version.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+    
+
 def changeAppearanceMode(new_appearance_mode: str):
     customtkinter.set_appearance_mode(new_appearance_mode)
 
@@ -221,3 +232,6 @@ def loadFile():
 
     except KeyError:
         messagebox.showerror(title="Error", message="\tNot a valid setup file file\n\tPlease select a valid setup file\n\tOld setup file is still in use.")
+
+def checkVersion(self):
+    print("check version")

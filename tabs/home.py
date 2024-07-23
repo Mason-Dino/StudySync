@@ -1,4 +1,4 @@
-from task import addMainTask, getMainTasks, finishMainTask
+from task import *
 from tkinter import messagebox
 from id import makeID
 import customtkinter
@@ -111,33 +111,43 @@ def makeTask(self):
     elif len(taskName) == 0 or className == "Pick Class" or day == "" or month == "" or year == "":
         messagebox.showerror(title="Error", message="You are missing a required field")
 
-    elif day.isdigit() == False or month.isdigit() == False or year.isdigit() == False:
+    elif day.isdigit() == False or month.isdigit() == False or year.isdigit() == False or (int(month) > 12 or int(month) < 1) or (int(month) == 2 and isLeapYear(int(year)) == False and int(day) == 29):
         messagebox.showerror(title="Error", message="Invalid date")
 
     else:
-        with open("setup.json", "r") as f:
-            self.setupDir = json.load(f)
+        month30 = [4, 6, 9, 11]
+        month31 = [1, 3, 5, 7, 8, 10, 12] 
 
-        self.classNum = self.setupDir["numClasses"]
-        id = ""
+        if int(month) in month30 and int(day) > 30:
+            messagebox.showerror(title="Error", message="Invalid date")
 
-        for i in range(self.classNum):
-            if self.setupDir[f"class{i+1}"]["name"] == className:
-                id = self.setupDir[f"class{i+1}"]["id"]
+        elif int(month) in month31 and int(day) > 31:
+            messagebox.showerror(title="Error", message="Invalid date")
 
-        if id == "":
-            id = "0000000000"
+        else:
+            with open("setup.json", "r") as f:
+                self.setupDir = json.load(f)
 
-        taskID = makeID(20)
-        addMainTask(taskName, taskID, className, id, day, month, year)
+            self.classNum = self.setupDir["numClasses"]
+            id = ""
 
-        self.taskName.delete(0, "end")
-        self.className.set("Pick Class")
-        self.day.delete(0, "end")
-        self.month.delete(0, "end")
-        self.year.delete(0, "end")
+            for i in range(self.classNum):
+                if self.setupDir[f"class{i+1}"]["name"] == className:
+                    id = self.setupDir[f"class{i+1}"]["id"]
 
-        home(self)
+            if id == "":
+                id = "0000000000"
+
+            taskID = makeID(20)
+            addMainTask(taskName, taskID, className, id, day, month, year)
+
+            self.taskName.delete(0, "end")
+            self.className.set("Pick Class")
+            self.day.delete(0, "end")
+            self.month.delete(0, "end")
+            self.year.delete(0, "end")
+
+            home(self)
 
 def finishTask(self, frame, id):
     frame.destroy()

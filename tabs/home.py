@@ -105,7 +105,7 @@ def makeTask(self):
     month = self.month.get()
     year = self.year.get()
 
-    if len(taskName) > 35:
+    if len(taskName) > 30:
         messagebox.showerror(title="Error", message="Task name too long")
 
     elif len(taskName) == 0 or className == "Pick Class" or day == "" or month == "" or year == "":

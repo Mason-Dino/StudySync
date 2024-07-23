@@ -1,4 +1,5 @@
 import customtkinter
+import datetime
 import sqlite3
 import json
 
@@ -75,6 +76,28 @@ def finishMainTask(self, id):
 
     with open("setup.json", "w") as f:
         json.dump(self.setupDir, f, indent=4)
+
+def searchDayTask(day: int, month: int, year: int = None):
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    if year == None:
+        year = datetime.datetime.now().year
+
+    c.execute(f"SELECT * FROM tasks WHERE day={day} AND month={month} AND year={year}")
+    rows = c.fetchall()
+    conn.close()
+
+    return rows
+
+def deleteTask(id):
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    c.execute(f"DELETE FROM tasks WHERE id='{id}'")
+
+    conn.commit()
+    conn.close()
 
 
 if __name__ == "__main__":

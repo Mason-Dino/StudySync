@@ -90,6 +90,16 @@ def searchDayTask(day: int, month: int, year: int = None):
 
     return rows
 
+def getOverdueTasks():
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    c.execute(f"SELECT * FROM tasks WHERE date < {datetime.datetime.now().strftime('%m%d%Y')}")
+    rows = c.fetchall()
+    conn.close()
+
+    return rows
+
 def deleteTask(id):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
@@ -107,4 +117,5 @@ def isLeapYear(year):
 
 
 if __name__ == "__main__":
-    database()
+    #database()
+    print(getOverdueTasks())

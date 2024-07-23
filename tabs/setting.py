@@ -243,11 +243,12 @@ def editClassSave(self, newClassName: str):
     messagebox.showinfo("Success", "Class Edited!")
 
 def saveFile():
-    file_path = filedialog.asksaveasfilename(filetypes=(("JSON Files", "*.json"), ("All Files", "*.*")))  # Use askopenfilenames() for multiple files
+    file_path = filedialog.asksaveasfilename(filetypes=(("JSON Files", "*.json"), ("All Files", "*.*")), typevariable=customtkinter.StringVar(value="setup"))  # Use askopenfilenames() for multiple files
     #file_path = filedialog.asksaveasfilename()
-    print(file_path)
-    current = os.getcwd()
-    shutil.copyfile(f"{current}/setup.json", f"{file_path}.json")
+
+    if file_path:
+        current = os.getcwd()
+        shutil.copyfile(f"{current}/setup.json", f"{file_path}.json")
 
 def loadFile():
     file_path = filedialog.askopenfilename(filetypes=(("JSON Files", "*.json"), ("All Files", "*.*")))

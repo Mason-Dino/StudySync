@@ -47,7 +47,6 @@ def due(self):
             overdue = getOverdueTasks()
 
         for i in range(len(overdue)):
-            type(overdue[i])
             self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=str(overdue[i][1]), font=customtkinter.CTkFont(size=15), fg_color="red", corner_radius=6)
             self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=2)
 
@@ -76,7 +75,6 @@ def due(self):
                 self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=2)
 
         elif len(dayTask) == 0:
-            print("hey")
             self.taskFrame.grid_columnconfigure(0, weight=1)
             self.taskFrame.grid_rowconfigure(0, weight=1)
 

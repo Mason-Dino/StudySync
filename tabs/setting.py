@@ -299,4 +299,4 @@ def updateStudySync(self):
     webbrowser.open("https://github.com/Mason-Dino/StudySync/releases/latest")
 
 def addClass(self):
-    classAddEdit(self, "ad")
+    classAddEdit(self, "add")

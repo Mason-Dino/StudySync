@@ -2,6 +2,7 @@ import customtkinter
 import datetime
 import sqlite3
 import json
+import os
 
 def database():
     conn = sqlite3.connect('study.db')
@@ -114,8 +115,17 @@ def isLeapYear(year):
         return True
     else:
         return False
+    
+def getClassInfo(id):
+    current = os.getcwd()
+
+    with open(f"{current}/setup.json", "r") as f:
+        setupDir = json.load(f)
+
+    for i in range(setupDir["numClasses"]):
+        if setupDir[f"class{i+1}"]["id"] == id:
+            return setupDir[f"class{i+1}"]
 
 
 if __name__ == "__main__":
-    #database()
-    print(getOverdueTasks())
+    database()

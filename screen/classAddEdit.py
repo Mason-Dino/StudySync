@@ -1,3 +1,4 @@
+from tkinter import messagebox
 import customtkinter
 import json
 
@@ -23,7 +24,7 @@ def classAddEdit(self, type: str, name: str = None):
     self.classFrame.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
     self.classFrame.grid_columnconfigure((0), weight=1)
 
-    self.className = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="Class Name")
+    self.className = customtkinter.CTkEntry(master=self.classFrame)
     self.className.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
 
     self.cosmetics = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
@@ -45,16 +46,16 @@ def classAddEdit(self, type: str, name: str = None):
     self.teacherFrame.grid(row=3, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
     self.teacherFrame.grid_columnconfigure((0,1), weight=1)
 
-    self.teacher = customtkinter.CTkEntry(master=self.teacherFrame, placeholder_text="Teacher")
+    self.teacher = customtkinter.CTkEntry(master=self.teacherFrame)
     self.teacher.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.email = customtkinter.CTkEntry(master=self.teacherFrame, placeholder_text="Email")
+    self.email = customtkinter.CTkEntry(master=self.teacherFrame)
     self.email.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
     self.breakFrame = customtkinter.CTkFrame(master=self.content, fg_color="transparent", height=10)
     self.breakFrame.grid(row=4, column=0, columnspan=2, sticky="nsew")
 
-    self.updateAdd = customtkinter.CTkButton(master=self.content, text="Update", command=lambda: updateAdd)
+    self.updateAdd = customtkinter.CTkButton(master=self.content, text="Update")
     self.updateAdd.grid(row=5, column=0, sticky="nsew", padx=10, pady=10)
 
     self.cancel = customtkinter.CTkButton(master=self.content, text="Cancel", command=lambda:cancel(self))
@@ -62,6 +63,12 @@ def classAddEdit(self, type: str, name: str = None):
 
     if type == "add":
         numClass = setupDir["numClasses"]
+
+        self.updateAdd.configure(command=lambda: updateAdd(self, "Added"))
+
+        self.className.configure(placeholder_text="Class Name")
+        self.teacher.configure(placeholder_text="Teacher")
+        self.email.configure(placeholder_text="Email")
 
     elif type == "edit":
         for i in range(setupDir["numClasses"]):
@@ -75,8 +82,40 @@ def classAddEdit(self, type: str, name: str = None):
         teacher = setupDir[f"class{classNum}"]["teacher"]
         email = setupDir[f"class{classNum}"]["email"]
 
-def updateAdd():
-    pass
+        self.className.configure(textvariable=customtkinter.StringVar(value=name))
+        self.subject.configure(variable=customtkinter.StringVar(value=subject))
+        self.icon.configure(variable=customtkinter.StringVar(value=icon))
+        self.color.configure(variable=customtkinter.StringVar(value=color.capitalize()))
+        self.teacher.configure(textvariable=customtkinter.StringVar(value=teacher))
+        self.email.configure(textvariable=customtkinter.StringVar(value=email))
+
+
+        self.updateAdd.configure(command=lambda: updateAdd(self, "Edited", classNum=classNum))
+
+def updateAdd(self, type: str, classNum: int = None):
+    if type == "Edited":
+        name = self.className.get()
+        subject = self.subject.get()
+        icon = self.icon.get()
+        color = self.color.get()
+        teacher = self.teacher.get()
+        email = self.email.get()
+
+        with open("setup.json", "r") as f:
+            setupDir = json.load(f)
+
+        setupDir[f"class{classNum}"]["name"] = name
+        setupDir[f"class{classNum}"]["subject"] = subject
+        setupDir[f"class{classNum}"]["icon"] = icon
+        setupDir[f"class{classNum}"]["color"] = color
+        setupDir[f"class{classNum}"]["teacher"] = teacher
+        setupDir[f"class{classNum}"]["email"] = email
+
+        with open("setup.json", "w") as f:
+            json.dump(setupDir, f, indent=4)
+
+    messagebox.showinfo(title="Success", message=f"Class {type.capitalize()}!")
+    home(self)
 
 def cancel(self):
     home(self)

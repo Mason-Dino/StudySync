@@ -1,4 +1,5 @@
 from version import getMainVersion, getUserVersion
+from screen.classAddEdit import classAddEdit
 from tkinter import messagebox
 from tkinter import filedialog
 from icon import getIcons

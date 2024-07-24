@@ -6,7 +6,7 @@ def loadColor(color):
     with open(f"{current}/themes/{color.lower()}.json", "r") as f:
         color = json.load(f)
 
-    print(color["CTkButton"]["fg_color"])
+    return color["CTkButton"]["fg_color"]
 
 if __name__ == "__main__":
     loadColor("purple")

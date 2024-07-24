@@ -284,7 +284,6 @@ class setup(customtkinter.CTk):
 
     def close(self):
         self.destroy()
-        self.congrats.configure(text="hey")
         exit()
 
 if __name__ == "__main__":

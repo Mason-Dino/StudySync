@@ -5,6 +5,9 @@ import customtkinter
 import json
 
 
+# ADD CLASS COLOR TO CLASS SETUP
+
+
 class setup(customtkinter.CTk):
     def __init__(self):
         """

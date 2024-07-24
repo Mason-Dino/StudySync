@@ -13,16 +13,18 @@ def due(self):
     date = datetime.datetime.today()
     daysToMonday = date.weekday()
 
-    monday = date - datetime.timedelta(days=daysToMonday)
-    tuesday = date - datetime.timedelta(days=daysToMonday - 1)
-    wednesday = date - datetime.timedelta(days=daysToMonday - 2)
-    thursday = date - datetime.timedelta(days=daysToMonday - 3)
-    friday = date - datetime.timedelta(days=daysToMonday - 4)
-    saturday = date - datetime.timedelta(days=daysToMonday - 5)
-    sunday = date - datetime.timedelta(days=daysToMonday - 6)
+    day1 = date
+    day2 = date + datetime.timedelta(days=1)
+    day3 = date + datetime.timedelta(days=2)
+    day4 = date + datetime.timedelta(days=3)
+    day5 = date + datetime.timedelta(days=4)
+    day6 = date + datetime.timedelta(days=5)
+    day7 = date + datetime.timedelta(days=6)
 
-    weekdays = [monday, tuesday, wednesday, thursday, friday, saturday, sunday]
-    strWeekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    weekdays = [day1, day2, day3, day4, day5, day6, day7]
+    strWeekdays = [day1.strftime("%A"), day2.strftime("%A"), day3.strftime("%A"), day3.strftime("%A"), day4.strftime("%A"), day5.strftime("%A"), day6.strftime("%A"), day7.strftime("%A")]
+
+    print(weekdays)
 
     if getOverdueTasks() == []:
         overdueI = 0

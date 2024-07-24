@@ -55,55 +55,24 @@ def settings(self):
 
     self.classEditFrame = customtkinter.CTkFrame(master=self.content, fg_color=["gray88", "gray19"])
     self.classEditFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
-    self.classEditFrame.grid_columnconfigure((1), weight=1)
+    self.classEditFrame.grid_columnconfigure((0,1), weight=1)
 
     RowI += 1
+
+    with open("setup.json", "r") as f:
+        self.setupDir = json.load(f)
 
     for i in range(self.setupDir["numClasses"]):
         classes.append(self.setupDir[f"class{i+1}"]["name"])
 
-    if classes == []:
-        classes.append("No Classes Available")
+    self.classEdit = customtkinter.CTkOptionMenu(master=self.classEditFrame, values=classes, width=200)
+    self.classEdit.grid(row=0, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
 
-    self.classEdit = customtkinter.CTkOptionMenu(master=self.classEditFrame, values=classes, command=lambda x: editClass(self, x), width=200)
-    self.classEdit.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+    self.edit = customtkinter.CTkButton(master=self.classEditFrame, text="Edit Class", command=lambda: editClassSave(self, self.classEdit.get()))
+    self.edit.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.newClassName = customtkinter.CTkEntry(master=self.classEditFrame, placeholder_text="New Class Name", textvariable=customtkinter.StringVar(value=classes[0]))
-    self.newClassName.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
-
-    self.newClassType = customtkinter.CTkOptionMenu(master=self.classEditFrame, 
-                                                    values=["Math", "Science", "English",  "History", "Social Studies", "World Language", "Fine Arts/Music", "Arts", "Physical Education", "Other"], 
-                                                    width=200)
-    self.newClassType.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
-
-    self.newClassIcon = customtkinter.CTkOptionMenu(master=self.classEditFrame, values=getIcons(), width=200)
-    self.newClassIcon.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
-
-    self.newInstructor = customtkinter.CTkEntry(master=self.classEditFrame, placeholder_text="Instructor Name", textvariable=customtkinter.StringVar(value="Instructor Name"))
-    self.newInstructor.grid(row=1, column=1, sticky="nsew", padx=10, pady=10)
-
-    self.newEmail = customtkinter.CTkEntry(master=self.classEditFrame, placeholder_text="Instructor Email", textvariable=customtkinter.StringVar(value="Instructor Email"))
-    self.newEmail.grid(row=2, column=1, sticky="nsew", padx=10, pady=10)
-
-    if classes == ["No Classes Available"]:
-        self.newInstructor.configure(textvariable=customtkinter.StringVar(value="No Classes Available"))
-        self.newClassType.configure(variable=customtkinter.StringVar(value="No Classes Available"))
-
-    else:
-        self.newInstructor.configure(textvariable=customtkinter.StringVar(value=self.setupDir["class1"]["teacher"]))
-        self.newEmail.configure(textvariable=customtkinter.StringVar(value=self.setupDir["class1"]["email"]))
-        self.newClassType.configure(variable=customtkinter.StringVar(value=self.setupDir["class1"]["subject"]))
-        self.newClassIcon.configure(variable=customtkinter.StringVar(value=self.setupDir["class1"]["icon"]))
-
-    self.classEditButtons = customtkinter.CTkFrame(master=self.classEditFrame, fg_color="transparent")
-    self.classEditButtons.grid(row=3, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
-    self.classEditButtons.grid_columnconfigure((0,1), weight=1)
-
-    self.edit = customtkinter.CTkButton(master=self.classEditButtons, text="Edit Class", command=lambda: editClassSave(self, self.newClassName.get()))
-    self.edit.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
-
-    self.delete = customtkinter.CTkButton(master=self.classEditButtons, text="Delete Class", command=lambda: deleteClass(self, self.classEdit.get()))
-    self.delete.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+    self.delete = customtkinter.CTkButton(master=self.classEditFrame, text="Delete Class", command=lambda: deleteClass(self, self.classEdit.get()))
+    self.delete.grid(row=1, column=1, sticky="nsew", padx=10, pady=10)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -186,62 +155,33 @@ def changeTheme(new_theme: str):
 
     messagebox.showinfo("Success", "Theme Changed!\nRestart StudySync for changes to take effect.")
 
-def editClass(self, new_class: str):
-    with open("setup.json", "r") as f:
-        setupDir = json.load(f)
-
-    for i in range(setupDir["numClasses"]):
-        if setupDir[f"class{i+1}"]["name"] == new_class:
-            classNum = i + 1
-
-    self.newClassName.configure(textvariable=customtkinter.StringVar(value=setupDir[f"class{classNum}"]["name"]))
-    self.newInstructor.configure(textvariable=customtkinter.StringVar(value=setupDir[f"class{classNum}"]["teacher"]))
-    self.newClassType.configure(variable=customtkinter.StringVar(value=setupDir[f"class{classNum}"]["subject"]))
-    self.newEmail.configure(textvariable=customtkinter.StringVar(value=setupDir[f"class{classNum}"]["email"]))
-    self.newClassIcon.configure(variable=customtkinter.StringVar(value=setupDir[f"class{classNum}"]["icon"]))
-
 
 def deleteClass(self, className: str):
     with open("setup.json", "r") as f:
         setupDir = json.load(f)
 
-    for i in range(setupDir["numClasses"]):
-        if setupDir[f"class{i+1}"]["name"] == className:
-            deleteNum = i + 1
+    if setupDir["numClasses"] == 1:
+        messagebox.showerror("Error", "Cannot delete last class!")
+
+    else:
+        for i in range(setupDir["numClasses"]):
+            if setupDir[f"class{i+1}"]["name"] == className:
+                deleteNum = i + 1
+                del setupDir[f"class{i+1}"]
+
+        for i in range(deleteNum, setupDir["numClasses"]):
+            tempClass = setupDir[f"class{i+1}"]
+            setupDir[f"class{i}"] = tempClass
             del setupDir[f"class{i+1}"]
 
-    for i in range(deleteNum, setupDir["numClasses"]):
-        tempClass = setupDir[f"class{i+1}"]
-        setupDir[f"class{i}"] = tempClass
-        del setupDir[f"class{i+1}"]
+        setupDir["numClasses"] -= 1
+        with open("setup.json", "w") as f:
+            json.dump(setupDir, f, indent=4)
 
-    setupDir["numClasses"] -= 1
-    with open("setup.json", "w") as f:
-        json.dump(setupDir, f, indent=4)
-
-    messagebox.showinfo("Success", "Class Deleted!")
+        messagebox.showinfo("Success", "Class Deleted!")
 
 def editClassSave(self, newClassName: str):
-    print(newClassName)
-
-    oldClassName = self.classEdit.get()
-
-    with open("setup.json", "r") as f:
-        setupDir = json.load(f)
-
-    for i in range(setupDir["numClasses"]):
-        if setupDir[f"class{i+1}"]["name"] == oldClassName:
-            setupDir[f"class{i+1}"]["name"] = newClassName
-            setupDir[f"class{i+1}"]["teacher"] = self.newInstructor.get()
-            setupDir[f"class{i+1}"]["email"] = self.newEmail.get()
-            setupDir[f"class{i+1}"]["subject"] = self.newClassType.get()
-            setupDir[f"class{i+1}"]["icon"] = self.newClassIcon.get()
-
-
-    with open("setup.json", "w") as f:
-        json.dump(setupDir, f, indent=4)
-
-    messagebox.showinfo("Success", "Class Edited!")
+    classAddEdit(self, "edit", newClassName)
 
 def saveFile():
     file_path = filedialog.asksaveasfilename(filetypes=(("JSON Files", "*.json"), ("All Files", "*.*")), typevariable=customtkinter.StringVar(value="setup"))  # Use askopenfilenames() for multiple files

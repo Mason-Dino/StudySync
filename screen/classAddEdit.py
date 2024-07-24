@@ -3,30 +3,31 @@ import json
 
 from themes.theme import topLevel
 from icon import getIcons
+from tabs.home import home
 
 def classAddEdit(self, type: str, name: str = None):
     self.type = type
 
     self.content = customtkinter.CTkFrame(master=self, corner_radius=6)
     self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
-    self.content.grid_columnconfigure(0, weight=1)
+    self.content.grid_columnconfigure((0,1), weight=1)
 
     self.title = customtkinter.CTkLabel(master=self.content, text=f"Class {type.capitalize()}",
                                         font=customtkinter.CTkFont(size=20, weight="bold"))
-    self.title.grid(row=0, column=0, pady=10)
+    self.title.grid(row=0, column=0, columnspan=2, pady=10)
 
     with open("setup.json", "r") as f:
         setupDir = json.load(f)
     
     self.classFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
-    self.classFrame.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+    self.classFrame.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
     self.classFrame.grid_columnconfigure((0), weight=1)
 
     self.className = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="Class Name")
     self.className.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
 
     self.cosmetics = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
-    self.cosmetics.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
+    self.cosmetics.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
     self.cosmetics.grid_columnconfigure((0,1), weight=1)
 
     self.subject = customtkinter.CTkOptionMenu(master=self.cosmetics, values=["Math", "Science", "English",  "History", "Social Studies", "World Language", "Fine Arts/Music", "Arts", "Physical Education", "Other"],
@@ -41,7 +42,7 @@ def classAddEdit(self, type: str, name: str = None):
     self.color.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
 
     self.teacherFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
-    self.teacherFrame.grid(row=3, column=0, sticky="nsew", padx=10, pady=10)
+    self.teacherFrame.grid(row=3, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
     self.teacherFrame.grid_columnconfigure((0,1), weight=1)
 
     self.teacher = customtkinter.CTkEntry(master=self.teacherFrame, placeholder_text="Teacher")
@@ -50,7 +51,14 @@ def classAddEdit(self, type: str, name: str = None):
     self.email = customtkinter.CTkEntry(master=self.teacherFrame, placeholder_text="Email")
     self.email.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
+    self.breakFrame = customtkinter.CTkFrame(master=self.content, fg_color="transparent", height=10)
+    self.breakFrame.grid(row=4, column=0, columnspan=2, sticky="nsew")
 
+    self.updateAdd = customtkinter.CTkButton(master=self.content, text="Update", command=lambda: updateAdd)
+    self.updateAdd.grid(row=5, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.cancel = customtkinter.CTkButton(master=self.content, text="Cancel", command=lambda:cancel(self))
+    self.cancel.grid(row=5, column=1, sticky="nsew", padx=10, pady=10)
 
     if type == "add":
         numClass = setupDir["numClasses"]
@@ -66,3 +74,9 @@ def classAddEdit(self, type: str, name: str = None):
         color = setupDir[f"class{classNum}"]["color"]
         teacher = setupDir[f"class{classNum}"]["teacher"]
         email = setupDir[f"class{classNum}"]["email"]
+
+def updateAdd():
+    pass
+
+def cancel(self):
+    home(self)

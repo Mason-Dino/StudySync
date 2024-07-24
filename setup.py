@@ -197,7 +197,7 @@ class setup(customtkinter.CTk):
                     color = "Blue"
 
                 else:
-                    color = self.classColor
+                    color = self.classColor.get()
 
                 # Create a dictionary to store the details of the current class
                 class_details = {
@@ -222,6 +222,8 @@ class setup(customtkinter.CTk):
 
                 # Reset the class subject option menu to display the default value
                 self.classSubject.configure(variable=customtkinter.StringVar(value="Subject"))
+
+                self.classColor.configure(variable=customtkinter.StringVar(value="Color"))
 
                 # Clear the class teacher/instructor entry widget
                 self.classTeacher.delete(0, "end")

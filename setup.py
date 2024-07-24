@@ -85,11 +85,15 @@ class setup(customtkinter.CTk):
         self.classFrame.grid_rowconfigure((0,1,2), weight=1)  # Row weights
 
         self.className = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="What is the class name?", width=200)  # Create the class name entry
-        self.className.grid(row=0, column=0, columnspan=3, padx=5, pady=5)  # Position the class name entry
+        self.className.grid(row=0, column=0, padx=5, pady=5)  # Position the class name entry
 
         self.classSubject = customtkinter.CTkOptionMenu(master=self.classFrame, width=200, variable=customtkinter.StringVar(value="Subject"),
                                                         values=["Math", "Science", "English",  "History", "Social Studies", "World Language", "Fine Arts/Music", "Arts", "Physical Education", "Other"])  # Create the class subject option menu
-        self.classSubject.grid(row=1, column=0, padx=5, pady=5)  # Position the class subject option menu
+        self.classSubject.grid(row=0, column=1, padx=5, pady=5)  # Position the class subject option menu
+
+        self.classColor = customtkinter.CTkOptionMenu(master=self.classFrame, width=200, variable=customtkinter.StringVar(value="Color"),
+                                                    values=["Teal", "Orange", "Purple", "Red", "Yellow", "Green", "Blue"])  # Create the class color option menu
+        self.classColor.grid(row=1, column=0, padx=5, pady=5)  # Position the class color option menu
 
         self.classIcon = customtkinter.CTkOptionMenu(master=self.classFrame, values=getIcons(), width=200, variable=customtkinter.StringVar(value="Icon"))  # Create the class icon entry
         self.classIcon.grid(row=1, column=1, padx=5, pady=5)  # Position the class icon entry

@@ -24,8 +24,6 @@ def due(self):
     weekdays = [day1, day2, day3, day4, day5, day6, day7]
     strWeekdays = [day1.strftime("%A"), day2.strftime("%A"), day3.strftime("%A"), day3.strftime("%A"), day4.strftime("%A"), day5.strftime("%A"), day6.strftime("%A"), day7.strftime("%A")]
 
-    print(weekdays)
-
     if getOverdueTasks() == []:
         overdueI = 0
 
@@ -50,7 +48,7 @@ def due(self):
 
         for i in range(len(overdue)):
             self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=str(overdue[i][1]), font=customtkinter.CTkFont(size=15), fg_color="red", corner_radius=6)
-            self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=2)
+            self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=4)
 
         overdueI = 1
 
@@ -74,7 +72,7 @@ def due(self):
         if len(dayTask) < 3 and len(dayTask) > 0:
             for i in range(len(dayTask)):
                 self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=dayTask[i][1], font=customtkinter.CTkFont(size=15), fg_color="red", corner_radius=6)
-                self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=2)
+                self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=4)
 
         elif len(dayTask) == 0:
             self.taskFrame.grid_columnconfigure(0, weight=1)

@@ -57,7 +57,7 @@ class StudySync(customtkinter.CTk):
         self.due = customtkinter.CTkButton(master=self.infoFrame, text="Due soon", command=lambda:due(self))
         self.due.grid(row=3, column=0, padx=15, pady=7)
 
-        self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=lambda:settings(self), image=self.settingImage)
+        self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=lambda: self.settingsMain(), image=self.settingImage)
         #self.settingsButton.grid(row=3, column=0, padx=15, pady=100)
         self.settingsButton.place(relx=.09, rely=.9)
 
@@ -66,8 +66,8 @@ class StudySync(customtkinter.CTk):
     def button_function(self):
         print("button pressed")
 
-    def settings(self):
-        print("selection cleared")
+    def settingsMain(self):
+        settings(self)
 
     def classesMain(self):
         classes(self)

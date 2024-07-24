@@ -8,5 +8,8 @@ def loadColor(color):
 
     return color["CTkButton"]["fg_color"]
 
+def topLevel():
+    return ["gray88", "gray19"]
+
 if __name__ == "__main__":
     loadColor("purple")

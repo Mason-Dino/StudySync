@@ -1,6 +1,7 @@
 import customtkinter
 import datetime
 
+from themes.theme import loadColor
 from task import *
 
 
@@ -71,7 +72,9 @@ def due(self):
 
         if len(dayTask) < 3 and len(dayTask) > 0:
             for i in range(len(dayTask)):
-                self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=dayTask[i][1], font=customtkinter.CTkFont(size=15), fg_color="red", corner_radius=6)
+                classInfo = getClassInfo(dayTask[i][8])
+                
+                self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=dayTask[i][1], font=customtkinter.CTkFont(size=15), fg_color=loadColor(classInfo["color"]), corner_radius=6)
                 self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=4)
 
         elif len(dayTask) == 0:

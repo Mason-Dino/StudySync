@@ -205,7 +205,7 @@ class setup(customtkinter.CTk):
                     "name": self.className.get(),  # Store the class name
                     "subject": subject,  # Store the class subject
                     "icon": icon,  # Store the class icon
-                    "color": color,  # Store the class color
+                    "color": color.lower(),  # Store the class color
                     "teacher": self.classTeacher.get(),  # Store the class teacher/instructor
                     "email": self.classTeacherEmail.get(),  # Store the class email
                 }

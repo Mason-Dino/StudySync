@@ -193,12 +193,19 @@ class setup(customtkinter.CTk):
                 else:
                     subject = self.classSubject.get()
 
+                if self.classColor == "Color":
+                    color = "Blue"
+
+                else:
+                    color = self.classColor
+
                 # Create a dictionary to store the details of the current class
                 class_details = {
                     "id": makeID(),  # Generate a unique ID for the class
                     "name": self.className.get(),  # Store the class name
                     "subject": subject,  # Store the class subject
                     "icon": icon,  # Store the class icon
+                    "color": color,  # Store the class color
                     "teacher": self.classTeacher.get(),  # Store the class teacher/instructor
                     "email": self.classTeacherEmail.get(),  # Store the class email
                 }

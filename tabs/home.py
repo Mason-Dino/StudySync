@@ -29,7 +29,7 @@ def home(self):
     self.progressbar.grid(row=0, column=0, columnspan=3, sticky="nsew", padx=10, pady=10)
     self.progressbar.set(self.progress)
 
-    self.taskName = customtkinter.CTkEntry(master=self.content, placeholder_text="Task Name (max: 35)")
+    self.taskName = customtkinter.CTkEntry(master=self.content, placeholder_text="Task Name (max: 30)")
     self.taskName.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
 
     for i in range(self.classNum):

@@ -239,4 +239,11 @@ def updateStudySync(self):
     webbrowser.open("https://github.com/Mason-Dino/StudySync/releases/latest")
 
 def addClass(self):
-    classAddEdit(self, "add")
+    with open("setup.json", "r") as f:
+        setupDir = json.load(f)
+
+    if setupDir["numClasses"] == 10:
+        messagebox.showerror("Error", "Cannot add more than 10 classes!")
+
+    else:
+        classAddEdit(self, "add")

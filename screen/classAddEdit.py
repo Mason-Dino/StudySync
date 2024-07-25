@@ -5,6 +5,7 @@ import json
 from themes.theme import topLevel
 from icon import getIcons
 from tabs.home import home
+from id import makeID
 
 def classAddEdit(self, type: str, name: str = None):
     self.type = type
@@ -64,7 +65,7 @@ def classAddEdit(self, type: str, name: str = None):
     if type == "add":
         numClass = setupDir["numClasses"]
 
-        self.updateAdd.configure(command=lambda: updateAdd(self, "Added"))
+        self.updateAdd.configure(command=lambda: updateAdd(self, "Added"), text="Add")
 
         self.className.configure(placeholder_text="Class Name")
         self.teacher.configure(placeholder_text="Teacher")
@@ -82,27 +83,42 @@ def classAddEdit(self, type: str, name: str = None):
         teacher = setupDir[f"class{classNum}"]["teacher"]
         email = setupDir[f"class{classNum}"]["email"]
 
-        self.className.configure(textvariable=customtkinter.StringVar(value=name))
+        if name == "":
+            self.className.configure(placeholder_text="Class Name")
+
+        else:
+            self.className.configure(textvariable=customtkinter.StringVar(value=name))
+
+        if teacher == "":
+            self.teacher.configure(placeholder_text="Who is the teacher/instructor?")
+
+        else:
+            self.teacher.configure(textvariable=customtkinter.StringVar(value=teacher))
+
+        if email == "":
+            self.email.configure(placeholder_text="What is their email?")
+
+        else:
+            self.email.configure(textvariable=customtkinter.StringVar(value=email))
+        
         self.subject.configure(variable=customtkinter.StringVar(value=subject))
         self.icon.configure(variable=customtkinter.StringVar(value=icon))
         self.color.configure(variable=customtkinter.StringVar(value=color.capitalize()))
-        self.teacher.configure(textvariable=customtkinter.StringVar(value=teacher))
-        self.email.configure(textvariable=customtkinter.StringVar(value=email))
 
 
         self.updateAdd.configure(command=lambda: updateAdd(self, "Edited", classNum=classNum))
 
 def updateAdd(self, type: str, classNum: int = None):
+    with open("setup.json", "r") as f:
+        setupDir = json.load(f)
+
     if type == "Edited":
         name = self.className.get()
         subject = self.subject.get()
         icon = self.icon.get()
-        color = self.color.get()
+        color = self.color.get().lower()
         teacher = self.teacher.get()
         email = self.email.get()
-
-        with open("setup.json", "r") as f:
-            setupDir = json.load(f)
 
         setupDir[f"class{classNum}"]["name"] = name
         setupDir[f"class{classNum}"]["subject"] = subject
@@ -110,6 +126,40 @@ def updateAdd(self, type: str, classNum: int = None):
         setupDir[f"class{classNum}"]["color"] = color
         setupDir[f"class{classNum}"]["teacher"] = teacher
         setupDir[f"class{classNum}"]["email"] = email
+
+        with open("setup.json", "w") as f:
+            json.dump(setupDir, f, indent=4)
+
+    if type == "Added":
+        numClass = setupDir["numClasses"]
+        setupDir["numClasses"] = numClass + 1
+        numClass = numClass + 1
+
+        name = self.className.get()
+        subject = self.subject.get()
+        icon = self.icon.get()
+        color = self.color.get()
+        teacher = self.teacher.get()
+        email = self.email.get()
+
+        if subject == "Subject":
+            subject = "Other"
+
+        if icon == "Icon":
+            icon = "Other"
+
+        if color == "Color":
+            color = "blue"
+
+        setupDir[f"class{numClass}"] = {
+            "id": makeID(),
+            "name": name,
+            "subject": subject,
+            "icon": icon,
+            "color": color,
+            "teacher": teacher,
+            "email": email
+        }
 
         with open("setup.json", "w") as f:
             json.dump(setupDir, f, indent=4)

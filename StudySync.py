@@ -26,7 +26,12 @@ class StudySync(customtkinter.CTk):
         self.settingImage = loadIcon("settings")
 
         customtkinter.set_appearance_mode(self.setupDir["mode"])  # Modes: system (default), light, dark
-        customtkinter.set_default_color_theme(f"themes/{self.setupDir['theme'].lower()}.json")  # Themes: blue (default), dark-blue, green
+
+        try:
+            customtkinter.set_default_color_theme(f"themes/{self.setupDir['theme'].lower()}.json")  # Themes: blue (default), dark-blue, green
+
+        except:
+            customtkinter.set_default_color_theme("themes/teal.json")
 
 
         self.numClasses = self.setupDir["numClasses"]

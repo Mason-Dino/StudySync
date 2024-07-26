@@ -36,6 +36,17 @@ def addMainTask(taskName, taskID, className, classID, day, month, year):
     conn.commit()
     conn.close()
 
+def addSubTask(taskName, taskID, className, classID, day, month, year, parentID):
+    print(taskName, taskID, className, classID, day, month, year, parentID)
+    dateNum = int(f"{month}" + f"{day}" + f"{year}")
+
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, dateNum, parentID, className, classID))
+    conn.commit()
+    conn.close()
+
 def getMainTasks(organize: str = None):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()

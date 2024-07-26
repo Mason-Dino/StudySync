@@ -45,10 +45,10 @@ def showAssignment(self, id):
 
     for i in range(len(subTask)):
         self.subTaskMiniFrame = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=["gray90", "gray21"])
-        self.subTaskMiniFrame.grid(row=i, column=0, sticky="nsew", padx=10, pady=7)
+        self.subTaskMiniFrame.grid(row=i, column=0, sticky="nsew", padx=10, pady=3)
 
-        self.subTask = customtkinter.CTkLabel(master=self.subTaskMiniFrame, text=f"{subTask[i][1]}", font=customtkinter.CTkFont(size=18), anchor="w", justify="left")
-        self.subTask.grid(row=0, column=0, sticky="nsew", padx=20, pady=4)
+        self.subTask = customtkinter.CTkLabel(master=self.subTaskMiniFrame, text=f"{subTask[i][1]}", font=customtkinter.CTkFont(size=15), anchor="w", justify="left")
+        self.subTask.grid(row=0, column=0, sticky="nsew", padx=10, pady=2)
 
     self.addSubTask = customtkinter.CTkButton(master=self.subTaskFrame, text="Add Sub-Task", fg_color="transparent", hover_color=["gray90", "gray21"], compound="left", anchor="w",
                                                 font=customtkinter.CTkFont(size=15), command=lambda: addSubTaskDisplay(self, id, classID, taskInfo))
@@ -82,3 +82,5 @@ def addSubTaskFunction(self, parentID, classID, taskInfo):
 
     id = makeID(20)
     addSubTask(subTaskName, id, taskInfo[0][7], taskInfo[0][8], taskInfo[0][2], taskInfo[0][3], taskInfo[0][4], parentID)
+
+    showAssignment(self, parentID)

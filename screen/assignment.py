@@ -41,7 +41,7 @@ def showAssignment(self, id):
     self.classContent.grid(row=0, column=1, sticky="nsew", padx=10, pady=4)
 
     self.addSubTask = customtkinter.CTkButton(master=self.subTaskFrame, text="Add Sub-Task", fg_color="transparent", hover_color=["gray90", "gray21"], compound="left", anchor="w",
-                                                font=customtkinter.CTkFont(size=15), command=lambda: addSubTask(self, id))
+                                                font=customtkinter.CTkFont(size=15), command=lambda: addSubTaskDisplay(self, id))
     self.addSubTask.grid(row=0, column=0, sticky="nsew", padx=10, pady=6)
 
     self.edit = customtkinter.CTkButton(master=self.buttonFrame, text="Edit")
@@ -53,9 +53,7 @@ def showAssignment(self, id):
     self.complete = customtkinter.CTkButton(master=self.buttonFrame, text="Complete")
     self.complete.grid(row=0, column=1, sticky="nsew", padx=10, pady=6)
 
-def addSubTask(self, parentid):
-    print(parentid)
-
+def addSubTaskDisplay(self, parentid):
     self.addSubTaskFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
     self.addSubTaskFrame.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
     self.addSubTaskFrame.grid_columnconfigure((0), weight=1)
@@ -63,5 +61,12 @@ def addSubTask(self, parentid):
     self.subTaskEntry = customtkinter.CTkEntry(master=self.addSubTaskFrame, placeholder_text="Sub-Task Name (max: 30)")
     self.subTaskEntry.grid(row=0, column=0, sticky="nsew", padx=10, pady=6)
 
-    self.subTaskButton = customtkinter.CTkButton(master=self.addSubTaskFrame, text="Add Sub-Task")
+    self.subTaskButton = customtkinter.CTkButton(master=self.addSubTaskFrame, text="Add Sub-Task", command=lambda: addSubTaskFunction(self, parentid))
     self.subTaskButton.grid(row=0, column=1, sticky="nsew", padx=10, pady=6)
+
+def addSubTaskFunction(self, parentid):
+    subTaskName = self.subTaskEntry.get()
+
+    self.addSubTaskFrame.destroy()
+    self.addSubTask.grid(row=1, column=0, sticky="nsew")
+    print(parentid)

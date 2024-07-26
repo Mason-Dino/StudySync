@@ -59,6 +59,16 @@ def getMainTaskSingle(id):
 
     return rows
 
+def getSubTasks(parentid):
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    c.execute(f"SELECT * FROM tasks WHERE parentID = '{parentid}'")
+    rows = c.fetchall()
+    conn.close()
+
+    return rows
+
 def finishMainTask(self, id):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()

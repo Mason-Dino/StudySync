@@ -8,6 +8,8 @@ import json
 
 import random
 
+from screen.assignment import showAssignment
+
 def home(self):
     self.taskFrame = {}
 
@@ -165,3 +167,4 @@ def showMainTask(self, event, id):
     print("showing main task")
     print(event)
     print(id)
+    showAssignment(self, id)

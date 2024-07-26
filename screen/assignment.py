@@ -1,14 +1,25 @@
 import customtkinter
 from task import *
 
+from themes.theme import topLevel
+
 def showAssignment(self, id):
     self.content = customtkinter.CTkFrame(master=self, corner_radius=6)
     self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
     self.content.grid_columnconfigure((0, 1), weight=1)
+    self.content.grid_rowconfigure((1), weight=1)
 
-    self.title = customtkinter.CTkLabel(master=self.content, text="Assignment", font=customtkinter.CTkFont(size=20, weight="bold"))
+    taskInfo = getMainTaskSingle(id)
 
-    classInfo = getMainTaskSingle(id)
+    print(taskInfo)
 
-    print(classInfo)
+    self.header = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+    self.header.grid(row=0, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
+
+    self.subTaskFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+    self.subTaskFrame.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
+
+    self.assignment = customtkinter.CTkLabel(master=self.header, text=f"{taskInfo[0][1]}", font=customtkinter.CTkFont(size=20, weight="bold"))
+    self.assignment.grid(row=0, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
+
 

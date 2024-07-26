@@ -15,14 +15,24 @@ def showAssignment(self, id):
 
     self.header = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
     self.header.grid(row=0, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
+    self.header.grid_columnconfigure((0), weight=1)
+
+    self.mainHeader = customtkinter.CTkFrame(master=self.header, fg_color="transparent")
+    self.mainHeader.grid(row=0, column=0, sticky="nsew")
+
+    self.subHeader = customtkinter.CTkFrame(master=self.header, fg_color="transparent")
+    self.subHeader.grid(row=1, column=0, sticky="nsew")
 
     self.subTaskFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
     self.subTaskFrame.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
 
-    self.assignment = customtkinter.CTkLabel(master=self.header, text=f"{taskInfo[0][1]}", font=customtkinter.CTkFont(size=20, weight="bold"), width=400, anchor="w", justify="left",)
+    self.assignment = customtkinter.CTkLabel(master=self.mainHeader, text=f"{taskInfo[0][1]}", font=customtkinter.CTkFont(size=20, weight="bold"), anchor="w", justify="left",)
     self.assignment.grid(row=0, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
 
-    self.due = customtkinter.CTkLabel(master=self.header, text=f"Due: {taskInfo[0][3]}/{taskInfo[0][2]}/{taskInfo[0][4]}", font=customtkinter.CTkFont(size=15), width=400, anchor="w", justify="left",)
-    self.due.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=4)
+    self.due = customtkinter.CTkLabel(master=self.subHeader, text=f"Due: {taskInfo[0][3]}/{taskInfo[0][2]}/{taskInfo[0][4]}", font=customtkinter.CTkFont(size=15), anchor="w", justify="left",)
+    self.due.grid(row=0, column=0, sticky="nsew", padx=10, pady=4)
+
+    self.classContent = customtkinter.CTkLabel(master=self.subHeader, text=f"Class: {taskInfo[0][7]}", font=customtkinter.CTkFont(size=15), width=400, anchor="w", justify="left",)
+    self.classContent.grid(row=0, column=1, sticky="nsew", padx=10, pady=4)
 
 

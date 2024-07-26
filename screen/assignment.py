@@ -43,9 +43,16 @@ def showAssignment(self, id):
     self.classContent = customtkinter.CTkLabel(master=self.subHeader, text=f"Class: {taskInfo[0][7]}", font=customtkinter.CTkFont(size=15), anchor="w", justify="left")
     self.classContent.grid(row=0, column=1, sticky="nsew", padx=10, pady=4)
 
+    for i in range(len(subTask)):
+        self.subTaskMiniFrame = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=["gray90", "gray21"])
+        self.subTaskMiniFrame.grid(row=i, column=0, sticky="nsew", padx=10, pady=7)
+
+        self.subTask = customtkinter.CTkLabel(master=self.subTaskMiniFrame, text=f"{subTask[i][1]}", font=customtkinter.CTkFont(size=18), anchor="w", justify="left")
+        self.subTask.grid(row=0, column=0, sticky="nsew", padx=20, pady=4)
+
     self.addSubTask = customtkinter.CTkButton(master=self.subTaskFrame, text="Add Sub-Task", fg_color="transparent", hover_color=["gray90", "gray21"], compound="left", anchor="w",
                                                 font=customtkinter.CTkFont(size=15), command=lambda: addSubTaskDisplay(self, id, classID, taskInfo))
-    self.addSubTask.grid(row=0, column=0, sticky="nsew", padx=10, pady=6)
+    self.addSubTask.grid(row=len(subTask), column=0, sticky="nsew", padx=10, pady=6)
 
     self.edit = customtkinter.CTkButton(master=self.buttonFrame, text="Edit")
     self.edit.grid(row=0, column=0, sticky="nsew", padx=10, pady=6)

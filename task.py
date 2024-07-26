@@ -49,6 +49,16 @@ def getMainTasks(organize: str = None):
 
     return rows
 
+def getMainTaskSingle(id):
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    c.execute(f"SELECT * FROM tasks WHERE id = '{id}'")
+    rows = c.fetchall()
+    conn.close()
+
+    return rows
+
 def finishMainTask(self, id):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()

@@ -43,7 +43,7 @@ def showAssignment(self, id):
     self.edit.grid(row=0, column=0, sticky="nsew", padx=10, pady=6)
 
     self.delete = customtkinter.CTkButton(master=self.buttonFrame, text="Delete")
-    self.delete.grid(row=0, column=1, sticky="nsew", padx=10, pady=6)
+    self.delete.grid(row=0, column=2, sticky="nsew", padx=10, pady=6)
 
     self.complete = customtkinter.CTkButton(master=self.buttonFrame, text="Complete")
-    self.complete.grid(row=0, column=2, sticky="nsew", padx=10, pady=6)
+    self.complete.grid(row=0, column=1, sticky="nsew", padx=10, pady=6)

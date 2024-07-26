@@ -25,19 +25,23 @@ def showAssignment(self, id):
 
     self.subTaskFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
     self.subTaskFrame.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
+    self.subTaskFrame.grid_columnconfigure((0), weight=1)
 
     self.buttonFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
     self.buttonFrame.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
     self.buttonFrame.grid_columnconfigure((0, 1, 2), weight=1)
 
-    self.assignment = customtkinter.CTkLabel(master=self.mainHeader, text=f"{taskInfo[0][1]}", font=customtkinter.CTkFont(size=20, weight="bold"), anchor="w", justify="left",)
+    self.assignment = customtkinter.CTkLabel(master=self.mainHeader, text=f"{taskInfo[0][1]}", font=customtkinter.CTkFont(size=20, weight="bold"), anchor="w", justify="left")
     self.assignment.grid(row=0, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
 
-    self.due = customtkinter.CTkLabel(master=self.subHeader, text=f"Due: {taskInfo[0][3]}/{taskInfo[0][2]}/{taskInfo[0][4]}", font=customtkinter.CTkFont(size=15), anchor="w", justify="left",)
+    self.due = customtkinter.CTkLabel(master=self.subHeader, text=f"Due: {taskInfo[0][3]}/{taskInfo[0][2]}/{taskInfo[0][4]}", font=customtkinter.CTkFont(size=15), anchor="w", justify="left")
     self.due.grid(row=0, column=0, sticky="nsew", padx=10, pady=4)
 
-    self.classContent = customtkinter.CTkLabel(master=self.subHeader, text=f"Class: {taskInfo[0][7]}", font=customtkinter.CTkFont(size=15), anchor="w", justify="left",)
+    self.classContent = customtkinter.CTkLabel(master=self.subHeader, text=f"Class: {taskInfo[0][7]}", font=customtkinter.CTkFont(size=15), anchor="w", justify="left")
     self.classContent.grid(row=0, column=1, sticky="nsew", padx=10, pady=4)
+
+    self.addSubTask = customtkinter.CTkButton(master=self.subTaskFrame, text="Add Subtask", fg_color="transparent", hover_color=["gray90", "gray21"], compound="left", anchor="w")
+    self.addSubTask.grid(row=0, column=0, sticky="nsew", padx=10, pady=6)
 
     self.edit = customtkinter.CTkButton(master=self.buttonFrame, text="Edit")
     self.edit.grid(row=0, column=0, sticky="nsew", padx=10, pady=6)

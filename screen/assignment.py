@@ -39,6 +39,7 @@ def showAssignment(self, id):
     self.assignment = customtkinter.CTkLabel(master=self.mainHeader, text=f"{taskInfo[0][1]}", font=customtkinter.CTkFont(size=20, weight="bold"), anchor="w", justify="left",
                                                 corner_radius=6)
     self.assignment.grid(row=0, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
+    self.assignment.grid_info()
 
     self.due = customtkinter.CTkLabel(master=self.subHeader, text=f"Due: {taskInfo[0][3]}/{taskInfo[0][2]}/{taskInfo[0][4]}", font=customtkinter.CTkFont(size=15), 
                                         anchor="w", justify="left", corner_radius=6)
@@ -67,7 +68,7 @@ def showAssignment(self, id):
                                                 font=customtkinter.CTkFont(size=15), command=lambda: addSubTaskDisplay(self, id, classID, taskInfo))
     self.addSubTask.grid(row=len(subTask), column=0, sticky="nsew", padx=10, pady=6)
 
-    self.edit = customtkinter.CTkButton(master=self.buttonFrame, text="Edit")
+    self.edit = customtkinter.CTkButton(master=self.buttonFrame, text="Edit", command=lambda: editAssignment(self, id))
     self.edit.grid(row=0, column=0, sticky="nsew", padx=10, pady=6)
 
     self.delete = customtkinter.CTkButton(master=self.buttonFrame, text="Delete", command=lambda: deleteAssignment(self, id))
@@ -110,6 +111,24 @@ def doneSubTaskClick(self, id: str, i):
     finishSubTask(self, id)
 
     self.subTaskInfo[i]["frame"].destroy()
+
+def editAssignment(self, id):
+    beforeTaskName = self.assignment.cget("text")
+
+    editTaskName = customtkinter.CTkEntry(master=self.mainHeader, placeholder_text="Edit Task Name (max: 30)", width=400, font=customtkinter.CTkFont(size=18))
+    editTaskName.grid(row=0, column=0, sticky="nsew", padx=10, pady=4)
+
+    self.buttonFrame.grid_forget()
+
+    self.buttonFrame2 = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+    self.buttonFrame2.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
+    self.buttonFrame2.grid_columnconfigure((0, 1), weight=1)
+
+    self.save = customtkinter.CTkButton(master=self.buttonFrame2, text="Save")
+    self.save.grid(row=0, column=0, sticky="nsew", padx=10, pady=6)
+
+    self.cancel = customtkinter.CTkButton(master=self.buttonFrame2, text="Cancel")
+    self.cancel.grid(row=0, column=1, sticky="nsew", padx=10, pady=6)
 
 def completeAssignment(self, id):
     from tabs.home import home

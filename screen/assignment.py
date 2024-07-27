@@ -62,7 +62,6 @@ def showAssignment(self, id):
         self.subTaskInfo[i]["done"].grid(row=0, column=1, sticky="nsew", padx=10, pady=4)
         taskID = subTask[i][0]
         makeButtonWork(self, i, taskID)
-        #self.done.place(relx=0.8, rely=0)
 
     self.addSubTask = customtkinter.CTkButton(master=self.subTaskFrame, text="Add Sub-Task", fg_color="transparent", hover_color=["gray90", "gray21"], compound="left", anchor="w",
                                                 font=customtkinter.CTkFont(size=15), command=lambda: addSubTaskDisplay(self, id, classID, taskInfo))
@@ -84,6 +83,7 @@ def addSubTaskDisplay(self, parentID, classID, taskInfo):
 
     self.subTaskEntry = customtkinter.CTkEntry(master=self.addSubTaskFrame, placeholder_text="Sub-Task Name (max: 30)")
     self.subTaskEntry.grid(row=0, column=0, sticky="nsew", padx=10, pady=6)
+    self.subTaskEntry.focus()
 
     self.subTaskButton = customtkinter.CTkButton(master=self.addSubTaskFrame, text="Add Sub-Task", command=lambda: addSubTaskFunction(self, parentID, classID, taskInfo))
     self.subTaskButton.grid(row=0, column=1, sticky="nsew", padx=0, pady=6)

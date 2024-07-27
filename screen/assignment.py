@@ -70,7 +70,7 @@ def showAssignment(self, id):
     self.edit = customtkinter.CTkButton(master=self.buttonFrame, text="Edit")
     self.edit.grid(row=0, column=0, sticky="nsew", padx=10, pady=6)
 
-    self.delete = customtkinter.CTkButton(master=self.buttonFrame, text="Delete")
+    self.delete = customtkinter.CTkButton(master=self.buttonFrame, text="Delete", command=lambda: deleteAssignment(self, id))
     self.delete.grid(row=0, column=2, sticky="nsew", padx=10, pady=6)
 
     self.complete = customtkinter.CTkButton(master=self.buttonFrame, text="Complete")
@@ -110,3 +110,7 @@ def doneSubTaskClick(self, id: str, i):
     finishSubTask(self, id)
 
     self.subTaskInfo[i]["frame"].destroy()
+
+def deleteAssignment(self, id):
+    deleteTask(id)
+    deleteSubTask(id)

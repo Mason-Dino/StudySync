@@ -207,12 +207,15 @@ def loadFile():
             theme = setupDir["theme"]
             progress = setupDir["progress"]
             level = setupDir["level"]
+            version = setupDir["version"]
 
             for i in range(numClass):
                 id = setupDir[f"class{i+1}"]["id"]
                 name = setupDir[f"class{i+1}"]["name"]
                 teacher = setupDir[f"class{i+1}"]["teacher"]
                 subject = setupDir[f"class{i+1}"]["subject"]
+                color = setupDir[f"class{i+1}"]["color"]
+                icon =  setupDir[f"class{i+1}"]["icon"]
 
             with open("setup.json", "w") as f:
                 json.dump(setupDir, f, indent=4)

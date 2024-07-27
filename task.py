@@ -26,7 +26,6 @@ def database():
         print("Database created successfully")
 
 def addMainTask(taskName, taskID, className, classID, day, month, year):
-    print(taskName, taskID, className, classID, day, month, year)
     dateNum = int(f"{month}" + f"{day}" + f"{year}")
 
     conn = sqlite3.connect('study.db')
@@ -37,7 +36,6 @@ def addMainTask(taskName, taskID, className, classID, day, month, year):
     conn.close()
 
 def addSubTask(taskName, taskID, className, classID, day, month, year, parentID):
-    print(taskName, taskID, className, classID, day, month, year, parentID)
     dateNum = int(f"{month}" + f"{day}" + f"{year}")
 
     conn = sqlite3.connect('study.db')
@@ -107,7 +105,6 @@ def finishMainTask(self, id):
     
     if before > after:
         self.setupDir["level"] += 1
-        print("level up")
 
 
     self.setupDir["progress"] = self.progressbar.get()

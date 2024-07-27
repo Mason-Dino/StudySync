@@ -114,11 +114,15 @@ def doneSubTaskClick(self, id: str, i):
 
 def editAssignment(self, id):
     beforeTaskName = self.assignment.cget("text")
+    taskInfo = getMainTaskSingle(id)
+    print(taskInfo)
 
-    editTaskName = customtkinter.CTkEntry(master=self.mainHeader, placeholder_text="Edit Task Name (max: 30)", width=400, font=customtkinter.CTkFont(size=18))
+    editTaskName = customtkinter.CTkEntry(master=self.mainHeader, placeholder_text="Edit Task Name (max: 30)", width=400, 
+                                            font=customtkinter.CTkFont(size=18), textvariable=customtkinter.StringVar(value=taskInfo[0][1]))
     editTaskName.grid(row=0, column=0, sticky="nsew", padx=10, pady=4)
 
     self.buttonFrame.grid_forget()
+    self.subHeader.grid_forget()
 
     self.buttonFrame2 = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
     self.buttonFrame2.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
@@ -129,6 +133,23 @@ def editAssignment(self, id):
 
     self.cancel = customtkinter.CTkButton(master=self.buttonFrame2, text="Cancel", command=lambda: cancel(self, id))
     self.cancel.grid(row=0, column=1, sticky="nsew", padx=10, pady=6)
+
+    self.subHeader2 = customtkinter.CTkFrame(master=self.header, fg_color="transparent", corner_radius=6)
+    self.subHeader2.grid(row=1, column=0, sticky="nsew")
+
+    self.due2 = customtkinter.CTkLabel(master=self.subHeader2, text="Due: ", font=customtkinter.CTkFont(size=15))
+    self.due2.grid(row=0, column=0, sticky="nsew", padx=10, pady=4)
+
+    self.dueDate2 = customtkinter.CTkEntry(master=self.subHeader2, font=customtkinter.CTkFont(size=15), placeholder_text="DD/MM/YYYY",
+                                            textvariable=customtkinter.StringVar(value=f"{taskInfo[0][3]}/{taskInfo[0][2]}/{taskInfo[0][4]}"))
+    self.dueDate2.grid(row=0, column=1, sticky="nsew", padx=10, pady=4)
+
+    self.classContent = customtkinter.CTkLabel(master=self.subHeader2, text=f"Class: {taskInfo[0][7]}", font=customtkinter.CTkFont(size=15), 
+                                                anchor="w", justify="left", corner_radius=6)
+    self.classContent.grid(row=0, column=2, sticky="nsew", pady=4)
+
+    self.subTaskFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+
 
 def completeAssignment(self, id):
     from tabs.home import home

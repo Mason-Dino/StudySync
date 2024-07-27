@@ -245,7 +245,7 @@ class setup(customtkinter.CTk):
 
                     self.setupDir["progress"] = 0
                     self.setupDir["level"] = 0
-                    self.setupDir["version"] = "v0.5.0"
+                    self.setupDir["version"] = "v0.6.0"
 
                     # Convert the setup directory to JSON format and store it in a variable
                     json_obj = json.dumps(self.setupDir, indent=4)

@@ -193,9 +193,6 @@ def saveFile():
 
 def loadFile():
     file_path = filedialog.askopenfilename(filetypes=(("JSON Files", "*.json"), ("All Files", "*.*")))
-    if file_path:
-        # Do something with the selected file path
-        print("Selected file:", file_path)
 
     with open(file_path, "r") as f:
         setupDir = json.load(f)

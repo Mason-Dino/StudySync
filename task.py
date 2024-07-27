@@ -132,7 +132,6 @@ def finishSubTask(self, id: str):
     
     if before > after:
         self.setupDir["level"] += 1
-        print("level up")
 
 
     self.setupDir["progress"] = self.progressbar.get()

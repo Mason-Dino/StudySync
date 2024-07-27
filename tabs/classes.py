@@ -76,5 +76,4 @@ def configScreen(self, c, classButton):
     classButton[c+1].configure(command=lambda: classScreen(self, classButton[c+1]._text))
 
 def classScreen(self, button):
-    print(button)
     classroom(self, "id", button)

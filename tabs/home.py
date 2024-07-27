@@ -164,7 +164,4 @@ def finishTask(self, frame, id):
         self.error.grid(row=0, column=0, sticky="nsew")
 
 def showMainTask(self, event, id):
-    print("showing main task")
-    print(event)
-    print(id)
     showAssignment(self, id)

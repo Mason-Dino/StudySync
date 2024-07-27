@@ -120,7 +120,6 @@ def editAssignment(self, id):
     self.beforeTaskName = self.assignment.cget("text")
     self.beforeDueDate = self.due.cget("text")
     taskInfo = getMainTaskSingle(id)
-    print(taskInfo)
 
     self.editTaskName = customtkinter.CTkEntry(master=self.mainHeader, placeholder_text="Edit Task Name (max: 30)", width=400, 
                                             font=customtkinter.CTkFont(size=18), textvariable=customtkinter.StringVar(value=taskInfo[0][1]))
@@ -182,11 +181,7 @@ def save(self, id):
     afterTaskName = self.editTaskName.get()
     afterDueDate = self.dueDate2.get()
 
-    print(self.beforeDueDate)
-    print(afterDueDate)
-
     self.beforeDueDate = self.beforeDueDate.split(" ")[1]
-    print(self.beforeDueDate)
 
     if len(afterTaskName) > 30:
         messagebox.showerror(title="Error", message="Task name too long")

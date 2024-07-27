@@ -79,6 +79,8 @@ def showAssignment(self, id):
     self.complete = customtkinter.CTkButton(master=self.buttonFrame, text="Complete", command=lambda: completeAssignment(self, id))
     self.complete.grid(row=0, column=1, sticky="nsew", padx=10, pady=6)
 
+    self.bind("<Return>", lambda event: addSubTaskFunction(self, id, taskInfo))
+
 def addSubTaskDisplay(self, parentID, classID, taskInfo):
     self.addSubTaskFrame = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=topLevel())
     self.addSubTaskFrame.grid(row=self.numSubTask, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
@@ -88,10 +90,10 @@ def addSubTaskDisplay(self, parentID, classID, taskInfo):
     self.subTaskEntry.grid(row=0, column=0, sticky="nsew", padx=10, pady=6)
     self.subTaskEntry.focus()
 
-    self.subTaskButton = customtkinter.CTkButton(master=self.addSubTaskFrame, text="Add Sub-Task", command=lambda: addSubTaskFunction(self, parentID, classID, taskInfo))
+    self.subTaskButton = customtkinter.CTkButton(master=self.addSubTaskFrame, text="Add Sub-Task", command=lambda: addSubTaskFunction(self, parentID, taskInfo))
     self.subTaskButton.grid(row=0, column=1, sticky="nsew", padx=0, pady=6)
 
-def addSubTaskFunction(self, parentID, classID, taskInfo):
+def addSubTaskFunction(self, parentID, taskInfo):
     if len(self.subTaskEntry.get()) > 30:
         messagebox.showerror("Error", "Sub-Task Name is too long")
 

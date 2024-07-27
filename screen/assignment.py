@@ -1,9 +1,11 @@
 from tkinter import messagebox
 import customtkinter
 from task import *
+import datetime
 
 from themes.theme import topLevel
 from id import makeID
+
 
 def showAssignment(self, id):
     self.content = customtkinter.CTkFrame(master=self, corner_radius=6)
@@ -113,13 +115,14 @@ def doneSubTaskClick(self, id: str, i):
     self.subTaskInfo[i]["frame"].destroy()
 
 def editAssignment(self, id):
-    beforeTaskName = self.assignment.cget("text")
+    self.beforeTaskName = self.assignment.cget("text")
+    self.beforeDueDate = self.due.cget("text")
     taskInfo = getMainTaskSingle(id)
     print(taskInfo)
 
-    editTaskName = customtkinter.CTkEntry(master=self.mainHeader, placeholder_text="Edit Task Name (max: 30)", width=400, 
+    self.editTaskName = customtkinter.CTkEntry(master=self.mainHeader, placeholder_text="Edit Task Name (max: 30)", width=400, 
                                             font=customtkinter.CTkFont(size=18), textvariable=customtkinter.StringVar(value=taskInfo[0][1]))
-    editTaskName.grid(row=0, column=0, sticky="nsew", padx=10, pady=4)
+    self.editTaskName.grid(row=0, column=0, sticky="nsew", padx=10, pady=4)
 
     self.buttonFrame.grid_forget()
     self.subHeader.grid_forget()
@@ -128,7 +131,7 @@ def editAssignment(self, id):
     self.buttonFrame2.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
     self.buttonFrame2.grid_columnconfigure((0, 1), weight=1)
 
-    self.save = customtkinter.CTkButton(master=self.buttonFrame2, text="Save")
+    self.save = customtkinter.CTkButton(master=self.buttonFrame2, text="Save", command=lambda: save(self, id))
     self.save.grid(row=0, column=0, sticky="nsew", padx=10, pady=6)
 
     self.cancel = customtkinter.CTkButton(master=self.buttonFrame2, text="Cancel", command=lambda: cancel(self, id))
@@ -172,3 +175,18 @@ def deleteAssignment(self, id):
 
 def cancel(self, id):
     showAssignment(self, id)
+
+def save(self, id):
+    afterTaskName = self.editTaskName.get()
+    afterDueDate = self.dueDate2.get()
+
+    if len(afterTaskName) > 30:
+        messagebox.showerror(title="Error", message="Task name too long")
+
+    try:
+        datetime.datetime.strptime(afterDueDate, "%d/%m/%Y")
+    
+    except:
+        messagebox.showerror(title="Error", message="Invalid due date")
+
+    print("hey")

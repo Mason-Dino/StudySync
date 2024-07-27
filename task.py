@@ -150,7 +150,7 @@ def searchDayTask(day: int, month: int, year: int = None):
     if year == None:
         year = datetime.datetime.now().year
 
-    c.execute(f"SELECT * FROM tasks WHERE day={day} AND month={month} AND year={year}")
+    c.execute(f"SELECT * FROM tasks WHERE day={day} AND month={month} AND year={year} and parentID='None'")
     rows = c.fetchall()
     conn.close()
 

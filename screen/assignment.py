@@ -73,7 +73,7 @@ def showAssignment(self, id):
     self.delete = customtkinter.CTkButton(master=self.buttonFrame, text="Delete", command=lambda: deleteAssignment(self, id))
     self.delete.grid(row=0, column=2, sticky="nsew", padx=10, pady=6)
 
-    self.complete = customtkinter.CTkButton(master=self.buttonFrame, text="Complete")
+    self.complete = customtkinter.CTkButton(master=self.buttonFrame, text="Complete", command=lambda: completeAssignment(self, id))
     self.complete.grid(row=0, column=1, sticky="nsew", padx=10, pady=6)
 
 def addSubTaskDisplay(self, parentID, classID, taskInfo):
@@ -111,9 +111,21 @@ def doneSubTaskClick(self, id: str, i):
 
     self.subTaskInfo[i]["frame"].destroy()
 
+def completeAssignment(self, id):
+    from tabs.home import home
+
+    finishMainTask(self, id)
+
+    messagebox.showinfo(title="Success", message="Assignment Completed")
+
+    home(self)
+
 def deleteAssignment(self, id):
     from tabs.home import home
 
     deleteTask(id)
     deleteSubTask(id)
+
+    messagebox.showinfo(title="Success", message="Assignment Deleted")
+
     home(self)

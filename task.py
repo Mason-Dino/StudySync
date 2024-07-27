@@ -81,6 +81,12 @@ def getSubTasks(parentid):
     return rows
 
 def finishMainTask(self, id):
+    subTask = getSubTasks(id)
+
+    if len(subTask) > 0:
+        for i in range(len(subTask)):
+            finishSubTask(self, subTask[i][0])
+
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 

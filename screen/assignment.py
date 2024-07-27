@@ -180,13 +180,39 @@ def save(self, id):
     afterTaskName = self.editTaskName.get()
     afterDueDate = self.dueDate2.get()
 
+    print(self.beforeDueDate)
+    print(afterDueDate)
+
+    self.beforeDueDate = self.beforeDueDate.split(" ")[1]
+    print(self.beforeDueDate)
+
     if len(afterTaskName) > 30:
         messagebox.showerror(title="Error", message="Task name too long")
 
     try:
-        datetime.datetime.strptime(afterDueDate, "%d/%m/%Y")
+        datetime.datetime.strptime(afterDueDate, "%m/%d/%Y")
     
     except:
         messagebox.showerror(title="Error", message="Invalid due date")
 
-    print("hey")
+    if afterTaskName == "" or afterDueDate == "":
+        messagebox.showerror(title="Error", message="You are missing a required field")
+
+    if afterTaskName == self.beforeTaskName:
+        changeTaskName = False
+
+    else:
+        editTask(id, "name", afterTaskName)
+        changeTaskName = True
+
+    if self.beforeDueDate == afterDueDate:
+        changeDueDate = False
+
+    else:
+        editTask(id, "date", afterDueDate)
+        changeDueDate = True
+
+    if changeTaskName == True or changeDueDate == True:
+        messagebox.showinfo(title="Success", message="Changes saved!")
+
+    showAssignment(self, id)

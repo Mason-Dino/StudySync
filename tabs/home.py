@@ -92,7 +92,7 @@ def home(self):
         for i in range(len(task)):
             makeButtonWork(self, i)
 
-    #self.bind("<Button-1>", makeTask)
+    self.bind("<Return>", lambda event: makeTask(self))
 
 def makeButtonWork(self, i):
     self.taskFrame[i]["done"].configure(command=lambda: finishTask(self, self.taskFrame[i]["frame"], self.taskFrame[i]["id"]))

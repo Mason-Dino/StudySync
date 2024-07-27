@@ -163,6 +163,19 @@ def getOverdueTasks():
 
     return rows
 
+def editTask(self, id, type: str, value: str):
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    if type == "name":
+        c.execute(f"UPDATE tasks SET task='{value}' WHERE id='{id}'")
+
+    elif type == "date":
+        pass
+
+    conn.commit()
+    conn.close()
+
 def deleteTask(id):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()

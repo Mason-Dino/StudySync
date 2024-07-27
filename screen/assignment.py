@@ -112,5 +112,8 @@ def doneSubTaskClick(self, id: str, i):
     self.subTaskInfo[i]["frame"].destroy()
 
 def deleteAssignment(self, id):
+    from tabs.home import home
+
     deleteTask(id)
     deleteSubTask(id)
+    home(self)

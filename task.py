@@ -163,7 +163,7 @@ def getOverdueTasks():
 
     return rows
 
-def editTask(self, id, type: str, value: str):
+def editTask(id, type: str, value: str):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
@@ -171,7 +171,21 @@ def editTask(self, id, type: str, value: str):
         c.execute(f"UPDATE tasks SET task='{value}' WHERE id='{id}'")
 
     elif type == "date":
-        pass
+        value = value.split("/")
+        day = int(value[1])
+        month = int(value[0])
+        year = int(value[2])
+        dueDate = int(f"{month}" + f"{day}" + f"{year}")
+
+        c.execute(f"UPDATE tasks SET date={dueDate} WHERE id='{id}'")
+        c.execute(f"UPDATE tasks SET day={day} WHERE id='{id}'")
+        c.execute(f"UPDATE tasks SET month={month} WHERE id='{id}'")
+        c.execute(f"UPDATE tasks SET year={year} WHERE id='{id}'")
+
+        c.execute(f"UPDATE tasks SET date={dueDate} WHERE parentID='{id}'")
+        c.execute(f"UPDATE tasks SET day={day} WHERE parentID='{id}'")
+        c.execute(f"UPDATE tasks SET month={month} WHERE parentID='{id}'")
+        c.execute(f"UPDATE tasks SET year={year} WHERE parentID='{id}'")
 
     conn.commit()
     conn.close()

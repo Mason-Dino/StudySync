@@ -127,7 +127,7 @@ def editAssignment(self, id):
     self.save = customtkinter.CTkButton(master=self.buttonFrame2, text="Save")
     self.save.grid(row=0, column=0, sticky="nsew", padx=10, pady=6)
 
-    self.cancel = customtkinter.CTkButton(master=self.buttonFrame2, text="Cancel")
+    self.cancel = customtkinter.CTkButton(master=self.buttonFrame2, text="Cancel", command=lambda: cancel(self, id))
     self.cancel.grid(row=0, column=1, sticky="nsew", padx=10, pady=6)
 
 def completeAssignment(self, id):
@@ -148,3 +148,6 @@ def deleteAssignment(self, id):
     messagebox.showinfo(title="Success", message="Assignment Deleted")
 
     home(self)
+
+def cancel(self, id):
+    showAssignment(self, id)

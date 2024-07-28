@@ -1,3 +1,4 @@
+from tkinter import messagebox
 import customtkinter
 import subprocess
 
@@ -27,5 +28,10 @@ def classroom(self, id, className):
     self.classTeacher = customtkinter.CTkLabel(master=self.header, text=f"Teacher: {classInfo["teacher"]}", cursor="hand2",
                                                 font=customtkinter.CTkFont(size=15), anchor="w", justify="left")
     self.classTeacher.grid(row=1, column=0, sticky="nsew", padx=10, pady=7)
-    cmd='echo '+classInfo["email"]+'|clip'
-    self.classTeacher.bind("<Button-1>", lambda event: subprocess.check_call(cmd, shell=True))
+    self.classTeacher.bind("<Button-1>", lambda event: teacherEmail(self, classInfo["email"]))
+
+def teacherEmail(self, email):
+    cmd='echo '+ email +'|clip'
+    subprocess.Popen(cmd, shell=True)
+
+    messagebox.showinfo(title="Success", message="Email copied to clipboard!")

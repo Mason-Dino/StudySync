@@ -68,8 +68,13 @@ def classInfoScreen(self, id):
     self.buttonFrame.grid(row=2, column=0, sticky="nsew", padx=10, pady=3)
     self.buttonFrame.grid_columnconfigure((0, 1), weight=1)
 
-    self.backButton = customtkinter.CTkButton(master=self.buttonFrame, text="Back")
+    self.backButton = customtkinter.CTkButton(master=self.buttonFrame, text="Back", command=lambda: back(self, classInfo["id"], classInfo["name"]))
     self.backButton.grid(row=0, column=0, sticky="nsew", padx=10, pady=3)
 
     self.editButton = customtkinter.CTkButton(master=self.buttonFrame, text="Edit", command=lambda: classAddEdit(self, "edit", classInfo["name"]))
     self.editButton.grid(row=0, column=1, sticky="nsew", padx=10, pady=3)
+
+def back(self, id, name):
+    from screen.classroom import classroom
+
+    classroom(self, id, name)

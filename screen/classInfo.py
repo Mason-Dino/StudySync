@@ -3,6 +3,7 @@ import customtkinter
 from task import getClassInfo
 from themes.theme import topLevel, loadColor
 from icon import loadIcon
+from screen.classAddEdit import classAddEdit
 
 def classInfoScreen(self, id):
     classInfo = getClassInfo(id)
@@ -54,7 +55,7 @@ def classInfoScreen(self, id):
     self.color = customtkinter.CTkLabel(master=self.infoFrame, text=f"Color:")
     self.color.grid(row=5, column=0, sticky="nsew", padx=10, pady=infoFramepady)
 
-    self.color2 = customtkinter.CTkFrame(master=self.infoFrame, fg_color=loadColor(classInfo['color']), width=40, height=20)
+    self.color2 = customtkinter.CTkFrame(master=self.infoFrame, fg_color=loadColor(classInfo['color']), width=30, height=20)
     self.color2.grid(row=5, column=1, sticky="nsew", padx=10, pady=infoFramepady)
 
     self.classID = customtkinter.CTkLabel(master=self.infoFrame, text=f"Class ID:")
@@ -70,5 +71,5 @@ def classInfoScreen(self, id):
     self.backButton = customtkinter.CTkButton(master=self.buttonFrame, text="Back")
     self.backButton.grid(row=0, column=0, sticky="nsew", padx=10, pady=3)
 
-    self.editButton = customtkinter.CTkButton(master=self.buttonFrame, text="Edit")
+    self.editButton = customtkinter.CTkButton(master=self.buttonFrame, text="Edit", command=lambda: classAddEdit(self, "edit", classInfo["name"]))
     self.editButton.grid(row=0, column=1, sticky="nsew", padx=10, pady=3)

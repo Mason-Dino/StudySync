@@ -43,6 +43,8 @@ def classAddEdit(self, type: str, name: str = None):
                                                 variable=customtkinter.StringVar(value="Color"), command=lambda colorOption: changeColor(self, colorOption))
     self.color.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
 
+    self.newColor = customtkinter.CTkEntry(master=self.cosmetics, placeholder_text="Color (hex code)")
+
     self.teacherFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
     self.teacherFrame.grid(row=3, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
     self.teacherFrame.grid_columnconfigure((0,1), weight=1)
@@ -172,9 +174,9 @@ def cancel(self):
 
 def changeColor(self, colorOption):
     if colorOption == "Other":
-        askedColor = customtkinter.CTkInputDialog(title="Color", text="What color would you like? (ex: #115b5c hex code)").get_input()
+        self.color.grid_forget()
+        self.color.grid(row=2, column=0,  sticky="nsew", padx=10, pady=10)
 
-        #if askedColor == "" or askedColor == None:
-        #    self.color.configure(variable=customtkinter.StringVar(value="Teal"))
-
-        print(askedColor)
+        self.newColor.grid_forget()
+        self.newColor.grid(row=2, column=1, sticky="nsew", padx=10, pady=10)
+    

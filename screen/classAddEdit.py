@@ -39,7 +39,7 @@ def classAddEdit(self, type: str, name: str = None):
     self.icon = customtkinter.CTkOptionMenu(master=self.cosmetics, values=getIcons(), variable=customtkinter.StringVar(value="Icon"))
     self.icon.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
-    self.color = customtkinter.CTkOptionMenu(master=self.cosmetics, values=["Teal", "Orange", "Purple", "Red", "Yellow", "Green", "Blue"],
+    self.color = customtkinter.CTkOptionMenu(master=self.cosmetics, values=["Teal", "Orange", "Purple", "Red", "Yellow", "Green", "Blue", "Other"],
                                                 variable=customtkinter.StringVar(value="Color"))
     self.color.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
 

@@ -10,6 +10,3 @@ def assignments(self):
 
     self.test = customtkinter.CTkLabel(master=self.content, text="Assignments")
     self.test.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
-
-    self.bob = customtkinter.CTkInputDialog(title="test", text="What is this")
-    print(self.bob.get_input())

@@ -36,18 +36,22 @@ def classes(self):
         while (c < numClasses):
             c += 1
 
+            classButton[c] = {}
+
+            classButton[c]["id"] = self.setupDir[f"class{c}"]["id"]
+
             if c == numClasses:
-                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
-                classButton[c].grid(row=row, column=0, columnspan=2, pady=10)
+                classButton[c]["button"] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
+                classButton[c]["button"].grid(row=row, column=0, columnspan=2, pady=10)
 
             elif c % 2 == 0:
-                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
-                classButton[c].grid(row=row, column=1, pady=15)
+                classButton[c]["button"] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
+                classButton[c]["button"].grid(row=row, column=1, pady=15)
                 row += 1
 
             else:
-                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
-                classButton[c].grid(row=row, column=0, pady=15)
+                classButton[c]["button"] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
+                classButton[c]["button"].grid(row=row, column=0, pady=15)
 
     elif odd == False:
         c = 0
@@ -56,24 +60,28 @@ def classes(self):
         while (c < numClasses):
             c += 1
 
+            classButton[c] = {}
+
+            classButton[c]["id"] = self.setupDir[f"class{c}"]["id"]
+
             if c == 1:
-                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
-                classButton[c].grid(row=row, column=0, pady=15)
+                classButton[c]["button"] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
+                classButton[c]["button"].grid(row=row, column=0, pady=15)
 
             elif c % 2 == 0: 
-                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
-                classButton[c].grid(row=row, column=1, pady=15)
+                classButton[c]["button"] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
+                classButton[c]["button"].grid(row=row, column=1, pady=15)
                 row += 1
 
             else:
-                classButton[c] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
-                classButton[c].grid(row=row, column=0, pady=15)
+                classButton[c]["button"] = customtkinter.CTkButton(master=self.classFrame, text=self.setupDir[f"class{c}"]["name"], width=width, image=loadIcon(self.setupDir[f"class{c}"]["icon"]))
+                classButton[c]["button"].grid(row=row, column=0, pady=15)
 
     for i in range(numClasses):
         configScreen(self, i, classButton)
 
 def configScreen(self, c, classButton):
-    classButton[c+1].configure(command=lambda: classScreen(self, classButton[c+1]._text))
+    classButton[c+1]["button"].configure(command=lambda: classScreen(self, classButton[c+1]["button"]._text, classButton[c+1]["id"]))
 
-def classScreen(self, button):
-    classroom(self, "id", button)
+def classScreen(self, button, id):
+    classroom(self, id, button)

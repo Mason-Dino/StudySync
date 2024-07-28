@@ -1,4 +1,5 @@
 import customtkinter
+import subprocess
 
 from themes.theme import topLevel
 from task import *
@@ -23,6 +24,8 @@ def classroom(self, id, className):
                                             anchor="w", justify="left")
     self.className.grid(row=0, column=0, sticky="nsew", padx=10, pady=7)
 
-    self.classTeacher = customtkinter.CTkLabel(master=self.header, text=f"Teacher: {classInfo["teacher"]}", 
+    self.classTeacher = customtkinter.CTkLabel(master=self.header, text=f"Teacher: {classInfo["teacher"]}", cursor="hand2",
                                                 font=customtkinter.CTkFont(size=15), anchor="w", justify="left")
     self.classTeacher.grid(row=1, column=0, sticky="nsew", padx=10, pady=7)
+    cmd='echo '+classInfo["email"]+'|clip'
+    self.classTeacher.bind("<Button-1>", lambda event: subprocess.check_call(cmd, shell=True))

@@ -40,7 +40,7 @@ def classAddEdit(self, type: str, name: str = None):
     self.icon.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
     self.color = customtkinter.CTkOptionMenu(master=self.cosmetics, values=["Teal", "Orange", "Purple", "Red", "Yellow", "Green", "Blue", "Other"],
-                                                variable=customtkinter.StringVar(value="Color"))
+                                                variable=customtkinter.StringVar(value="Color"), command=lambda colorOption: changeColor(self, colorOption))
     self.color.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
 
     self.teacherFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
@@ -169,3 +169,12 @@ def updateAdd(self, type: str, classNum: int = None):
 
 def cancel(self):
     home(self)
+
+def changeColor(self, colorOption):
+    if colorOption == "Other":
+        askedColor = customtkinter.CTkInputDialog(title="Color", text="What color would you like? (ex: #115b5c hex code)").get_input()
+
+        #if askedColor == "" or askedColor == None:
+        #    self.color.configure(variable=customtkinter.StringVar(value="Teal"))
+
+        print(askedColor)

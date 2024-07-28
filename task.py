@@ -82,7 +82,7 @@ def getClassTasks(classID):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
-    c.execute(f"SELECT * FROM tasks WHERE classID = '{classID}' AND parentID='None'")
+    c.execute(f"SELECT * FROM tasks WHERE classID = '{classID}' AND parentID='None' ORDER BY date ASC")
     rows = c.fetchall()
     conn.close()
 

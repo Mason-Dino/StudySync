@@ -6,6 +6,7 @@ from themes.theme import topLevel
 from task import *
 from screen.classAddEdit import classAddEdit
 from tabs.home import makeButtonWork, finishTask
+from screen.classInfo import classInfoScreen
 
 def classroom(self, id, className):
     classInfo = getClassInfo(id)
@@ -42,7 +43,7 @@ def classroom(self, id, className):
     self.editClass = customtkinter.CTkButton(master=self.buttonFrame, text="Edit", command=lambda: classAddEdit(self, "edit", className))
     self.editClass.grid(row=0, column=0, sticky="nsew", padx=10, pady=7)
 
-    self.infoClass = customtkinter.CTkButton(master=self.buttonFrame, text="Info", command=lambda: print("info"))
+    self.infoClass = customtkinter.CTkButton(master=self.buttonFrame, text="Info", command=lambda: classInfoScreen(self, id))
     self.infoClass.grid(row=0, column=1, sticky="nsew", padx=10, pady=7)
 
     if task == []:

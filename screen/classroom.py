@@ -1,12 +1,27 @@
 import customtkinter
 
+from themes.theme import topLevel
+from task import *
+
 def classroom(self, id, className):
-    print(id)
+    classInfo = getClassInfo(id)
+
     self.content = customtkinter.CTkFrame(master=self)
     self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
 
     self.content.grid_columnconfigure(0, weight=1)
-    self.content.grid_rowconfigure(0, weight=1)
+    self.content.grid_rowconfigure((1), weight=1)
 
-    self.test = customtkinter.CTkLabel(master=self.content, text=className)
-    self.test.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+    self.header = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+    self.header.grid(row=0, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
+
+    self.mainContent = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+    self.mainContent.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
+
+    self.className = customtkinter.CTkLabel(master=self.header, text=className, font=customtkinter.CTkFont(size=20, weight="bold"),
+                                            anchor="w", justify="left")
+    self.className.grid(row=0, column=0, sticky="nsew", padx=10, pady=7)
+
+    self.classTeacher = customtkinter.CTkLabel(master=self.header, text=f"Teacher: {classInfo["teacher"]}", 
+                                                font=customtkinter.CTkFont(size=15), anchor="w", justify="left")
+    self.classTeacher.grid(row=1, column=0, sticky="nsew", padx=10, pady=7)

@@ -12,6 +12,7 @@ from themes.theme import *
 
 class setup(customtkinter.CTk):
     def __init__(self):
+        self.version = "v0.7.0"
         """
         This is the constructor for the Setup class. It initializes the setup window and its elements.
         """
@@ -133,28 +134,6 @@ class setup(customtkinter.CTk):
 
         self.classTeacherEmail = customtkinter.CTkEntry(master=self.teacherFrame, placeholder_text="What is their email?")
         self.classTeacherEmail.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
-
-        """
-        self.className = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="What is the class name?", width=200)  # Create the class name entry
-        self.className.grid(row=0, column=0, padx=5, pady=5)  # Position the class name entry
-
-        self.classSubject = customtkinter.CTkOptionMenu(master=self.classFrame, width=200, variable=customtkinter.StringVar(value="Subject"),
-                                                        values=["Math", "Science", "English",  "History", "Social Studies", "World Language", "Fine Arts/Music", "Arts", "Physical Education", "Other"])  # Create the class subject option menu
-        self.classSubject.grid(row=0, column=1, padx=5, pady=5)  # Position the class subject option menu
-
-        self.classColor = customtkinter.CTkOptionMenu(master=self.classFrame, width=200, variable=customtkinter.StringVar(value="Color"),
-                                                    values=["Teal", "Orange", "Purple", "Red", "Yellow", "Green", "Blue", "Other"], command=self.changeColor)  # Create the class color option menu
-        self.classColor.grid(row=1, column=0, padx=5, pady=5)  # Position the class color option menu
-
-        self.classIcon = customtkinter.CTkOptionMenu(master=self.classFrame, values=getIcons(), width=200, variable=customtkinter.StringVar(value="Icon"))  # Create the class icon entry
-        self.classIcon.grid(row=1, column=1, padx=5, pady=5)  # Position the class icon entry
-
-        self.classTeacher = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="Who is the teacher/instructor?", width=200)  # Create the class teacher/instructor entry
-        self.classTeacher.grid(row=2, column=0, padx=5, pady=5)  # Position the class teacher/instructor entry
-
-        self.classTeacherEmail = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="What is their email?", width=200)  # Create the class teacher/instructor email entry 
-        self.classTeacherEmail.grid(row=2, column=1, padx=5, pady=5)  # Position the class teacher/instructor email entry
-        """
 
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -311,7 +290,7 @@ class setup(customtkinter.CTk):
 
                     self.setupDir["progress"] = 0
                     self.setupDir["level"] = 0
-                    self.setupDir["version"] = "v0.6.0"
+                    self.setupDir["version"] = self.version
 
                     # Convert the setup directory to JSON format and store it in a variable
                     json_obj = json.dumps(self.setupDir, indent=4)

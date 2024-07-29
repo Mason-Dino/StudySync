@@ -88,6 +88,19 @@ def settings(self):
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    self.classColorFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
+    self.classColorFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
+    self.classColorFrame.grid_columnconfigure((0), weight=1)
+
+    RowI += 1
+
+    self.classColor = customtkinter.CTkButton(master=self.classColorFrame, text="Class Color", command=lambda: print("class color"))
+    self.classColor.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     self.level = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
     self.level.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyOutside)
     self.level.grid_columnconfigure((0,1), weight=1)

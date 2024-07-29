@@ -1,5 +1,6 @@
 import customtkinter
 import datetime
+from tkinter import messagebox
 
 from themes.theme import loadColor
 from task import *
@@ -24,6 +25,7 @@ def due(self):
 
     weekdays = [day1, day2, day3, day4, day5, day6, day7]
     strWeekdays = [day1.strftime("%A"), day2.strftime("%A"), day3.strftime("%A"), day3.strftime("%A"), day4.strftime("%A"), day5.strftime("%A"), day6.strftime("%A"), day7.strftime("%A")]
+    error = False
 
     if getOverdueTasks() == []:
         overdueI = 0
@@ -48,10 +50,14 @@ def due(self):
             overdue = getOverdueTasks()
 
         for i in range(len(overdue)):
-            classInfo = getClassInfo(overdue[i][8])
+            try:
+                classInfo = getClassInfo(overdue[i][8])
 
-            self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=str(overdue[i][1]), font=customtkinter.CTkFont(size=15), fg_color=loadColor(classInfo["color"]), corner_radius=6)
-            self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=4)
+                self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=str(overdue[i][1]), font=customtkinter.CTkFont(size=15), fg_color=loadColor(classInfo["color"]), corner_radius=6)
+                self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=4)
+
+            except:
+                error = True
 
         overdueI = 1
 
@@ -74,10 +80,14 @@ def due(self):
 
         if len(dayTask) <= 3 and len(dayTask) > 0:
             for i in range(len(dayTask)):
-                classInfo = getClassInfo(dayTask[i][8])
+                try:
+                    classInfo = getClassInfo(overdue[i][8])
 
-                self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=dayTask[i][1], font=customtkinter.CTkFont(size=15), fg_color=loadColor(classInfo["color"]), corner_radius=6)
-                self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=4)
+                    self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=str(overdue[i][1]), font=customtkinter.CTkFont(size=15), fg_color=loadColor(classInfo["color"]), corner_radius=6)
+                    self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=4)
+
+                except:
+                    error = True
 
         elif len(dayTask) == 0:
             self.taskFrame.grid_columnconfigure(0, weight=1)
@@ -89,8 +99,17 @@ def due(self):
         elif len(dayTask) > 3:
             dayTask = dayTask[0:3] 
             for i in range(len(dayTask)):
-                self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=dayTask[i][1], font=customtkinter.CTkFont(size=15), fg_color=loadColor(classInfo["color"]), corner_radius=6)
-                self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=3)
+                try:
+                    classInfo = getClassInfo(overdue[i][8])
+
+                    self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=str(overdue[i][1]), font=customtkinter.CTkFont(size=15), fg_color=loadColor(classInfo["color"]), corner_radius=6)
+                    self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=4)
+
+                except:
+                    error = True
+
+    if error == True:
+        messagebox.showerror(title="Error", message="Error loading tasks")
 
         #self.test = customtkinter.CTkLabel(master=self.taskFrame, text="No tasks found", font=customtkinter.CTkFont(size=15))
         #self.test.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)

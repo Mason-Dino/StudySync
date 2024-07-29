@@ -2,7 +2,7 @@ from tkinter import messagebox
 import customtkinter
 import json
 
-from themes.theme import topLevel
+from themes.theme import *
 from icon import getIcons
 from tabs.home import home
 from id import makeID
@@ -121,6 +121,16 @@ def updateAdd(self, type: str, classNum: int = None):
         color = self.color.get().lower()
         teacher = self.teacher.get()
         email = self.email.get()
+
+        if color == "other":
+            newColor = self.newColor.get()
+
+            if isValidColorCode(newColor) == True:
+                color = newColor
+
+            else:
+                messagebox.showerror(title="Error", message="Invalid color code")
+                color = setupDir[f"class{classNum}"]["color"]
 
         setupDir[f"class{classNum}"]["name"] = name
         setupDir[f"class{classNum}"]["subject"] = subject

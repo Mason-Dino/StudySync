@@ -47,7 +47,8 @@ def classroom(self, id, className):
     self.infoClass.grid(row=0, column=1, sticky="nsew", padx=10, pady=7)
 
     if task == []:
-        print("no task")
+        self.noTask = customtkinter.CTkLabel(master=self.mainContent, text="No Tasks", font=customtkinter.CTkFont(size=15, weight="bold"))
+        self.noTask.grid(row=0, column=0, sticky="nsew", padx=10, pady=7)
 
     else:
         for i in range(len(task)):

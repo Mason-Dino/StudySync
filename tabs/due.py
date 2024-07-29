@@ -72,7 +72,7 @@ def due(self):
 
         dayTask = searchDayTask(weekdays[i].strftime('%d'), weekdays[i].strftime('%m'), weekdays[i].strftime('%Y'))
 
-        if len(dayTask) < 3 and len(dayTask) > 0:
+        if len(dayTask) <= 3 and len(dayTask) > 0:
             for i in range(len(dayTask)):
                 classInfo = getClassInfo(dayTask[i][8])
 

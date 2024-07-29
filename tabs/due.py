@@ -89,7 +89,7 @@ def due(self):
         elif len(dayTask) > 3:
             dayTask = dayTask[0:3] 
             for i in range(len(dayTask)):
-                self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=dayTask[i][1], font=customtkinter.CTkFont(size=15), fg_color="red", corner_radius=6)
+                self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=dayTask[i][1], font=customtkinter.CTkFont(size=15), fg_color=loadColor(classInfo["color"]), corner_radius=6)
                 self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=3)
 
         #self.test = customtkinter.CTkLabel(master=self.taskFrame, text="No tasks found", font=customtkinter.CTkFont(size=15))

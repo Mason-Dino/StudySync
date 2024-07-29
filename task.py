@@ -26,7 +26,19 @@ def database():
         print("Database created successfully")
 
 def addMainTask(taskName, taskID, className, classID, day, month, year):
-    dateNum = int(f"{month}" + f"{day}" + f"{year}")
+    if int(day) < 10:
+        daystr = "0" + str(day)
+
+    else:
+        daystr = str(day)
+
+    if int(month) < 10:
+        monthstr = "0" + str(month)
+
+    else:
+        monthstr = str(month)
+
+    dateNum = int(f"{monthstr}" + f"{daystr}" + f"{year}")
 
     conn = sqlite3.connect('study.db')
     c = conn.cursor()

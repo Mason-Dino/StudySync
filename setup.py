@@ -93,9 +93,48 @@ class setup(customtkinter.CTk):
 
         # Create the class frame
         self.classFrame = customtkinter.CTkFrame(master=self)  # Create the class frame
-        self.classFrame.grid_columnconfigure((0,1), weight=1)  # Column weight
-        self.classFrame.grid_rowconfigure((0,1,2), weight=1)  # Row weights
+        self.classFrame.grid_columnconfigure((0), weight=1)  # Column weight
+        #self.classFrame.grid_rowconfigure((0,1,2), weight=1)  # Row weights
 
+        self.title = customtkinter.CTkLabel(master=self.classFrame, text=f"Class Add",
+                                        font=customtkinter.CTkFont(size=20, weight="bold"))
+        self.title.grid(row=0, column=0, pady=10)
+
+        self.classNameFrame = customtkinter.CTkFrame(master=self.classFrame, fg_color=topLevel())
+        self.classNameFrame.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
+        self.classNameFrame.grid_columnconfigure((0), weight=1)
+
+        self.className = customtkinter.CTkEntry(master=self.classNameFrame, placeholder_text="Class Name", width=200)
+        self.className.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+
+        self.cosmetics = customtkinter.CTkFrame(master=self.classFrame, fg_color=topLevel())
+        self.cosmetics.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
+        self.cosmetics.grid_columnconfigure((0,1), weight=1)
+
+        self.classSubject = customtkinter.CTkOptionMenu(master=self.cosmetics, values=["Math", "Science", "English",  "History", "Social Studies", "World Language", "Fine Arts/Music", "Arts", "Physical Education", "Other"],
+                                                    variable=customtkinter.StringVar(value="Subject"))
+        self.classSubject.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+        self.classIcon = customtkinter.CTkOptionMenu(master=self.cosmetics, values=getIcons(), variable=customtkinter.StringVar(value="Icon"))
+        self.classIcon.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
+        self.classColor = customtkinter.CTkOptionMenu(master=self.cosmetics, values=["Teal", "Orange", "Purple", "Red", "Yellow", "Green", "Blue", "Other"],
+                                                    variable=customtkinter.StringVar(value="Color"), command=lambda colorOption: self.changeColorSetup(colorOption))
+        self.classColor.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
+
+        self.newColor = customtkinter.CTkEntry(master=self.cosmetics, placeholder_text="Color (hex code)")
+
+        self.teacherFrame = customtkinter.CTkFrame(master=self.classFrame, fg_color=topLevel())
+        self.teacherFrame.grid(row=3, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
+        self.teacherFrame.grid_columnconfigure((0,1), weight=1)
+
+        self.classTeacher = customtkinter.CTkEntry(master=self.teacherFrame, placeholder_text="Who is the teacher/instructor?")
+        self.classTeacher.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+        self.classTeacherEmail = customtkinter.CTkEntry(master=self.teacherFrame, placeholder_text="What is their email?")
+        self.classTeacherEmail.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
+        """
         self.className = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="What is the class name?", width=200)  # Create the class name entry
         self.className.grid(row=0, column=0, padx=5, pady=5)  # Position the class name entry
 
@@ -115,6 +154,7 @@ class setup(customtkinter.CTk):
 
         self.classTeacherEmail = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="What is their email?", width=200)  # Create the class teacher/instructor email entry 
         self.classTeacherEmail.grid(row=2, column=1, padx=5, pady=5)  # Position the class teacher/instructor email entry
+        """
 
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -215,8 +255,11 @@ class setup(customtkinter.CTk):
                 if color.lower() == "other":
                     newColor = self.newColor.get()
 
-                if isValidColorCode(newColor) == True:
-                    color = newColor
+                    if isValidColorCode(newColor) == True:
+                        color = newColor
+
+                    else:
+                        color = "Blue"
 
                 else:
                     messagebox.showerror(title="Error", message="Invalid color code")
@@ -322,9 +365,13 @@ class setup(customtkinter.CTk):
         self.destroy()
         exit()
 
-    def changeColor(self, colorOption):
+    def changeColorSetup(self, colorOption):
         if colorOption == "Other":
-            pass
+            self.classColor.grid_forget()
+            self.classColor.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
+
+            self.newColor.grid_forget()
+            self.newColor.grid(row=2, column=1, sticky="nsew", padx=10, pady=10)
 
 if __name__ == "__main__":
     App = setup()

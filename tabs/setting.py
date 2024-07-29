@@ -1,4 +1,5 @@
 from version import getMainVersion, getUserVersion
+from screen.classColor import showClassColors
 from screen.classAddEdit import classAddEdit
 from themes.theme import topLevel
 from tkinter import messagebox
@@ -94,7 +95,7 @@ def settings(self):
 
     RowI += 1
 
-    self.classColor = customtkinter.CTkButton(master=self.classColorFrame, text="Class Color", command=lambda: print("class color"))
+    self.classColor = customtkinter.CTkButton(master=self.classColorFrame, text="Class Color", command=lambda: showClassColors(self))
     self.classColor.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
 

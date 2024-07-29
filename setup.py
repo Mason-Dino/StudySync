@@ -38,6 +38,8 @@ class setup(customtkinter.CTk):
         self.grid_columnconfigure((1,2), weight=2)  # Column weights
         self.grid_rowconfigure((0,1), weight=1)  # Row weights
 
+        #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
         # Create the side frame and add the logo
         self.side = customtkinter.CTkFrame(master=self, corner_radius=0)  # Create the side frame
         self.side.grid(row=0, rowspan=3, column=0, sticky="nswe")  # Position the side frame
@@ -46,6 +48,8 @@ class setup(customtkinter.CTk):
 
         self.logo = customtkinter.CTkLabel(master=self.side, anchor="n", text="Setup", font=customtkinter.CTkFont(size=20, weight="bold"))  # Create the logo label
         self.logo.grid(row=0, column=0, padx=5, pady=5)  # Position the logo label
+
+        #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         # Create the first question frame
         self.questionFrame1 = customtkinter.CTkFrame(master=self)  # Create the first question frame
@@ -59,6 +63,8 @@ class setup(customtkinter.CTk):
         self.mode = customtkinter.CTkOptionMenu(master=self.questionFrame1, values=["Light", "Dark", "System"], variable=customtkinter.StringVar(value=customtkinter.get_appearance_mode()))  # Create the mode option menu
         self.mode.grid(row=1, column=0, padx=5, pady=5)  # Position the mode option menu
 
+        #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
         # Create the second question frame
         self.questionFrame2 = customtkinter.CTkFrame(master=self)  # Create the second question frame
         self.questionFrame2.grid_columnconfigure(0, weight=1)  # Column weight
@@ -70,6 +76,8 @@ class setup(customtkinter.CTk):
         self.theme = customtkinter.CTkOptionMenu(master=self.questionFrame2, values=["Teal", "Orange", "Purple", "Red", "Yellow", "Green", "Blue", "Grey"])  # Create the theme option menu
         self.theme.grid(row=1, column=0, padx=5, pady=5)  # Position the theme option menu
 
+        #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
         # Create the third question frame
         self.questionFrame3 = customtkinter.CTkFrame(master=self)  # Create the third question frame
         self.questionFrame3.grid_columnconfigure(0, weight=1)  # Column weight
@@ -80,6 +88,8 @@ class setup(customtkinter.CTk):
 
         self.numClass = customtkinter.CTkOptionMenu(master=self.questionFrame3, values=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"])  # Create the class option menu
         self.numClass.grid(row=1, column=0, padx=5, pady=5)  # Position the class option menu
+
+        #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         # Create the class frame
         self.classFrame = customtkinter.CTkFrame(master=self)  # Create the class frame
@@ -106,6 +116,7 @@ class setup(customtkinter.CTk):
         self.classTeacherEmail = customtkinter.CTkEntry(master=self.classFrame, placeholder_text="What is their email?", width=200)  # Create the class teacher/instructor email entry 
         self.classTeacherEmail.grid(row=2, column=1, padx=5, pady=5)  # Position the class teacher/instructor email entry
 
+        #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         # Create the page buttons
         self.pageButton = customtkinter.CTkSegmentedButton(master=self, values=["Last", "Next"], command=self.page)  # Create the page buttons

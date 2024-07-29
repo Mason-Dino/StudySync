@@ -1,5 +1,6 @@
 from version import getMainVersion, getUserVersion
 from screen.classAddEdit import classAddEdit
+from themes.theme import topLevel
 from tkinter import messagebox
 from tkinter import filedialog
 from icon import getIcons
@@ -25,7 +26,7 @@ def settings(self):
         self.setupDir = json.load(f)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    self.appearanceFrame = customtkinter.CTkFrame(master=self.content, fg_color=["gray88", "gray19"])
+    self.appearanceFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
     self.appearanceFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyOutside)
     self.appearanceFrame.grid_columnconfigure((1), weight=1)
 
@@ -39,7 +40,7 @@ def settings(self):
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    self.themeFrame = customtkinter.CTkFrame(master=self.content, fg_color=["gray88", "gray19"])
+    self.themeFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
     self.themeFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
     self.themeFrame.grid_columnconfigure((1), weight=1)
 
@@ -53,7 +54,7 @@ def settings(self):
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    self.classEditFrame = customtkinter.CTkFrame(master=self.content, fg_color=["gray88", "gray19"])
+    self.classEditFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
     self.classEditFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
     self.classEditFrame.grid_columnconfigure((0,1), weight=1)
 
@@ -76,7 +77,7 @@ def settings(self):
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    self.addClassFrame = customtkinter.CTkFrame(master=self.content, fg_color=["gray88", "gray19"])
+    self.addClassFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
     self.addClassFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
     self.addClassFrame.grid_columnconfigure((0), weight=1)
 
@@ -87,7 +88,7 @@ def settings(self):
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    self.level = customtkinter.CTkFrame(master=self.content, fg_color=["gray88", "gray19"])
+    self.level = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
     self.level.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyOutside)
     self.level.grid_columnconfigure((0,1), weight=1)
 
@@ -107,7 +108,7 @@ def settings(self):
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    self.saveFrame = customtkinter.CTkFrame(master=self.content, fg_color=["gray88", "gray19"])
+    self.saveFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
     self.saveFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
     self.saveFrame.grid_columnconfigure((0, 1), weight=1)
 
@@ -121,7 +122,7 @@ def settings(self):
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    self.versionFrame = customtkinter.CTkFrame(master=self.content, fg_color=["gray88", "gray19"])
+    self.versionFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
     self.versionFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
     self.versionFrame.grid_columnconfigure((0, 1), weight=1)
 

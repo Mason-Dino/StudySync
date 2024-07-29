@@ -4,10 +4,9 @@ from icon import getIcons
 import customtkinter
 import json
 from tkinter import messagebox
+from tkinter import filedialog
 
 from themes.theme import *
-
-# CHANGE WHOLE CLASS SETUP TO BE LIKE IN STUDYSYNC SETTINGS
 
 
 class setup(customtkinter.CTk):
@@ -49,6 +48,9 @@ class setup(customtkinter.CTk):
 
         self.logo = customtkinter.CTkLabel(master=self.side, anchor="n", text="Setup", font=customtkinter.CTkFont(size=20, weight="bold"))  # Create the logo label
         self.logo.grid(row=0, column=0, padx=5, pady=5)  # Position the logo label
+
+        self.load = customtkinter.CTkButton(master=self.side, text="Load Setup", command=self.loadSetup)  # Create the load button
+        self.load.grid(row=1, column=0, padx=10, pady=5)  # Position the load button
 
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -351,6 +353,43 @@ class setup(customtkinter.CTk):
 
             self.newColor.grid_forget()
             self.newColor.grid(row=2, column=1, sticky="nsew", padx=10, pady=10)
+
+    def loadSetup(self):
+        file_path = filedialog.askopenfilename(filetypes=(("JSON Files", "*.json"), ("All Files", "*.*")))
+
+        with open(file_path, "r") as f:
+            setupDir = json.load(f)
+
+        try:
+            if setupDir["setupComplete"] == False or setupDir["setupComplete"] == None:
+                messagebox.showwarning(title="Error", message="Not a valid setup file")
+
+            else:
+                numClass = setupDir["numClasses"]
+                mode = setupDir["mode"]
+                theme = setupDir["theme"]
+                progress = setupDir["progress"]
+                level = setupDir["level"]
+                version = setupDir["version"]
+
+                for i in range(numClass):
+                    id = setupDir[f"class{i+1}"]["id"]
+                    name = setupDir[f"class{i+1}"]["name"]
+                    teacher = setupDir[f"class{i+1}"]["teacher"]
+                    subject = setupDir[f"class{i+1}"]["subject"]
+                    color = setupDir[f"class{i+1}"]["color"]
+                    icon =  setupDir[f"class{i+1}"]["icon"]
+
+                setupDir["version"] = self.version
+
+                with open("setup.json", "w") as f:
+                    json.dump(setupDir, f, indent=4)
+                messagebox.showinfo(title="Success", message="Setup file loaded!")
+
+                self.pageInfo[4].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
+
+        except KeyError:
+            messagebox.showerror(title="Error", message="\tNot a valid setup file file\n\tPlease select a valid setup file\n\tOld setup file is still in use.")
 
 if __name__ == "__main__":
     App = setup()

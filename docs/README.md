@@ -28,6 +28,7 @@ description: >-
 * Assignment and Task organization
   * Option for Sub-Task also!
 * Next 7-Day Schedule
+* AND SO MUCH MORE!!
 
 Overall customization!
 

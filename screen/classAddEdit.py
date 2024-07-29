@@ -70,6 +70,8 @@ def classAddEdit(self, type: str, name: str = None):
         self.updateAdd.configure(command=lambda: updateAdd(self, "Added"), text="Add")
 
         self.className.configure(placeholder_text="Class Name")
+        self.teacher.configure(placeholder_text="Who is the teacher/instructor?")
+        self.email.configure(placeholder_text="What is their email?")
         self.teacher.configure(placeholder_text="Teacher")
         self.email.configure(placeholder_text="Email")
 

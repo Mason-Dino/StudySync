@@ -3,9 +3,11 @@ from id import makeID
 from icon import getIcons
 import customtkinter
 import json
+from tkinter import messagebox
 
+from themes.theme import *
 
-# ADD CLASS COLOR TO CLASS SETUP
+# CHANGE WHOLE CLASS SETUP TO BE LIKE IN STUDYSYNC SETTINGS
 
 
 class setup(customtkinter.CTk):
@@ -92,7 +94,7 @@ class setup(customtkinter.CTk):
         self.classSubject.grid(row=0, column=1, padx=5, pady=5)  # Position the class subject option menu
 
         self.classColor = customtkinter.CTkOptionMenu(master=self.classFrame, width=200, variable=customtkinter.StringVar(value="Color"),
-                                                    values=["Teal", "Orange", "Purple", "Red", "Yellow", "Green", "Blue"])  # Create the class color option menu
+                                                    values=["Teal", "Orange", "Purple", "Red", "Yellow", "Green", "Blue", "Other"], command=self.changeColor)  # Create the class color option menu
         self.classColor.grid(row=1, column=0, padx=5, pady=5)  # Position the class color option menu
 
         self.classIcon = customtkinter.CTkOptionMenu(master=self.classFrame, values=getIcons(), width=200, variable=customtkinter.StringVar(value="Icon"))  # Create the class icon entry
@@ -199,6 +201,16 @@ class setup(customtkinter.CTk):
                 else:
                     color = self.classColor.get()
 
+                if color.lower() == "other":
+                    newColor = self.newColor.get()
+
+                if isValidColorCode(newColor) == True:
+                    color = newColor
+
+                else:
+                    messagebox.showerror(title="Error", message="Invalid color code")
+                    color = "Blue"
+
                 # Create a dictionary to store the details of the current class
                 class_details = {
                     "id": makeID(),  # Generate a unique ID for the class
@@ -298,6 +310,10 @@ class setup(customtkinter.CTk):
     def close(self):
         self.destroy()
         exit()
+
+    def changeColor(self, colorOption):
+        if colorOption == "Other":
+            pass
 
 if __name__ == "__main__":
     App = setup()

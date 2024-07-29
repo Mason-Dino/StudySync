@@ -51,13 +51,22 @@ def due(self):
 
         for i in range(len(overdue)):
             try:
-                classInfo = getClassInfo(overdue[i][8])
+                if overdue[i][8] == "0000000000":
+                    with open("setup.json", "r") as f:
+                        setup = json.load(f)
 
-                self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=str(overdue[i][1]), font=customtkinter.CTkFont(size=15), fg_color=loadColor(classInfo["color"]), corner_radius=6)
+                    color = setup["theme"]
+
+                else:
+                    classInfo = getClassInfo(overdue[i][8])
+                    color = classInfo["color"]
+
+                self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=str(overdue[i][1]), font=customtkinter.CTkFont(size=15), fg_color=loadColor(color), corner_radius=6)
                 self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=4)
 
             except:
                 error = True
+                print("error 1")
 
         overdueI = 1
 
@@ -78,16 +87,8 @@ def due(self):
 
         dayTask = searchDayTask(weekdays[i].strftime('%d'), weekdays[i].strftime('%m'), weekdays[i].strftime('%Y'))
 
-        if len(dayTask) <= 3 and len(dayTask) > 0:
-            for i in range(len(dayTask)):
-                try:
-                    classInfo = getClassInfo(overdue[i][8])
-
-                    self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=str(overdue[i][1]), font=customtkinter.CTkFont(size=15), fg_color=loadColor(classInfo["color"]), corner_radius=6)
-                    self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=4)
-
-                except:
-                    error = True
+        if len(dayTask) > 3:
+            dayTask = dayTask[:3]
 
         elif len(dayTask) == 0:
             self.taskFrame.grid_columnconfigure(0, weight=1)
@@ -96,17 +97,19 @@ def due(self):
             self.noTask = customtkinter.CTkLabel(master=self.taskFrame, text="No tasks found", font=customtkinter.CTkFont(size=15))
             self.noTask.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-        elif len(dayTask) > 3:
-            dayTask = dayTask[0:3] 
-            for i in range(len(dayTask)):
-                try:
-                    classInfo = getClassInfo(overdue[i][8])
+        else:
+            dayTask = dayTask
 
-                    self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=str(overdue[i][1]), font=customtkinter.CTkFont(size=15), fg_color=loadColor(classInfo["color"]), corner_radius=6)
-                    self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=4)
+        for i in range(len(dayTask)):
+            try:
+                classInfo = getClassInfo(dayTask[i][8])
 
-                except:
-                    error = True
+                self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=str(dayTask[i][1]), font=customtkinter.CTkFont(size=15), fg_color=loadColor(classInfo["color"]), corner_radius=6)
+                self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=4)
+
+            except:
+                error = True
+                print("error 2")
 
     if error == True:
         messagebox.showerror(title="Error", message="Error loading tasks")

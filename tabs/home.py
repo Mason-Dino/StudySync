@@ -9,6 +9,7 @@ import json
 import random
 
 from screen.assignment import showAssignment
+from tabs.assignments import assignments
 
 def home(self):
     self.taskFrame = {}
@@ -37,10 +38,10 @@ def home(self):
     self.addTask = customtkinter.CTkButton(master=self.content, text="Add Task", command=lambda: makeTask(self))
     self.addTask.grid(row=2, column=2, sticky="nsew", padx=10, pady=10)
 
+    """
     for i in range(self.classNum):
         classNameValues.append(self.setupDir[f"class{i+1}"]["name"])
 
-    """
     self.className = customtkinter.CTkOptionMenu(master=self.content, values=classNameValues, variable=customtkinter.StringVar(value="Pick Class"))
     self.className.grid(row=2, column=2, sticky="nsew", padx=10, pady=10)
 
@@ -107,50 +108,7 @@ def makeButtonWork(self, i):
     self.taskFrame[i]["due"].bind("<Button-1>", lambda event: showMainTask(self, event, self.taskFrame[i]["id"]))
 
 def makeTask(self):
-    taskName = self.taskName.get()
-    className = self.className.get()
-    day = self.day.get()
-    month = self.month.get()
-    year = self.year.get()
-
-    if len(taskName) > 30:
-        messagebox.showerror(title="Error", message="Task name too long")
-
-    elif len(taskName) == 0 or className == "Pick Class" or day == "" or month == "" or year == "":
-        messagebox.showerror(title="Error", message="You are missing a required field")
-
-    try:
-        datetime.datetime(int(year), int(month), int(day))
-        good = True
-
-    except ValueError:
-        good = False
-        messagebox.showerror(title="Error", message="Invalid date")
-
-    if good == True:
-        with open("setup.json", "r") as f:
-            self.setupDir = json.load(f)
-
-        self.classNum = self.setupDir["numClasses"]
-        id = ""
-
-        for i in range(self.classNum):
-            if self.setupDir[f"class{i+1}"]["name"] == className:
-                id = self.setupDir[f"class{i+1}"]["id"]
-
-        if id == "":
-            id = "0000000000"
-
-        taskID = makeID(20)
-        addMainTask(taskName, taskID, className, id, day, month, year)
-
-        self.taskName.delete(0, "end")
-        self.className.set("Pick Class")
-        self.day.delete(0, "end")
-        self.month.delete(0, "end")
-        self.year.delete(0, "end")
-
-        home(self)
+    assignments(self, self.taskName.get())
 
 def finishTask(self, frame, id):
     frame.destroy()

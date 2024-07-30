@@ -4,4 +4,4 @@
 
 ## 🏫 Classes
 
-* [Class Name](classes/class-name.md)
+* [Class Name](classes/page-1.md)

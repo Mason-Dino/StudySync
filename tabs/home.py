@@ -34,9 +34,13 @@ def home(self):
     self.taskName = customtkinter.CTkEntry(master=self.content, placeholder_text="Task Name (max: 30)")
     self.taskName.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
 
+    self.addTask = customtkinter.CTkButton(master=self.content, text="Add Task", command=lambda: makeTask(self))
+    self.addTask.grid(row=2, column=2, sticky="nsew", padx=10, pady=10)
+
     for i in range(self.classNum):
         classNameValues.append(self.setupDir[f"class{i+1}"]["name"])
 
+    """
     self.className = customtkinter.CTkOptionMenu(master=self.content, values=classNameValues, variable=customtkinter.StringVar(value="Pick Class"))
     self.className.grid(row=2, column=2, sticky="nsew", padx=10, pady=10)
 
@@ -52,6 +56,8 @@ def home(self):
 
     self.button = customtkinter.CTkButton(master=self.content, text="Add Task", command=lambda: makeTask(self))
     self.button.grid(row=4, column=1, sticky="nsew", padx=10, pady=10)
+
+    """
 
     self.task = customtkinter.CTkScrollableFrame(master=self.content, corner_radius=6, fg_color="transparent")
     self.task.grid(row=5, column=0, columnspan=3, sticky="nsew", padx=3)

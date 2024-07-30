@@ -45,3 +45,43 @@ def assignments(self, taskName: str = None):
     self.year = customtkinter.CTkEntry(master=self.dateFrame, placeholder_text="Year")
     self.year.grid(row=0, column=2, sticky="nsew", padx=10, pady=0)
 
+    self.miniContent = customtkinter.CTkFrame(master=self.overallTaskFrame, fg_color="red")
+    self.miniContent.grid(row=3, column=0, sticky="nsew", padx=10, pady=10)
+    self.miniContent.grid_columnconfigure((0,1), weight=1)
+
+    self.sideLeft = customtkinter.CTkFrame(master=self.miniContent, fg_color="green")
+    self.sideLeft.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.sideRight = customtkinter.CTkFrame(master=self.miniContent, fg_color="blue")
+    self.sideRight.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+    
+    self.project = customtkinter.StringVar(value="project")
+
+    self.testType = customtkinter.CTkRadioButton(master=self.sideRight, text="Test", variable=self.project, value="test")
+    self.testType.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.quizType = customtkinter.CTkRadioButton(master=self.sideRight, text="Quiz", variable=self.project, value="quiz")
+    self.quizType.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.assignment = customtkinter.CTkRadioButton(master=self.sideRight, text="Assignment", variable=self.project, value="assignment")
+    self.assignment.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.groupType = customtkinter.CTkRadioButton(master=self.sideRight, text="Group", variable=self.project, value="group")
+    self.groupType.grid(row=3, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.essayType = customtkinter.CTkRadioButton(master=self.sideRight, text="Essay", variable=self.project, value="essay")
+    self.essayType.grid(row=4, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.submission = customtkinter.CTkEntry(master=self.sideLeft, placeholder_text="Submission Link")
+    self.submission.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.description = customtkinter.CTkTextbox(master=self.sideLeft)
+    self.description.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+
+    ## Point Value?
+    ## Description
+
+    ## Type of assignment
+
+
+

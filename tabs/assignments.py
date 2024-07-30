@@ -16,8 +16,13 @@ def assignments(self, taskName: str = None):
     self.taskNameFrame.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
     self.taskNameFrame.grid_columnconfigure((0), weight=1)
 
-    self.taskNameEntry = customtkinter.CTkEntry(master=self.taskNameFrame, placeholder_text="Task Name (max: 30)")
+    self.taskNameEntry = customtkinter.CTkEntry(master=self.taskNameFrame)
     self.taskNameEntry.grid(row=1, column=0,  sticky="nsew", padx=10, pady=0)
+
+    if taskName is not None:
+        self.taskNameEntry.configure(textvariable=customtkinter.StringVar(value=taskName))
+
+    self.taskNameEntry.configure(placeholder_text="Task Name (max: 30)")
 
     self.classFrame = customtkinter.CTkFrame(master=self.overallTaskFrame, fg_color="transparent")
     self.classFrame.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)

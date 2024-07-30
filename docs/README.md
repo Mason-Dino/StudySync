@@ -5,7 +5,7 @@ description: >-
   allows students to organize their schooling!
 ---
 
-# StudySync Documentation
+# 📚 StudySync Documentation
 
 ### What is StudySunc
 

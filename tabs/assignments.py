@@ -125,8 +125,6 @@ def makeTask(self):
 
     error = False
 
-    print(importance.split(" ")[0])
-
     if importance == "1 (most)" or importance == "4 (least)":
         importance = int(importance.split(" ")[0])
 
@@ -135,7 +133,6 @@ def makeTask(self):
         error = True
 
     elif day == "" or month == "" or year == "" or name == "" or classOption == "Pick Class":
-        print(day, month, year, name, classOption)
         messagebox.showerror(title="Error", message="Missing required field")
         error = True
 
@@ -156,6 +153,12 @@ def makeTask(self):
 
     if importance == "Importance Level":
         importance = 5
+
+    if type == "project":
+        type = "None"
+
+    if subLink == "":
+        subLink = "None"
 
     if error == False:
         importance = int(importance)

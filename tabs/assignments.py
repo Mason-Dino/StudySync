@@ -121,6 +121,7 @@ def makeTask(self):
     subLink = self.submission.get()
     ptsValue = self.pts.get()
     importance = self.importance.get()
+    type = self.project.get()
 
     error = False
 
@@ -158,9 +159,8 @@ def makeTask(self):
 
     if error == False:
         importance = int(importance)
-        print(importance)
 
-        addMainTask(name, id, classOption, classID, day, month, year)
+        #addMainTask(name, id, classOption, classID, day, month, year)
 
         self.taskNameEntry.delete(0, "end")
         self.taskNameEntry.configure(placeholder_text="Task Name (max: 30)")
@@ -176,5 +176,6 @@ def makeTask(self):
         self.pts.delete(0, "end")
         self.pts.configure(placeholder_text="Point Value")
         self.importance.set("Importance Level")
-        
+        self.project.set("project")
+
         messagebox.showinfo(title="Success", message="Task added!")

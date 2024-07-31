@@ -77,10 +77,13 @@ def assignments(self, taskName: str = None):
     self.essayType.grid(row=4, column=0, sticky="nsew", padx=10, pady=7)
 
     self.submission = customtkinter.CTkEntry(master=self.sideLeft, placeholder_text="Submission Link")
-    self.submission.grid(row=0, column=0, sticky="nsew", padx=10, pady=5)
+    self.submission.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.description = customtkinter.CTkTextbox(master=self.sideLeft, height=100)
-    self.description.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
+    self.pts = customtkinter.CTkEntry(master=self.sideLeft, placeholder_text="Point Value")
+    self.pts.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.importance = customtkinter.CTkOptionMenu(master=self.sideLeft, values=["1 (most)", "2", "3", "4 (least)"], variable=customtkinter.StringVar(value="Importance Level"))
+    self.importance.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
 
     self.addTask = customtkinter.CTkButton(master=self.overallTaskFrame, text="Add Task", command=lambda: print("Make Task"))
     self.addTask.grid(row=4, column=0, sticky="nsew", padx=10, pady=10)

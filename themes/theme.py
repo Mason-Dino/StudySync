@@ -21,5 +21,8 @@ def isValidColorCode(code):
 def topLevel():
     return ["gray88", "gray19"]
 
+def top2Level():
+    return ["gray90", "gray21"]
+
 if __name__ == "__main__":
     loadColor("purple")

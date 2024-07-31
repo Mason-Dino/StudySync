@@ -1,6 +1,6 @@
 import customtkinter
 
-from themes.theme import topLevel
+from themes.theme import topLevel, top2Level
 
 
 def assignments(self, taskName: str = None):
@@ -47,15 +47,15 @@ def assignments(self, taskName: str = None):
     self.year = customtkinter.CTkEntry(master=self.dateFrame, placeholder_text="Year")
     self.year.grid(row=0, column=2, sticky="nsew", padx=10, pady=0)
 
-    self.miniContent = customtkinter.CTkFrame(master=self.overallTaskFrame, fg_color="red")
+    self.miniContent = customtkinter.CTkFrame(master=self.overallTaskFrame, fg_color="transparent")
     self.miniContent.grid(row=3, column=0, sticky="nsew", padx=10, pady=7)
     self.miniContent.grid_columnconfigure((0,1), weight=1)
 
-    self.sideLeft = customtkinter.CTkFrame(master=self.miniContent, fg_color="green")
+    self.sideLeft = customtkinter.CTkFrame(master=self.miniContent, fg_color=top2Level())
     self.sideLeft.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
     self.sideLeft.grid_columnconfigure((0), weight=1)
 
-    self.sideRight = customtkinter.CTkFrame(master=self.miniContent, fg_color="blue")
+    self.sideRight = customtkinter.CTkFrame(master=self.miniContent, fg_color=top2Level())
     self.sideRight.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
     self.sideRight.grid_columnconfigure((0), weight=1)
     

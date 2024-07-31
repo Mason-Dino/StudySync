@@ -118,7 +118,16 @@ def makeTask(self):
     month = self.month.get()
     year = self.year.get()
 
+    subLink = self.submission.get()
+    ptsValue = self.pts.get()
+    importance = self.importance.get()
+
     error = False
+
+    print(importance.split(" ")[0])
+
+    if importance == "1 (most)" or importance == "4 (least)":
+        importance = int(importance.split(" ")[0])
 
     if len(name) > 30:
         messagebox.showerror(title="Error", message="Task name too long")
@@ -140,8 +149,18 @@ def makeTask(self):
         messagebox.showerror(title="Error", message="Invalid date")
         error = True
 
+    if ptsValue.isdigit() == False and ptsValue != "":
+        messagebox.showerror(title="Error", message="Invalid point value")
+        error = True
+
+    if importance == "Importance Level":
+        importance = 5
+
     if error == False:
-        addMainTask(name, id, classOption, classID, day, month, year)
+        importance = int(importance)
+        print(importance)
+
+        #addMainTask(name, id, classOption, classID, day, month, year)
         messagebox.showinfo(title="Success", message="Task added!")
 
         self.taskNameEntry.delete(0, "end")

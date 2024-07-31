@@ -161,7 +161,6 @@ def makeTask(self):
         print(importance)
 
         addMainTask(name, id, classOption, classID, day, month, year)
-        messagebox.showinfo(title="Success", message="Task added!")
 
         self.taskNameEntry.delete(0, "end")
         self.taskNameEntry.configure(placeholder_text="Task Name (max: 30)")
@@ -177,3 +176,5 @@ def makeTask(self):
         self.pts.delete(0, "end")
         self.pts.configure(placeholder_text="Point Value")
         self.importance.set("Importance Level")
+        
+        messagebox.showinfo(title="Success", message="Task added!")

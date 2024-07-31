@@ -64,9 +64,6 @@ def assignments(self, taskName: str = None):
     self.testType = customtkinter.CTkRadioButton(master=self.sideRight, text="Test", variable=self.project, value="test")
     self.testType.grid(row=0, column=0, sticky="nsew", padx=10, pady=7)
 
-    #self.quizType = customtkinter.CTkRadioButton(master=self.sideRight, text="Quiz", variable=self.project, value="quiz")
-    #self.quizType.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
-
     self.assignment = customtkinter.CTkRadioButton(master=self.sideRight, text="Assignment", variable=self.project, value="assignment")
     self.assignment.grid(row=2, column=0, sticky="nsew", padx=10, pady=7)
 
@@ -87,11 +84,3 @@ def assignments(self, taskName: str = None):
 
     self.addTask = customtkinter.CTkButton(master=self.overallTaskFrame, text="Add Task", command=lambda: print("Make Task"))
     self.addTask.grid(row=4, column=0, sticky="nsew", padx=10, pady=10)
-
-    ## Point Value?
-    ## Description
-
-    ## Type of assignment
-
-
-

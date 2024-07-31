@@ -62,19 +62,19 @@ def assignments(self, taskName: str = None):
     self.project = customtkinter.StringVar(value="project")
 
     self.testType = customtkinter.CTkRadioButton(master=self.sideRight, text="Test", variable=self.project, value="test")
-    self.testType.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+    self.testType.grid(row=0, column=0, sticky="nsew", padx=10, pady=7)
 
     #self.quizType = customtkinter.CTkRadioButton(master=self.sideRight, text="Quiz", variable=self.project, value="quiz")
     #self.quizType.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
 
     self.assignment = customtkinter.CTkRadioButton(master=self.sideRight, text="Assignment", variable=self.project, value="assignment")
-    self.assignment.grid(row=2, column=0, sticky="nsew", padx=10, pady=5)
+    self.assignment.grid(row=2, column=0, sticky="nsew", padx=10, pady=7)
 
     self.groupType = customtkinter.CTkRadioButton(master=self.sideRight, text="Group", variable=self.project, value="group")
-    self.groupType.grid(row=3, column=0, sticky="nsew", padx=10, pady=5)
+    self.groupType.grid(row=3, column=0, sticky="nsew", padx=10, pady=7)
 
     self.essayType = customtkinter.CTkRadioButton(master=self.sideRight, text="Essay", variable=self.project, value="essay")
-    self.essayType.grid(row=4, column=0, sticky="nsew", padx=10, pady=5)
+    self.essayType.grid(row=4, column=0, sticky="nsew", padx=10, pady=7)
 
     self.submission = customtkinter.CTkEntry(master=self.sideLeft, placeholder_text="Submission Link")
     self.submission.grid(row=0, column=0, sticky="nsew", padx=10, pady=5)

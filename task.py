@@ -29,7 +29,7 @@ def database():
     if __name__ == "__main__":
         print("Database created successfully")
 
-def addMainTask(taskName, taskID, className, classID, day, month, year):
+def addMainTask(taskName, taskID, className, classID, day, month, year, subLink, ptsValue, importance, type):
     if int(day) < 10:
         daystr = "0" + str(day)
 
@@ -47,17 +47,17 @@ def addMainTask(taskName, taskID, className, classID, day, month, year):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
-    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, dateNum, "None", className, classID))
+    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, dateNum, "None", className, classID, subLink, ptsValue, importance, type))
     conn.commit()
     conn.close()
 
-def addSubTask(taskName, taskID, className, classID, day, month, year, parentID, subLink, ptsValue, importance, type):
+def addSubTask(taskName, taskID, className, classID, day, month, year, parentID):
     dateNum = int(f"{month}" + f"{day}" + f"{year}")
 
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
-    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, dateNum, parentID, className, classID, subLink, ptsValue, importance, type))
+    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, dateNum, parentID, className, classID, "None", "None", "None", "None"))
     conn.commit()
     conn.close()
 

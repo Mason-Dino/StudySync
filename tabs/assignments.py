@@ -1,6 +1,11 @@
 import customtkinter
+import json
+from tkinter import messagebox
+import datetime
 
 from themes.theme import topLevel, top2Level
+from id import makeID
+from task import addMainTask
 
 
 def assignments(self, taskName: str = None):
@@ -30,7 +35,17 @@ def assignments(self, taskName: str = None):
     self.classFrame.grid(row=1, column=0, sticky="nsew", padx=10, pady=7)
     self.classFrame.grid_columnconfigure((0), weight=1)
 
-    self.classOption = customtkinter.CTkOptionMenu(master=self.classFrame, values=["Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6", "Class 7", "Class 8", "Class 9", "Class 10"],
+    classes = ["None"]
+
+    with open("setup.json", "r") as f:
+        self.setupDir = json.load(f)
+
+    numClasses = int(self.setupDir["numClasses"])
+
+    for i in range(numClasses):
+        classes.append(self.setupDir[f"class{i+1}"]["name"])
+
+    self.classOption = customtkinter.CTkOptionMenu(master=self.classFrame, values=classes,
                                                     variable=customtkinter.StringVar(value="Pick Class"))
     self.classOption.grid(row=0, column=0, sticky="nsew", padx=10, pady=0)
 
@@ -44,7 +59,7 @@ def assignments(self, taskName: str = None):
     self.month = customtkinter.CTkEntry(master=self.dateFrame, placeholder_text="Month")
     self.month.grid(row=0, column=1, sticky="nsew", padx=10, pady=0)
 
-    self.year = customtkinter.CTkEntry(master=self.dateFrame, placeholder_text="Year")
+    self.year = customtkinter.CTkEntry(master=self.dateFrame, placeholder_text="Year", textvariable=customtkinter.StringVar(value=datetime.datetime.now().year))
     self.year.grid(row=0, column=2, sticky="nsew", padx=10, pady=0)
 
     self.miniContent = customtkinter.CTkFrame(master=self.overallTaskFrame, fg_color="transparent")
@@ -82,5 +97,49 @@ def assignments(self, taskName: str = None):
     self.importance = customtkinter.CTkOptionMenu(master=self.sideLeft, values=["1 (most)", "2", "3", "4 (least)"], variable=customtkinter.StringVar(value="Importance Level"))
     self.importance.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.addTask = customtkinter.CTkButton(master=self.overallTaskFrame, text="Add Task", command=lambda: print("Make Task"))
+    self.addTask = customtkinter.CTkButton(master=self.overallTaskFrame, text="Add Task", command=lambda: makeTask(self))
     self.addTask.grid(row=4, column=0, sticky="nsew", padx=10, pady=10)
+
+def makeTask(self):
+    #def addMainTask(taskName, taskID, className, classID, day, month, year):
+    name = self.taskNameEntry.get()
+    id = makeID(20)
+    classOption = self.classOption.get()
+    classID = "0000000000"
+
+    with open("setup.json", "r") as f:
+        setupDir = json.load(f)
+
+    for i in range(setupDir["numClasses"]):
+        if setupDir[f"class{i+1}"]["name"] == classOption:
+            classID = setupDir[f"class{i+1}"]["id"]
+
+    day = self.day.get()
+    month = self.month.get()
+    year = self.year.get()
+
+    error = False
+
+    if len(name) > 30:
+        messagebox.showerror(title="Error", message="Task name too long")
+        error = True
+
+    elif day == "" or month == "" or year == "" or name == "" or classOption == "Pick Class":
+        print(day, month, year, name, classOption)
+        messagebox.showerror(title="Error", message="Missing required field")
+        error = True
+
+    elif day.isdigit() == False or month.isdigit() == False or year.isdigit() == False:
+        messagebox.showerror(title="Error", message="Invalid date")
+        error = True
+
+    try:
+        datetime.datetime(int(year), int(month), int(day))
+
+    except:
+        messagebox.showerror(title="Error", message="Invalid date")
+        error = True
+
+    if error == False:
+        addMainTask(name, id, classOption, classID, day, month, year)
+        messagebox.showinfo(title="Success", message="Task added!")

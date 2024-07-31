@@ -160,7 +160,7 @@ def makeTask(self):
         importance = int(importance)
         print(importance)
 
-        #addMainTask(name, id, classOption, classID, day, month, year)
+        addMainTask(name, id, classOption, classID, day, month, year)
         messagebox.showinfo(title="Success", message="Task added!")
 
         self.taskNameEntry.delete(0, "end")
@@ -170,3 +170,10 @@ def makeTask(self):
         self.day.configure(placeholder_text="Day")
         self.month.delete(0, "end")
         self.month.configure(placeholder_text="Month")
+        self.year.delete(0, "end")
+        self.year.configure(textvariable=customtkinter.StringVar(value=datetime.datetime.now().year))
+        self.submission.delete(0, "end")
+        self.submission.configure(placeholder_text="Submission Link")
+        self.pts.delete(0, "end")
+        self.pts.configure(placeholder_text="Point Value")
+        self.importance.set("Importance Level")

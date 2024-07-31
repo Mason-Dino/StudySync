@@ -49,7 +49,7 @@ class StudySync(customtkinter.CTk):
         self.infoFrame = customtkinter.CTkFrame(master=self.side, height=250, fg_color=["gray86","gray17"])
         self.infoFrame.grid_columnconfigure(0, weight=1)
         self.infoFrame.grid(row=1, rowspan=2, column=0, sticky="nswe", pady=10)
-        
+
         self.home = customtkinter.CTkButton(master=self.infoFrame, text="Home", command=lambda:home(self))
         self.home.grid(row=0, column=0, padx=15, pady=5)
 

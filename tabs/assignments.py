@@ -143,3 +143,11 @@ def makeTask(self):
     if error == False:
         addMainTask(name, id, classOption, classID, day, month, year)
         messagebox.showinfo(title="Success", message="Task added!")
+
+        self.taskNameEntry.delete(0, "end")
+        self.taskNameEntry.configure(placeholder_text="Task Name (max: 30)")
+        self.classOption.set("Pick Class")
+        self.day.delete(0, "end")
+        self.day.configure(placeholder_text="Day")
+        self.month.delete(0, "end")
+        self.month.configure(placeholder_text="Month")

@@ -19,7 +19,7 @@ class StudySync(customtkinter.CTk):
         with open("setup.json", "r") as f:
             self.setupDir = json.load(f)
 
-        self.geometry("700x400")
+        self.geometry("700x450")
         self.title("StudySync")
 
         icon_path = os.path.join(os.path.dirname(__file__), "icons")

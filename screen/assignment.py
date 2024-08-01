@@ -3,7 +3,7 @@ import customtkinter
 from task import *
 import datetime
 
-from themes.theme import topLevel
+from themes.theme import topLevel, loadLevelColor, top2Level
 from id import makeID
 from icon import loadIcon
 
@@ -28,7 +28,7 @@ def showAssignment(self, id):
     self.mainHeader = customtkinter.CTkFrame(master=self.header, fg_color="transparent", corner_radius=6)
     self.mainHeader.grid(row=0, column=0, sticky="nsew")
 
-    self.flagFrame = customtkinter.CTkFrame(master=self.mainHeader, fg_color="blue",width=30, height=30)
+    self.flagFrame = customtkinter.CTkFrame(master=self.mainHeader, fg_color=loadLevelColor(taskInfo[0][11]), width=30, height=30)
     self.flagFrame.place(relx=0.92, rely=0.2)
 
     self.flagImage = customtkinter.CTkLabel(master=self.flagFrame, image=loadIcon("flag"), text="", height=25, width=25)
@@ -62,7 +62,7 @@ def showAssignment(self, id):
     for i in range(len(subTask)):
         self.subTaskInfo[i] = {}
 
-        self.subTaskInfo[i]["frame"] = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=["gray90", "gray21"])
+        self.subTaskInfo[i]["frame"] = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=top2Level())
         self.subTaskInfo[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=10, pady=3)
         self.subTaskInfo[i]["frame"].grid_columnconfigure((0), weight=1)
 
@@ -74,7 +74,7 @@ def showAssignment(self, id):
         taskID = subTask[i][0]
         makeButtonWork(self, i, taskID)
 
-    self.addSubTask = customtkinter.CTkButton(master=self.subTaskFrame, text="Add Sub-Task", fg_color="transparent", hover_color=["gray90", "gray21"], compound="left", anchor="w",
+    self.addSubTask = customtkinter.CTkButton(master=self.subTaskFrame, text="Add Sub-Task", fg_color="transparent", hover_color=top2Level(), text_color=["gray10", "#DCE4EE"], compound="left", anchor="w",
                                                 font=customtkinter.CTkFont(size=15), command=lambda: addSubTaskDisplay(self, id, classID, taskInfo))
     self.addSubTask.grid(row=len(subTask), column=0, sticky="nsew", padx=10, pady=6)
 

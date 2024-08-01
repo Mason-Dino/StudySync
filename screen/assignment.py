@@ -27,6 +27,9 @@ def showAssignment(self, id):
     self.mainHeader = customtkinter.CTkFrame(master=self.header, fg_color="transparent", corner_radius=6)
     self.mainHeader.grid(row=0, column=0, sticky="nsew")
 
+    self.flagFrame = customtkinter.CTkFrame(master=self.mainHeader, fg_color="blue",width=25, height=25)
+    self.flagFrame.place(relx=0.93, rely=0.2)
+
     self.subHeader = customtkinter.CTkFrame(master=self.header, fg_color="transparent", corner_radius=6)
     self.subHeader.grid(row=1, column=0, sticky="nsew")
 

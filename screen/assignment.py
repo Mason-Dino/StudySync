@@ -33,7 +33,7 @@ def showAssignment(self, id):
 
     self.flagImage = customtkinter.CTkLabel(master=self.flagFrame, image=loadIcon("flag"), text="", height=25, width=25)
     #self.flagImage.grid(row=0, column=0)
-    self.flagImage.place(anchor="center", relx=0.49, rely=0.45)
+    self.flagImage.place(anchor="center", relx=0.48, rely=0.45)
 
     self.subHeader = customtkinter.CTkFrame(master=self.header, fg_color="transparent", corner_radius=6)
     self.subHeader.grid(row=1, column=0, sticky="nsew")

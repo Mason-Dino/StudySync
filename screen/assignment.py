@@ -38,6 +38,8 @@ def showAssignment(self, id):
     self.subHeader = customtkinter.CTkFrame(master=self.header, fg_color="transparent", corner_radius=6)
     self.subHeader.grid(row=1, column=0, sticky="nsew")
 
+    # ADD TASK INFO SUB-SCREEN INTO A TABVIEW
+
     self.subTaskFrame = customtkinter.CTkScrollableFrame(master=self.content, corner_radius=6, fg_color=topLevel())
     self.subTaskFrame.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
     self.subTaskFrame.grid_columnconfigure((0), weight=1)

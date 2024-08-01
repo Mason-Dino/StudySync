@@ -5,6 +5,7 @@ import datetime
 
 from themes.theme import topLevel
 from id import makeID
+from icon import loadIcon
 
 
 def showAssignment(self, id):
@@ -27,8 +28,12 @@ def showAssignment(self, id):
     self.mainHeader = customtkinter.CTkFrame(master=self.header, fg_color="transparent", corner_radius=6)
     self.mainHeader.grid(row=0, column=0, sticky="nsew")
 
-    self.flagFrame = customtkinter.CTkFrame(master=self.mainHeader, fg_color="blue",width=25, height=25)
-    self.flagFrame.place(relx=0.93, rely=0.2)
+    self.flagFrame = customtkinter.CTkFrame(master=self.mainHeader, fg_color="blue",width=30, height=30)
+    self.flagFrame.place(relx=0.92, rely=0.2)
+
+    self.flagImage = customtkinter.CTkLabel(master=self.flagFrame, image=loadIcon("flag"), text="", height=25, width=25)
+    #self.flagImage.grid(row=0, column=0)
+    self.flagImage.place(anchor="center", relx=0.49, rely=0.45)
 
     self.subHeader = customtkinter.CTkFrame(master=self.header, fg_color="transparent", corner_radius=6)
     self.subHeader.grid(row=1, column=0, sticky="nsew")

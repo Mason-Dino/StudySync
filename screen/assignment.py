@@ -40,9 +40,16 @@ def showAssignment(self, id):
 
     # ADD TASK INFO SUB-SCREEN INTO A TABVIEW
 
-    self.subTaskFrame = customtkinter.CTkScrollableFrame(master=self.content, corner_radius=6, fg_color=topLevel())
-    self.subTaskFrame.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
+    self.subTaskFrame = customtkinter.CTkTabview(master=self.content, corner_radius=6, fg_color=topLevel())
+    self.subTaskFrame.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=0)
     self.subTaskFrame.grid_columnconfigure((0), weight=1)
+    self.task = self.subTaskFrame.add("Task")
+    self.info = self.subTaskFrame.add("Info")
+
+    self.subTaskFrame.set("Task")
+
+    self.task.grid_columnconfigure(0, weight=1)
+    self.info.grid_rowconfigure(0, weight=1)
 
     self.buttonFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
     self.buttonFrame.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
@@ -61,10 +68,15 @@ def showAssignment(self, id):
                                                 anchor="w", justify="left", corner_radius=6)
     self.classContent.grid(row=0, column=1, sticky="nsew", padx=10, pady=4)
 
+    self.taskScroll = customtkinter.CTkScrollableFrame(master=self.task, corner_radius=6, fg_color="red", height=200)
+    self.taskScroll.grid(row=0, column=0, sticky="nsew", padx=0, pady=0)
+    self.taskScroll.grid_columnconfigure((0), weight=1)
+
+
     for i in range(len(subTask)):
         self.subTaskInfo[i] = {}
 
-        self.subTaskInfo[i]["frame"] = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=top2Level())
+        self.subTaskInfo[i]["frame"] = customtkinter.CTkFrame(master=self.taskScroll, corner_radius=6, fg_color=top2Level())
         self.subTaskInfo[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=10, pady=3)
         self.subTaskInfo[i]["frame"].grid_columnconfigure((0), weight=1)
 
@@ -76,7 +88,7 @@ def showAssignment(self, id):
         taskID = subTask[i][0]
         makeButtonWork(self, i, taskID)
 
-    self.addSubTask = customtkinter.CTkButton(master=self.subTaskFrame, text="Add Sub-Task", fg_color="transparent", hover_color=top2Level(), text_color=["gray10", "#DCE4EE"], compound="left", anchor="w",
+    self.addSubTask = customtkinter.CTkButton(master=self.taskScroll, text="Add Sub-Task", fg_color="transparent", hover_color=top2Level(), text_color=["gray10", "#DCE4EE"], compound="left", anchor="w",
                                                 font=customtkinter.CTkFont(size=15), command=lambda: addSubTaskDisplay(self, id, classID, taskInfo))
     self.addSubTask.grid(row=len(subTask), column=0, sticky="nsew", padx=10, pady=6)
 
@@ -92,7 +104,7 @@ def showAssignment(self, id):
     self.bind("<Return>", lambda event: addSubTaskFunction(self, id, taskInfo))
 
 def addSubTaskDisplay(self, parentID, classID, taskInfo):
-    self.addSubTaskFrame = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=topLevel())
+    self.addSubTaskFrame = customtkinter.CTkFrame(master=self.taskScroll, corner_radius=6, fg_color=topLevel())
     self.addSubTaskFrame.grid(row=self.numSubTask, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
     self.addSubTaskFrame.grid_columnconfigure((0), weight=1)
 

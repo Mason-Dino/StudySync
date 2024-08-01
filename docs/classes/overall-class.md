@@ -1,5 +1,12 @@
 # 📘 Overall Class
 
+### How do I add a class?
+
+> You have up to 10 classes to have with StudySync you can see how many you have available when you click the settings button at the bottom left of the screen and scrolling down a bit.
+>
+> \
+> To add a class you must have an available class to use,  if you do you can click on the add class button in the settings page. This will bring you to a class add page where you can add a new class!
+
 ### How do I see the class information?
 
 > Click the "Classes" button to see all your classes that you have currently added to StudySync click on the class you want to learn more about. Once you are in that "classroom" click on the "Info" button in the bottom right and that will show all the infomation that we have on that class.

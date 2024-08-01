@@ -102,7 +102,15 @@ def due(self):
 
         for i in range(len(dayTask)):
             try:
-                classInfo = getClassInfo(dayTask[i][8])
+                if dayTask[i][8] == "0000000000":
+                    with open("setup.json", "r") as f:
+                        setup = json.load(f)
+
+                    color = setup["theme"]
+
+                else:
+                    classInfo = getClassInfo(dayTask[i][8])
+                    color = classInfo["color"]
 
                 self.taskName = customtkinter.CTkLabel(master=self.taskFrame, text=str(dayTask[i][1]), font=customtkinter.CTkFont(size=15), fg_color=loadColor(classInfo["color"]), corner_radius=6)
                 self.taskName.grid(row=i, column=0, sticky="nsew", padx=10, pady=4)

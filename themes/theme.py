@@ -19,10 +19,10 @@ def isValidColorCode(code):
     return bool(match)
 
 def topLevel():
-    return ["gray88", "gray19"]
+    return ["gray90", "gray19"]
 
 def top2Level():
-    return ["gray90", "gray21"]
+    return ["gray92", "gray21"]
 
 def loadLevelColor(level: int):
     if level == 1:

@@ -14,7 +14,7 @@ def assignments(self, taskName: str = None):
     self.content.grid_columnconfigure((0), weight=1)
     self.content.grid_rowconfigure((0), weight=1)
 
-    self.overallTaskFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
+    self.overallTaskFrame = customtkinter.CTkFrame(master=self.content, fg_color="transparent")
     self.overallTaskFrame.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
     self.overallTaskFrame.grid_columnconfigure((0), weight=1)
     self.overallTaskFrame.grid_rowconfigure((0, 1,2,3,4), weight=1)
@@ -66,11 +66,11 @@ def assignments(self, taskName: str = None):
     self.miniContent.grid(row=3, column=0, sticky="nsew", padx=10, pady=7)
     self.miniContent.grid_columnconfigure((0,1), weight=1)
 
-    self.sideLeft = customtkinter.CTkFrame(master=self.miniContent, fg_color=top2Level())
+    self.sideLeft = customtkinter.CTkFrame(master=self.miniContent, fg_color=topLevel())
     self.sideLeft.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
     self.sideLeft.grid_columnconfigure((0), weight=1)
 
-    self.sideRight = customtkinter.CTkFrame(master=self.miniContent, fg_color=top2Level())
+    self.sideRight = customtkinter.CTkFrame(master=self.miniContent, fg_color=topLevel())
     self.sideRight.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
     self.sideRight.grid_columnconfigure((0), weight=1)
     

@@ -86,7 +86,8 @@ def home(self):
             self.taskFrame[i]["info"].grid(row=0, column=0, padx=5)
 
             date = datetime.datetime(int(task[i][4]), int(task[i][3]), int(task[i][2]))
-            if date.day < datetime.datetime.now().day and date.month <= datetime.datetime.now().month and date.year <= datetime.datetime.now().year:
+            now = datetime.datetime(datetime.datetime.now().year, datetime.datetime.now().month, datetime.datetime.now().day)
+            if date < now:
                 self.taskFrame[i]["info"].configure(text_color="red")
 
 

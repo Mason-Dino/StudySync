@@ -4,5 +4,6 @@
 
 ## 🏫 Classes
 
-* [Class Name](classes/page-1.md)
+* [🎒 Class Name](classes/page-1.md)
 * [🎨 Class Color](classes/class-color.md)
+* [📙 Other Class Information](classes/other-class-information.md)

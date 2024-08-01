@@ -10,6 +10,7 @@ import random
 
 from screen.assignment import showAssignment
 from tabs.assignments import assignments
+from themes.theme import topLevel
 
 def home(self):
     self.taskFrame = {}
@@ -77,7 +78,7 @@ def home(self):
             self.taskFrame[i] = {}
             self.taskFrame[i]["id"] = task[i][0]
 
-            self.taskFrame[i]["frame"] = customtkinter.CTkFrame(master=self.task, fg_color=["gray88", "gray19"])
+            self.taskFrame[i]["frame"] = customtkinter.CTkFrame(master=self.task, fg_color=topLevel())
             self.taskFrame[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=3, pady=2)
 
             self.taskFrame[i]["info"] = customtkinter.CTkLabel(master=self.taskFrame[i]["frame"], text=task[i][1], font=customtkinter.CTkFont(size=20, weight="bold"), anchor="w", justify="left", width=400)

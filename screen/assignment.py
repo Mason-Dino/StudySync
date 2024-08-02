@@ -128,6 +128,8 @@ def showAssignment(self, id):
         self.subButton.grid(row=3, column=0, columnspan=2, sticky="nsew", pady=10, padx=40)
         self.noSubButton = False
 
+    self.lenSubTask = len(subTask)
+
     for i in range(len(subTask)):
         self.subTaskInfo[i] = {}
 
@@ -234,6 +236,9 @@ def editAssignment(self, id):
     self.level.grid_forget()
     self.type2.grid_forget()
     self.pts2.grid_forget()
+
+    for i in range(self.lenSubTask):
+        self.subTaskInfo[i]["done"].configure(text="Delete")
 
     if self.noSubButton == False:
         pass

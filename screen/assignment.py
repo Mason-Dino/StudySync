@@ -77,7 +77,7 @@ def showAssignment(self, id):
 
     self.infoFrame = customtkinter.CTkFrame(master=self.info, corner_radius=6, fg_color="red")
     self.infoFrame.grid(row=0, column=0, sticky="nsew")
-    self.infoFrame.grid_columnconfigure((0), weight=1)
+    self.infoFrame.grid_columnconfigure((0,1), weight=1)
 
     #I need to provide a way to show a text version of:
     #[ ] importance
@@ -85,6 +85,25 @@ def showAssignment(self, id):
     #[ ] PTS value
     #[ ] Submission button
 
+    self.importance = customtkinter.CTkLabel(master=self.infoFrame, text="Importance: ", font=customtkinter.CTkFont(size=15))
+    self.importance.grid(row=0, column=0, sticky="nsew", pady=10)
+
+    self.type = customtkinter.CTkLabel(master=self.infoFrame, text="Type: ", font=customtkinter.CTkFont(size=15))
+    self.type.grid(row=1, column=0, sticky="nsew", pady=10)
+
+    self.pts = customtkinter.CTkLabel(master=self.infoFrame, text="Points: ", font=customtkinter.CTkFont(size=15))
+    self.pts.grid(row=2, column=0, sticky="nsew", pady=10)
+    
+    if taskInfo[0][9] == "None":
+        self.submission = customtkinter.CTkLabel(master=self.infoFrame, text="Submission: ", font=customtkinter.CTkFont(size=15))
+        self.submission.grid(row=3, column=0, sticky="nsew", pady=10)
+
+        self.submission2 = customtkinter.CTkLabel(master=self.infoFrame, text="No Submission Link", font=customtkinter.CTkFont(size=15))
+        self.submission2.grid(row=3, column=1, sticky="nsew", pady=10)
+
+    else:
+        self.subButton = customtkinter.CTkButton(master=self.infoFrame, text="Submit Assignment", command=lambda: print("submit"))
+        self.subButton.grid(row=3, column=0, columnspan=2, sticky="nsew", pady=10)
 
     for i in range(len(subTask)):
         self.subTaskInfo[i] = {}

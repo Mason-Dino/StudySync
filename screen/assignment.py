@@ -2,6 +2,7 @@ from tkinter import messagebox
 import customtkinter
 from task import *
 import datetime
+import webbrowser
 
 from themes.theme import topLevel, loadLevelColor, top2Level
 from id import makeID
@@ -120,10 +121,12 @@ def showAssignment(self, id):
 
         self.submission2 = customtkinter.CTkLabel(master=self.infoFrame, text="No Submission Link", font=customtkinter.CTkFont(size=15))
         self.submission2.grid(row=3, column=1, sticky="nsew", pady=10)
+        self.noSubButton = True
 
     else:
-        self.subButton = customtkinter.CTkButton(master=self.infoFrame, text="Submit Assignment", command=lambda: print("submit"), height=28)
+        self.subButton = customtkinter.CTkButton(master=self.infoFrame, text="Submit Assignment", command=lambda: submitURL(taskInfo[0][9]), height=28)
         self.subButton.grid(row=3, column=0, columnspan=2, sticky="nsew", pady=10, padx=40)
+        self.noSubButton = False
 
     for i in range(len(subTask)):
         self.subTaskInfo[i] = {}
@@ -228,6 +231,15 @@ def editAssignment(self, id):
 
     self.subTaskFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
 
+    self.level.grid_forget()
+    self.type2.grid_forget()
+    self.pts2.grid_forget()
+
+    if self.noSubButton == False:
+        pass
+
+    elif self.noSubButton == True:
+        pass
 
 def completeAssignment(self, id):
     from tabs.home import home
@@ -287,3 +299,10 @@ def save(self, id):
         messagebox.showinfo(title="Success", message="Changes saved!")
 
     showAssignment(self, id)
+
+def submitURL(url):
+    try:
+        webbrowser.open(url)
+
+    except:
+        messagebox.showerror(title="Error", message="Invalid URL")

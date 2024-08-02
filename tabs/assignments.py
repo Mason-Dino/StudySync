@@ -97,7 +97,7 @@ def assignments(self, taskName: str = None):
     self.importance = customtkinter.CTkOptionMenu(master=self.sideLeft, values=["1 (most)", "2", "3", "4 (least)"], variable=customtkinter.StringVar(value="Importance Level"))
     self.importance.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.addTask = customtkinter.CTkButton(master=self.overallTaskFrame, text="Add Task", command=lambda: makeTask(self))
+    self.addTask = customtkinter.CTkButton(master=self.overallTaskFrame, text="Add Task", command=lambda: makeTask(self), height=20)
     self.addTask.grid(row=4, column=0, sticky="nsew", padx=10, pady=10)
 
 def makeTask(self):

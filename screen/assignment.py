@@ -75,9 +75,10 @@ def showAssignment(self, id):
     self.taskScroll.grid(row=0, column=0, sticky="nsew", padx=0, pady=0)
     self.taskScroll.grid_columnconfigure((0), weight=1)
 
-    self.infoFrame = customtkinter.CTkFrame(master=self.info, corner_radius=6, fg_color="red")
+    self.infoFrame = customtkinter.CTkFrame(master=self.info, corner_radius=6, fg_color="transparent")
     self.infoFrame.grid(row=0, column=0, sticky="nsew")
     self.infoFrame.grid_columnconfigure((0,1), weight=1)
+    self.infoFrame.grid_rowconfigure((0,1,2,3), weight=1)
 
     #I need to provide a way to show a text version of:
     #[ ] importance
@@ -88,11 +89,30 @@ def showAssignment(self, id):
     self.importance = customtkinter.CTkLabel(master=self.infoFrame, text="Importance: ", font=customtkinter.CTkFont(size=15))
     self.importance.grid(row=0, column=0, sticky="nsew", pady=10)
 
+    self.level = customtkinter.CTkFrame(master=self.infoFrame, fg_color=loadLevelColor(taskInfo[0][11]), corner_radius=6, height=20)
+    self.level.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
+    self.level.grid_columnconfigure(0, weight=1)
+    self.level.grid_rowconfigure(0, weight=1)
+
+    self.level2 = customtkinter.CTkLabel(master=self.level, text=f"Level {taskInfo[0][11]}", font=customtkinter.CTkFont(size=15))
+    self.level2.grid(row=0, column=0, sticky="nsew", padx=20, pady=2)
+
     self.type = customtkinter.CTkLabel(master=self.infoFrame, text="Type: ", font=customtkinter.CTkFont(size=15))
     self.type.grid(row=1, column=0, sticky="nsew", pady=10)
 
+    self.type2 = customtkinter.CTkLabel(master=self.infoFrame, text=taskInfo[0][12], font=customtkinter.CTkFont(size=15))
+    self.type2.grid(row=1, column=1, sticky="nsew", pady=10)
+
     self.pts = customtkinter.CTkLabel(master=self.infoFrame, text="Points: ", font=customtkinter.CTkFont(size=15))
     self.pts.grid(row=2, column=0, sticky="nsew", pady=10)
+
+    if taskInfo[0][10] == "None" or taskInfo[0][10] == 0 or taskInfo[0][10] == "":
+        self.pts2 = customtkinter.CTkLabel(master=self.infoFrame, text="No Points", font=customtkinter.CTkFont(size=15))
+        self.pts2.grid(row=2, column=1, sticky="nsew", pady=10)
+
+    else:
+        self.pts2 = customtkinter.CTkLabel(master=self.infoFrame, text=f"{taskInfo[0][10]} Point(s)", font=customtkinter.CTkFont(size=15))
+        self.pts2.grid(row=2, column=1, sticky="nsew", pady=10)
     
     if taskInfo[0][9] == "None":
         self.submission = customtkinter.CTkLabel(master=self.infoFrame, text="Submission: ", font=customtkinter.CTkFont(size=15))
@@ -102,8 +122,8 @@ def showAssignment(self, id):
         self.submission2.grid(row=3, column=1, sticky="nsew", pady=10)
 
     else:
-        self.subButton = customtkinter.CTkButton(master=self.infoFrame, text="Submit Assignment", command=lambda: print("submit"))
-        self.subButton.grid(row=3, column=0, columnspan=2, sticky="nsew", pady=10)
+        self.subButton = customtkinter.CTkButton(master=self.infoFrame, text="Submit Assignment", command=lambda: print("submit"), height=28)
+        self.subButton.grid(row=3, column=0, columnspan=2, sticky="nsew", pady=10, padx=40)
 
     for i in range(len(subTask)):
         self.subTaskInfo[i] = {}

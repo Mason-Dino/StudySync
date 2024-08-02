@@ -49,6 +49,9 @@ def showAssignment(self, id):
     self.subTaskFrame.set("Task")
 
     self.task.grid_columnconfigure(0, weight=1)
+    self.task.grid_rowconfigure(0, weight=1)
+
+    self.info.grid_columnconfigure(0, weight=1)
     self.info.grid_rowconfigure(0, weight=1)
 
     self.buttonFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
@@ -68,9 +71,19 @@ def showAssignment(self, id):
                                                 anchor="w", justify="left", corner_radius=6)
     self.classContent.grid(row=0, column=1, sticky="nsew", padx=10, pady=4)
 
-    self.taskScroll = customtkinter.CTkScrollableFrame(master=self.task, corner_radius=6, fg_color="red", height=200)
+    self.taskScroll = customtkinter.CTkScrollableFrame(master=self.task, corner_radius=6, fg_color="transparent", height=200)
     self.taskScroll.grid(row=0, column=0, sticky="nsew", padx=0, pady=0)
     self.taskScroll.grid_columnconfigure((0), weight=1)
+
+    self.infoFrame = customtkinter.CTkFrame(master=self.info, corner_radius=6, fg_color="red")
+    self.infoFrame.grid(row=0, column=0, sticky="nsew")
+    self.infoFrame.grid_columnconfigure((0), weight=1)
+
+    #I need to provide a way to show a text version of:
+    #[ ] importance
+    #[ ] type of project
+    #[ ] PTS value
+    #[ ] Submission button
 
 
     for i in range(len(subTask)):

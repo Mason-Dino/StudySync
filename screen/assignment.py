@@ -111,7 +111,13 @@ def showAssignment(self, id):
         self.pts2.grid(row=2, column=1, sticky="nsew", pady=10)
 
     else:
-        self.pts2 = customtkinter.CTkLabel(master=self.infoFrame, text=f"{taskInfo[0][10]} Point(s)", font=customtkinter.CTkFont(size=15))
+        if taskInfo[0][10] == 1:
+            point = "Point"
+
+        else:
+            point = "Points"
+
+        self.pts2 = customtkinter.CTkLabel(master=self.infoFrame, text=f"{taskInfo[0][10]} {point}", font=customtkinter.CTkFont(size=15))
         self.pts2.grid(row=2, column=1, sticky="nsew", pady=10)
     
     if taskInfo[0][9] == "None":
@@ -248,14 +254,35 @@ def editAssignment(self, id):
     self.projectType = customtkinter.CTkOptionMenu(master=self.tempFrame, values=["Test", "Assignment", "Group", "Essay"], width=100)
     self.projectType.grid(row=0, column=0, sticky="nsew", padx=10, pady=4)
 
+    self.tempFrame2 = customtkinter.CTkFrame(master=self.infoFrame, fg_color="transparent", corner_radius=6, height=20)
+    self.tempFrame2.grid(row=2, column=1, sticky="nsew", padx=10, pady=10)
+    self.tempFrame2.grid_columnconfigure((0), weight=1)
+    self.tempFrame2.grid_rowconfigure((0), weight=1)
+
+    self.pointsEntry = customtkinter.CTkEntry(master=self.tempFrame2, placeholder_text="Points", width=100)
+    self.pointsEntry.grid(row=0, column=0, sticky="nsew", padx=10, pady=4)
+
+    self.tempFrame3 = customtkinter.CTkFrame(master=self.infoFrame, fg_color="transparent", corner_radius=6, height=20)
+    self.tempFrame3.grid(row=3, column=1, sticky="nsew", padx=10, pady=10)
+    self.tempFrame3.grid_columnconfigure((0), weight=1)
+    self.tempFrame3.grid_rowconfigure((0), weight=1)
+
+    self.subEntry = customtkinter.CTkEntry(master=self.tempFrame3, placeholder_text="Submission", width=100)
+    self.subEntry.grid(row=0, column=0, sticky="nsew", padx=10, pady=4)
+
     for i in range(self.lenSubTask):
         self.subTaskInfo[i]["done"].configure(text="Delete")
 
+    print(self.noSubButton)
+
     if self.noSubButton == False:
-        pass
+        self.subButton.grid_forget()
+        
+        self.submission = customtkinter.CTkLabel(master=self.infoFrame, text="Submission: ", font=customtkinter.CTkFont(size=15))
+        self.submission.grid(row=3, column=0, sticky="nsew", pady=10)
 
     elif self.noSubButton == True:
-        pass
+        self.submission.grid(row=3, column=0, sticky="nsew", padx=10, pady=10)
 
 def completeAssignment(self, id):
     from tabs.home import home

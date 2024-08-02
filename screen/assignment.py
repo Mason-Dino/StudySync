@@ -79,7 +79,6 @@ def showAssignment(self, id):
     self.infoFrame = customtkinter.CTkFrame(master=self.info, corner_radius=6, fg_color="transparent")
     self.infoFrame.grid(row=0, column=0, sticky="nsew")
     self.infoFrame.grid_columnconfigure((0,1), weight=1)
-    self.infoFrame.grid_rowconfigure((0,1,2,3), weight=1)
 
     #I need to provide a way to show a text version of:
     #[ ] importance
@@ -233,9 +232,21 @@ def editAssignment(self, id):
 
     self.subTaskFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
 
-    self.level.grid_forget()
+    self.level2.grid_forget()
     self.type2.grid_forget()
     self.pts2.grid_forget()
+
+    self.level.configure(fg_color="transparent")
+    self.levelInput = customtkinter.CTkOptionMenu(master=self.level, values=["None", "1 (most)", "2", "3", "4 (least)"], width=100)
+    self.levelInput.grid(row=0, column=0, sticky="nsew", padx=10, pady=4)
+
+    self.tempFrame = customtkinter.CTkFrame(master=self.infoFrame, fg_color="transparent", corner_radius=6, height=20)
+    self.tempFrame.grid(row=1, column=1, sticky="nsew", padx=10, pady=10)
+    self.tempFrame.grid_columnconfigure((0), weight=1)
+    self.tempFrame.grid_rowconfigure((0), weight=1)
+
+    self.projectType = customtkinter.CTkOptionMenu(master=self.tempFrame, values=["Test", "Assignment", "Group", "Essay"], width=100)
+    self.projectType.grid(row=0, column=0, sticky="nsew", padx=10, pady=4)
 
     for i in range(self.lenSubTask):
         self.subTaskInfo[i]["done"].configure(text="Delete")

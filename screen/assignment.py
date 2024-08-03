@@ -271,7 +271,7 @@ def editAssignment(self, id):
     self.tempFrame3.grid_columnconfigure((0), weight=1)
     self.tempFrame3.grid_rowconfigure((0), weight=1)
 
-    self.subEntry = customtkinter.CTkEntry(master=self.tempFrame3, placeholder_text="Submission", width=100)
+    self.subEntry = customtkinter.CTkEntry(master=self.tempFrame3, width=100)
     self.subEntry.grid(row=0, column=0, sticky="nsew", padx=10, pady=4)
 
     self.pointsEntry.configure(textvariable=customtkinter.StringVar(value=taskInfo[0][10]))
@@ -290,6 +290,7 @@ def editAssignment(self, id):
         level = taskInfo[0][11]
 
     self.levelInput.configure(variable=customtkinter.StringVar(value=level))
+    self.subEntry.configure(textvariable=customtkinter.StringVar(value=taskInfo[0][9]))
 
     for i in range(self.lenSubTask):
         makeDeleteWork(self, i, self.subTaskInfo[i]["id"])
@@ -343,14 +344,8 @@ def save(self, id):
     afterDueDate = self.dueDate2.get()
 
     task = getMainTaskSingle(id)
-    print(task)
 
     self.beforeDueDate = self.beforeDueDate.split(" ")[1]
-
-    print(self.levelInput.get())
-    print(self.projectType.get())
-    print(self.pointsEntry.get())
-    print(self.subEntry.get())
 
     if len(afterTaskName) > 30:
         messagebox.showerror(title="Error", message="Task name too long")
@@ -365,21 +360,53 @@ def save(self, id):
         messagebox.showerror(title="Error", message="You are missing a required field")
 
     if afterTaskName == self.beforeTaskName:
-        changeTaskName = False
+        pass
 
     else:
         editTask(id, "name", afterTaskName)
-        changeTaskName = True
+        
 
     if self.beforeDueDate == afterDueDate:
-        changeDueDate = False
+        pass
 
     else:
         editTask(id, "date", afterDueDate)
-        changeDueDate = True
+        
 
-    if changeTaskName == True or changeDueDate == True:
-        messagebox.showinfo(title="Success", message="Changes saved!")
+    level = self.levelInput.get()
+
+    if level == "1 (most)" or level == "4 (least)":
+        importance = int(level.split(" ")[0])
+
+    elif level == "None":
+        importance = 5
+
+    else:
+        importance = self.levelInput.get()
+
+    editTask(id, "importance", importance)
+        
+
+    if self.subEntry.get() == "":
+        sub = "None"
+
+    else:
+        sub = self.subEntry.get()
+    
+    editTask(id, "submission", sub)
+    
+    if self.pointsEntry.get() == "":
+        points = "None"
+
+    else:
+        points = self.pointsEntry.get()
+
+    editTask(id, "points", points)
+
+    editTask(id, "type", self.projectType.get())
+        
+
+    messagebox.showinfo(title="Success", message="Update Task!")
 
     showAssignment(self, id)
 

@@ -245,6 +245,15 @@ def deleteSubTask(parentID):
     conn.commit()
     conn.close()
 
+def deleteOnlySubTask(id):
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    c.execute(f"DELETE FROM tasks WHERE id='{id}'")
+
+    conn.commit()
+    conn.close()
+
 def isLeapYear(year):
     if (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):
         return True

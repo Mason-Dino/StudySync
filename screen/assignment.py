@@ -325,7 +325,15 @@ def save(self, id):
     afterTaskName = self.editTaskName.get()
     afterDueDate = self.dueDate2.get()
 
+    task = getMainTaskSingle(id)
+    print(task)
+
     self.beforeDueDate = self.beforeDueDate.split(" ")[1]
+
+    print(self.levelInput.get())
+    print(self.projectType.get())
+    print(self.pointsEntry.get())
+    print(self.subEntry.get())
 
     if len(afterTaskName) > 30:
         messagebox.showerror(title="Error", message="Task name too long")

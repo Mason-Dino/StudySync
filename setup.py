@@ -11,7 +11,7 @@ from themes.theme import *
 
 class setup(customtkinter.CTk):
     def __init__(self):
-        self.version = "v0.7.0"
+        self.version = "v0.8.0"
         """
         This is the constructor for the Setup class. It initializes the setup window and its elements.
         """

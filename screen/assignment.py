@@ -137,6 +137,7 @@ def showAssignment(self, id):
 
     for i in range(len(subTask)):
         self.subTaskInfo[i] = {}
+        self.subTaskInfo[i]["id"] = subTask[i][0]
 
         self.subTaskInfo[i]["frame"] = customtkinter.CTkFrame(master=self.taskScroll, corner_radius=6, fg_color=top2Level())
         self.subTaskInfo[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=10, pady=3)
@@ -194,6 +195,9 @@ def addSubTaskFunction(self, parentID, taskInfo):
 
 def makeButtonWork(self, i, id):
     self.subTaskInfo[i]["done"].configure(command=lambda: doneSubTaskClick(self, id, i))
+
+def makeDeleteWork(self, i, id):
+    self.subTaskInfo[i]["done"].configure(command=lambda: deleteSubTaskFunction(self, id, i), text="Delete")
 
 def doneSubTaskClick(self, id: str, i):
     finishSubTask(self, id)
@@ -271,7 +275,7 @@ def editAssignment(self, id):
     self.subEntry.grid(row=0, column=0, sticky="nsew", padx=10, pady=4)
 
     for i in range(self.lenSubTask):
-        self.subTaskInfo[i]["done"].configure(text="Delete")
+        makeDeleteWork(self, i, self.subTaskInfo[i]["id"])
 
     print(self.noSubButton)
 
@@ -295,13 +299,24 @@ def completeAssignment(self, id):
 
 def deleteAssignment(self, id):
     from tabs.home import home
+    
+    results = messagebox.showerror(title="Error", message="Are you sure you want to delete this assignment?", type="yesno")
 
-    deleteTask(id)
-    deleteSubTask(id)
+    if results == "yes":
+        deleteTask(id)
+        deleteSubTask(id)
 
-    messagebox.showinfo(title="Success", message="Assignment Deleted")
+        messagebox.showinfo(title="Success", message="Assignment Deleted")
 
-    home(self)
+        home(self)
+
+    if results == "no":
+        showAssignment(self, id)
+
+def deleteSubTaskFunction(self, id, i):
+    print("hey")
+    deleteOnlySubTask(id)
+    self.subTaskInfo[i]["frame"].destroy()
 
 def cancel(self, id):
     showAssignment(self, id)

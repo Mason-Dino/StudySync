@@ -227,6 +227,18 @@ def editTask(id, type: str, value: str):
         c.execute(f"UPDATE tasks SET month={month} WHERE parentID='{id}'")
         c.execute(f"UPDATE tasks SET year={year} WHERE parentID='{id}'")
 
+    elif type == "importance":
+        c.execute(f"UPDATE tasks SET importance='{value}' WHERE id='{id}'")
+
+    elif type == "submission":
+        c.execute(f"UPDATE tasks SET subLink='{value}' WHERE id='{id}'")
+
+    elif type == "points":
+        c.execute(f"UPDATE tasks SET ptsValue='{value}' WHERE id='{id}'")
+
+    elif type == "type":
+        c.execute(f"UPDATE tasks SET type='{value}' WHERE id='{id}'")
+
     conn.commit()
     conn.close()
 

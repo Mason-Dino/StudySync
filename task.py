@@ -30,6 +30,9 @@ def database():
         print("Database created successfully")
 
 def addMainTask(taskName, taskID, className, classID, day, month, year, subLink, ptsValue, importance, type):
+    if ptsValue == "":
+        ptsValue = "None"
+
     if int(day) < 10:
         daystr = "0" + str(day)
 

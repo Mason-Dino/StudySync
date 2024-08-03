@@ -121,7 +121,7 @@ def showAssignment(self, id):
         self.pts2.grid(row=2, column=1, sticky="nsew", pady=10)
     
     if taskInfo[0][9] == "None":
-        self.submission = customtkinter.CTkLabel(master=self.infoFrame, text="Submission: ", font=customtkinter.CTkFont(size=15))
+        self.submission = customtkinter.CTkLabel(master=self.infoFrame, text="Submission Link: ", font=customtkinter.CTkFont(size=15))
         self.submission.grid(row=3, column=0, sticky="nsew", pady=10)
 
         self.submission2 = customtkinter.CTkLabel(master=self.infoFrame, text="No Submission Link", font=customtkinter.CTkFont(size=15))
@@ -255,15 +255,15 @@ def editAssignment(self, id):
     self.tempFrame.grid_columnconfigure((0), weight=1)
     self.tempFrame.grid_rowconfigure((0), weight=1)
 
-    self.projectType = customtkinter.CTkOptionMenu(master=self.tempFrame, values=["Test", "Assignment", "Group", "Essay"], width=100)
+    self.projectType = customtkinter.CTkOptionMenu(master=self.tempFrame, values=["None", "Test", "Assignment", "Group", "Essay"], width=100)
     self.projectType.grid(row=0, column=0, sticky="nsew", padx=10, pady=4)
 
     self.tempFrame2 = customtkinter.CTkFrame(master=self.infoFrame, fg_color="transparent", corner_radius=6, height=20)
     self.tempFrame2.grid(row=2, column=1, sticky="nsew", padx=10, pady=10)
-    self.tempFrame2.grid_columnconfigure((0), weight=1)
+    self.tempFrame2.grid_columnconfigure((0), weigh=1)
     self.tempFrame2.grid_rowconfigure((0), weight=1)
 
-    self.pointsEntry = customtkinter.CTkEntry(master=self.tempFrame2, placeholder_text="Points", width=100)
+    self.pointsEntry = customtkinter.CTkEntry(master=self.tempFrame2, width=100, )
     self.pointsEntry.grid(row=0, column=0, sticky="nsew", padx=10, pady=4)
 
     self.tempFrame3 = customtkinter.CTkFrame(master=self.infoFrame, fg_color="transparent", corner_radius=6, height=20)
@@ -274,6 +274,23 @@ def editAssignment(self, id):
     self.subEntry = customtkinter.CTkEntry(master=self.tempFrame3, placeholder_text="Submission", width=100)
     self.subEntry.grid(row=0, column=0, sticky="nsew", padx=10, pady=4)
 
+    self.pointsEntry.configure(textvariable=customtkinter.StringVar(value=taskInfo[0][10]))
+    self.projectType.configure(variable=customtkinter.StringVar(value=taskInfo[0][12]))
+
+    if taskInfo[0][11] == 1:
+        level = "1 (most)"
+
+    elif taskInfo[0][11] == 4:
+        level = "4 (least)"
+
+    elif taskInfo[0][11] == 5:
+        level = "None"
+
+    else:
+        level = taskInfo[0][11]
+
+    self.levelInput.configure(variable=customtkinter.StringVar(value=level))
+
     for i in range(self.lenSubTask):
         makeDeleteWork(self, i, self.subTaskInfo[i]["id"])
 
@@ -282,7 +299,7 @@ def editAssignment(self, id):
     if self.noSubButton == False:
         self.subButton.grid_forget()
         
-        self.submission = customtkinter.CTkLabel(master=self.infoFrame, text="Submission: ", font=customtkinter.CTkFont(size=15))
+        self.submission = customtkinter.CTkLabel(master=self.infoFrame, text="Submission Link: ", font=customtkinter.CTkFont(size=15))
         self.submission.grid(row=3, column=0, sticky="nsew", pady=10)
 
     elif self.noSubButton == True:

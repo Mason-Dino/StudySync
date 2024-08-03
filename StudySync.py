@@ -60,7 +60,10 @@ class StudySync(customtkinter.CTk):
         self.assignments.grid(row=2, column=0, padx=15, pady=5)
 
         self.due = customtkinter.CTkButton(master=self.infoFrame, text="Due soon", command=lambda:due(self))
-        self.due.grid(row=3, column=0, padx=15, pady=7)
+        self.due.grid(row=3, column=0, padx=15, pady=5)
+
+        self.importance = customtkinter.CTkButton(master=self.infoFrame, text="Importance", command=lambda: self.button_function())
+        self.importance.grid(row=4, column=0, padx=15, pady=5)
 
         self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=lambda: self.settingsMain(), image=self.settingImage)
         #self.settingsButton.grid(row=3, column=0, padx=15, pady=100)

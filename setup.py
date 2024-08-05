@@ -294,6 +294,14 @@ class setup(customtkinter.CTk):
                     self.setupDir["level"] = 0
                     self.setupDir["version"] = self.version
 
+                    self.setupDir["tabs"] = {
+                        "home": True,
+                        "class": True,
+                        "task": True,
+                        "due": True,
+                        "important": True
+                    }
+
                     # Convert the setup directory to JSON format and store it in a variable
                     json_obj = json.dumps(self.setupDir, indent=4)
 

@@ -75,12 +75,14 @@ class StudySync(customtkinter.CTk):
         self.bind("<Control_L><a>", lambda event: assignments(self))
         self.bind("<Control_L><d>", lambda event: due(self))
         self.bind("<Control_L><s>", lambda event: settings(self))
+        self.bind("<Control_L><i>", lambda event: importance(self))
 
         self.bind("<Control_R><h>", lambda event: home(self))
         self.bind("<Control_R><c>", lambda event: classes(self))
         self.bind("<Control_R><a>", lambda event: assignments(self))
         self.bind("<Control_R><d>", lambda event: due(self))
         self.bind("<Control_R><s>", lambda event: settings(self))
+        self.bind("<Control_R><i>", lambda event: importance(self))
 
         home(self)
 

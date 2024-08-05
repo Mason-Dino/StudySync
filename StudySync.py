@@ -51,20 +51,37 @@ class StudySync(customtkinter.CTk):
         self.infoFrame.grid_columnconfigure(0, weight=1)
         self.infoFrame.grid(row=1, rowspan=2, column=0, sticky="nswe", pady=10)
 
-        self.home = customtkinter.CTkButton(master=self.infoFrame, text="Home", command=lambda:home(self))
-        self.home.grid(row=0, column=0, padx=15, pady=5)
+        b = 0
 
-        self.classes = customtkinter.CTkButton(master=self.infoFrame, text="Classes", command=lambda: self.classesMain())
-        self.classes.grid(row=1, column=0, padx=15, pady=5)
+        if self.setupDir["tabs"]["home"] == True:
+            self.home = customtkinter.CTkButton(master=self.infoFrame, text="Home", command=lambda:home(self))
+            self.home.grid(row=b, column=0, padx=15, pady=5)
 
-        self.assignments = customtkinter.CTkButton(master=self.infoFrame, text="Assignments", command=lambda:assignments(self))
-        self.assignments.grid(row=2, column=0, padx=15, pady=5)
+            b += 1
 
-        self.due = customtkinter.CTkButton(master=self.infoFrame, text="Due soon", command=lambda:due(self))
-        self.due.grid(row=3, column=0, padx=15, pady=5)
+        if self.setupDir["tabs"]["class"] == True:
+            self.classes = customtkinter.CTkButton(master=self.infoFrame, text="Classes", command=lambda: self.classesMain())
+            self.classes.grid(row=b, column=0, padx=15, pady=5)
 
-        self.importance = customtkinter.CTkButton(master=self.infoFrame, text="Importance", command=lambda: importance(self))
-        self.importance.grid(row=4, column=0, padx=15, pady=5)
+            b += 1
+
+        if self.setupDir["tabs"]["task"] == True:
+            self.assignments = customtkinter.CTkButton(master=self.infoFrame, text="Assignments", command=lambda:assignments(self))
+            self.assignments.grid(row=b, column=0, padx=15, pady=5)
+
+            b += 1
+        
+        if self.setupDir["tabs"]["due"] == True:
+            self.due = customtkinter.CTkButton(master=self.infoFrame, text="Due soon", command=lambda:due(self))
+            self.due.grid(row=b, column=0, padx=15, pady=5)
+
+            b += 1
+
+        if self.setupDir["tabs"]["important"] == True:
+            self.importance = customtkinter.CTkButton(master=self.infoFrame, text="Importance", command=lambda: importance(self))
+            self.importance.grid(row=b, column=0, padx=15, pady=5)
+
+            b += 1
 
         self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=lambda: self.settingsMain(), image=self.settingImage)
         #self.settingsButton.grid(row=3, column=0, padx=15, pady=100)

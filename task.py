@@ -203,6 +203,16 @@ def getOverdueTasks():
 
     return rows
 
+def getTaskbyLevel(level: int):
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    c.execute(f"SELECT * FROM tasks WHERE importance={level} AND parentID='None'")
+    rows = c.fetchall()
+    conn.close()
+
+    return rows
+
 def editTask(id, type: str, value: str):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()

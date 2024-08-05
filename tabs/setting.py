@@ -70,14 +70,14 @@ def settings(self):
     self.classSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Classes")
     self.classSwitch.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.importSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Important")
-    self.importSwitch.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
+    self.taskSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Assignments")
+    self.taskSwitch.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
 
     self.dueSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Due")
     self.dueSwitch.grid(row=3, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.taskSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Assignments")
-    self.taskSwitch.grid(row=4, column=0, sticky="nsew", padx=10, pady=10)
+    self.importSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Important")
+    self.importSwitch.grid(row=4, column=0, sticky="nsew", padx=10, pady=10)
 
     self.sideRight = customtkinter.CTkFrame(master=self.turnOffFrame, fg_color="transparent")
     self.sideRight.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
@@ -94,6 +94,21 @@ def settings(self):
 
     self.update = customtkinter.CTkButton(master=self.sideRight, text="Update", command=lambda: updateTabs(self))
     self.update.grid(row=3, column=0, sticky="nsew", padx=10, pady=10)
+
+
+    pageSwitch = [self.homeSwitch, self.classSwitch, self.taskSwitch, self.dueSwitch, self.importSwitch]
+    name = ["home", "class", "task", "due", "important"]
+
+    with open("setup.json", "r") as f:
+        setupDir = json.load(f)
+
+    for i in range(5):
+        if setupDir["tabs"][name[i]] == True:
+            pageSwitch[i].select()
+
+        else:
+            pageSwitch[i].deselect()
+
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
@@ -319,4 +334,24 @@ def turnOn(self):
         page.select()
 
 def updateTabs(self):
-    print("update")
+    with open("setup.json", "r") as f:
+        setupDir = json.load(f)
+
+    pageSwitch = [self.homeSwitch, self.classSwitch, self.taskSwitch, self.dueSwitch, self.importSwitch]
+    name = ["home", "class", "task", "due", "important"]
+    value = []
+
+    for page in pageSwitch:
+        value.append(page.get())
+
+    for i in range(5):
+        if value[i] == 1:
+            setupDir["tabs"][name[i]] = True
+
+        else:
+            setupDir["tabs"][name[i]] = False
+
+    with open("setup.json", "w") as f:
+        json.dump(setupDir, f, indent=4)
+
+    print(json.dumps(setupDir, indent=4))

@@ -55,6 +55,48 @@ def settings(self):
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    self.turnOffFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
+    self.turnOffFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
+    self.turnOffFrame.grid_columnconfigure((0,1), weight=1)
+
+    RowI += 1
+
+    self.sideLeft = customtkinter.CTkFrame(master=self.turnOffFrame, fg_color="transparent")
+    self.sideLeft.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.homeSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Home")
+    self.homeSwitch.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.classSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Classes")
+    self.classSwitch.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.importSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Important")
+    self.importSwitch.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.dueSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Due")
+    self.dueSwitch.grid(row=3, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.taskSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Assignments")
+    self.taskSwitch.grid(row=4, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.sideRight = customtkinter.CTkFrame(master=self.turnOffFrame, fg_color="transparent")
+    self.sideRight.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+    self.sideRight.grid_columnconfigure((0), weight=1)
+
+    self.des = customtkinter.CTkLabel(master=self.sideRight, text="Turn on and off\nOn: See Button\nOff: No Button", font=customtkinter.CTkFont(size=15))
+    self.des.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.turnOff = customtkinter.CTkButton(master=self.sideRight, text="Turn all Off", command=lambda: turnOff(self))
+    self.turnOff.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.turnOn = customtkinter.CTkButton(master=self.sideRight, text="Turn all On", command=lambda: turnOn(self))
+    self.turnOn.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.update = customtkinter.CTkButton(master=self.sideRight, text="Update", command=lambda: updateStudySync(self))
+    self.update.grid(row=3, column=0, sticky="nsew", padx=10, pady=10)
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
     self.classEditFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
     self.classEditFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
     self.classEditFrame.grid_columnconfigure((0,1), weight=1)
@@ -262,3 +304,9 @@ def addClass(self):
 
     else:
         classAddEdit(self, "add")
+
+def turnOff(self):
+    print("update")
+
+def turnOn(self):
+    print("update")

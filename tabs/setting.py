@@ -92,7 +92,7 @@ def settings(self):
     self.turnOn = customtkinter.CTkButton(master=self.sideRight, text="Turn all On", command=lambda: turnOn(self))
     self.turnOn.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.update = customtkinter.CTkButton(master=self.sideRight, text="Update", command=lambda: updateStudySync(self))
+    self.update = customtkinter.CTkButton(master=self.sideRight, text="Update", command=lambda: updateTabs(self))
     self.update.grid(row=3, column=0, sticky="nsew", padx=10, pady=10)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -306,7 +306,17 @@ def addClass(self):
         classAddEdit(self, "add")
 
 def turnOff(self):
-    print("update")
+    pageSwitch = [self.homeSwitch, self.classSwitch, self.importSwitch, self.dueSwitch, self.taskSwitch]
+
+    for page in pageSwitch:
+        page.deselect()
 
 def turnOn(self):
+    #self.homeSwitch.select()
+    pageSwitch = [self.homeSwitch, self.classSwitch, self.importSwitch, self.dueSwitch, self.taskSwitch]
+
+    for page in pageSwitch:
+        page.select()
+
+def updateTabs(self):
     print("update")

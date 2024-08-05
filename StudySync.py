@@ -1,6 +1,7 @@
 from tabs.assignments import assignments
-from tabs.classes import classes
+from tabs.importance import importance
 from tabs.setting import settings
+from tabs.classes import classes
 from tabs.home import home
 from icon import loadIcon
 from tabs.due import due
@@ -62,7 +63,7 @@ class StudySync(customtkinter.CTk):
         self.due = customtkinter.CTkButton(master=self.infoFrame, text="Due soon", command=lambda:due(self))
         self.due.grid(row=3, column=0, padx=15, pady=5)
 
-        self.importance = customtkinter.CTkButton(master=self.infoFrame, text="Importance", command=lambda: self.button_function())
+        self.importance = customtkinter.CTkButton(master=self.infoFrame, text="Importance", command=lambda: importance(self))
         self.importance.grid(row=4, column=0, padx=15, pady=5)
 
         self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=lambda: self.settingsMain(), image=self.settingImage)

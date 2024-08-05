@@ -354,4 +354,4 @@ def updateTabs(self):
     with open("setup.json", "w") as f:
         json.dump(setupDir, f, indent=4)
 
-    print(json.dumps(setupDir, indent=4))
+    messagebox.showinfo("Success", "Tabs updated!\nRestart StudySync to apply changes.")

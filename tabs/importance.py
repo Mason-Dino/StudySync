@@ -12,6 +12,13 @@ def importance(self):
 
     self.level1 = customtkinter.CTkFrame(master=self.content, fg_color=topLevel(), corner_radius=6)
     self.level1.grid(row=0, column=0, sticky="nsew", pady=padyLevel, padx=padxLevel)
+    self.level1.grid_columnconfigure((0), weight=1)
+
+    self.level1Label = customtkinter.CTkLabel(master=self.level1, text="Level 1", font=customtkinter.CTkFont(size=15))
+    self.level1Label.grid(row=0, column=0, sticky="nsew", pady=padyLevel, padx=padxLevel)
+
+    self.level1Break = customtkinter.CTkFrame(master=self.level1, fg_color=["gray92", "gray14"], corner_radius=6, height=4)
+    self.level1Break.grid(row=1, column=0, sticky="nsew")
 
     self.level2 = customtkinter.CTkFrame(master=self.content, fg_color=topLevel(), corner_radius=6)
     self.level2.grid(row=1, column=0, sticky="nsew", pady=padyLevel, padx=padxLevel)

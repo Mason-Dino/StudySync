@@ -225,7 +225,20 @@ def editTask(id, type: str, value: str):
         day = int(value[1])
         month = int(value[0])
         year = int(value[2])
-        dueDate = int(f"{month}" + f"{day}" + f"{year}")
+
+        if int(day) < 10:
+            daystr = "0" + str(day)
+
+        else:
+            daystr = str(day)
+
+        if int(month) < 10:
+            monthstr = "0" + str(month)
+
+        else:
+            monthstr = str(month)
+
+        dueDate = int(f"{monthstr}" + f"{daystr}" + f"{year}")
 
         c.execute(f"UPDATE tasks SET date={dueDate} WHERE id='{id}'")
         c.execute(f"UPDATE tasks SET day={day} WHERE id='{id}'")

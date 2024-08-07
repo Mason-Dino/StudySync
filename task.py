@@ -35,6 +35,28 @@ def deleteDatabase():
 
     database()
 
+def makeTestTask():
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    c.execute("""INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", ("test123456789", "Birthday", 1, 2, 2006, 2012006, "None", "test", "test", "test", 10, 1, "test"))
+
+    conn.commit()
+    conn.close()
+
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    c.execute("SELECT * FROM tasks")
+
+    rows = c.fetchall()
+
+    rows[0][12]
+
+    conn.close()
+
+    deleteTask("test123456789")
+
 def addMainTask(taskName, taskID, className, classID, day, month, year, subLink, ptsValue, importance, type):
     if ptsValue == "":
         ptsValue = "None"

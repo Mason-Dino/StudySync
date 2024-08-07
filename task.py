@@ -36,16 +36,20 @@ def deleteDatabase():
     database()
 
 def makeTestTask():
-    conn = sqlite3.connect('study.db')
-    c = conn.cursor()
+    try:
+        conn = sqlite3.connect('study.db')
+        c = conn.cursor()
 
-    c.execute("""INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", ("test123456789", "Birthday", 1, 2, 2006, 2012006, "None", "test", "test", "test", 10, 1, "test"))
+        c.execute("""INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", ("test123456789", "Birthday", 1, 2, 2006, 2012006, "None", "test", "test", "test", 10, 1, "test"))
 
-    conn.commit()
-    conn.close()
+        conn.commit()
+        conn.close()
 
-    conn = sqlite3.connect('study.db')
-    c = conn.cursor()
+        conn = sqlite3.connect('study.db')
+        c = conn.cursor()
+
+    except:
+        print("Error")
 
     c.execute("SELECT * FROM tasks")
 

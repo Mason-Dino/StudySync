@@ -396,4 +396,12 @@ def deleteAllTasks(self):
 def loadTask(self):
     print("hey")
 
+    if os.path.exists("study.db"):
+        os.remove("study.db")
+    
+    file_path = filedialog.askopenfilename(filetypes=(("Data Base Files", "*.db"), ("All Files", "*.*")))
+
+    current = os.getcwd()
+    shutil.copyfile(f"{file_path}", f"{current}/study.db")
+
     makeTestTask()

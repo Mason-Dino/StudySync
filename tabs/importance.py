@@ -105,3 +105,14 @@ def displayTask(self, levelSTR: str, levelINT: int):
         self.taskFrame[levelSTR][i]["done"] = customtkinter.CTkButton(master=self.taskFrame[levelSTR][i]["frame"], text="Done", width=50, command=lambda: print("done"))
         #self.done.grid(row=0, rowspan=2, column=1, padx=3, sticky="e")
         self.taskFrame[levelSTR][i]["done"].place(relx=.99, rely=0.25, anchor="ne")
+
+    if len(level1Task) == 0:
+        self.taskFrame["frame"][levelSTR].grid_remove()
+        #self.noTask = customtkinter.CTkLabel(master=self.taskFrame["frame"][levelSTR], text="No Tasks", font=customtkinter.CTkFont(size=15, weight="bold"))
+        #self.noTask.grid(row=2, column=0, sticky="nsew", padx=5, pady=4)
+
+    if levelINT == 5:
+        if len(getTaskbyLevel(1)) == 0 and len(getTaskbyLevel(2)) == 0 and len(getTaskbyLevel(3)) == 0 and len(getTaskbyLevel(4)) == 0 and len(getTaskbyLevel(5)) == 0:
+
+            self.noTask = customtkinter.CTkLabel(master=self.content, text="No Tasks foung", font=customtkinter.CTkFont(size=15, weight="bold"))
+            self.noTask.grid(row=0, column=0, sticky="nsew", padx=5, pady=4)

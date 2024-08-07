@@ -394,6 +394,8 @@ class setup(customtkinter.CTk):
                     json.dump(setupDir, f, indent=4)
                 messagebox.showinfo(title="Success", message="Setup file loaded!")
 
+                database()
+
                 self.pageInfo[4].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
 
         except KeyError:

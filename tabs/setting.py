@@ -1,5 +1,6 @@
 from version import getMainVersion, getUserVersion
 from screen.classColor import showClassColors
+from task import deleteDatabase, makeTestTask
 from screen.classAddEdit import classAddEdit
 from themes.theme import topLevel
 from tkinter import messagebox
@@ -196,6 +197,21 @@ def settings(self):
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    self.taskUpdateFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
+    self.taskUpdateFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
+    self.taskUpdateFrame.grid_columnconfigure((0, 1), weight=1)
+
+    RowI += 1
+
+    self.deleteAll = customtkinter.CTkButton(master=self.taskUpdateFrame, text="Delete All Tasks", command=lambda: deleteAllTasks(self))
+    self.deleteAll.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.loadTasks = customtkinter.CTkButton(master=self.taskUpdateFrame, text="Load Tasks", command=lambda: loadTask(self))
+    self.loadTasks.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
     self.versionFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
     self.versionFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
     self.versionFrame.grid_columnconfigure((0, 1), weight=1)
@@ -371,3 +387,13 @@ def resetStudySync(self):
     os.remove("study.db")
 
     messagebox.showinfo("Success", "StudySync has been reset!\nRestart StudySync to apply changes.")
+
+def deleteAllTasks(self):
+    deleteDatabase()
+
+    messagebox.showinfo("Success", "All tasks have been deleted!")
+
+def loadTask(self):
+    print("hey")
+
+    makeTestTask()

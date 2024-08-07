@@ -181,7 +181,7 @@ def settings(self):
 
     self.saveFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
     self.saveFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
-    self.saveFrame.grid_columnconfigure((0, 1), weight=1)
+    self.saveFrame.grid_columnconfigure((0, 1, 2), weight=1)
 
     RowI += 1
 
@@ -190,6 +190,9 @@ def settings(self):
 
     self.loadSetup = customtkinter.CTkButton(master=self.saveFrame, text="Load Setup File", command=loadFile)
     self.loadSetup.grid(row=0, column=1, sticky="nsew", padx=10, pady=overallPadyOutside)
+
+    self.reset = customtkinter.CTkButton(master=self.saveFrame, text="Reset StudySync", command=lambda: resetStudySync(self))
+    self.reset.grid(row=0, column=2, sticky="nsew", padx=10, pady=overallPadyOutside)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -355,3 +358,16 @@ def updateTabs(self):
         json.dump(setupDir, f, indent=4)
 
     messagebox.showinfo("Success", "Tabs updated!\nRestart StudySync to apply changes.")
+
+def resetStudySync(self):
+    with open("setup.json", "r") as f:
+        setupDir = json.load(f)
+
+    setupDir["setupComplete"] = False
+
+    with open("setup.json", "w") as f:
+        json.dump(setupDir, f, indent=4)
+
+    os.remove("study.db")
+
+    messagebox.showinfo("Success", "StudySync has been reset!\nRestart StudySync to apply changes.")

@@ -42,19 +42,37 @@ def importance(self):
     self.taskFrame["frame"]["level 3"].grid(row=2, column=0, sticky="nsew", pady=padyLevel, padx=padxLevel)
     self.taskFrame["frame"]["level 3"].grid_columnconfigure((0), weight=1)
 
-    self.level2Label = customtkinter.CTkLabel(master=self.taskFrame["frame"]["level 3"], text="Level 3", font=customtkinter.CTkFont(size=15))
-    self.level2Label.grid(row=0, column=0, sticky="nsew", pady=padyLevel, padx=padxLevel)
+    self.level3Label = customtkinter.CTkLabel(master=self.taskFrame["frame"]["level 3"], text="Level 3", font=customtkinter.CTkFont(size=15))
+    self.level3Label.grid(row=0, column=0, sticky="nsew", pady=padyLevel, padx=padxLevel)
 
-    self.level2Break = customtkinter.CTkFrame(master=self.taskFrame["frame"]["level 3"], fg_color=["gray92", "gray14"], corner_radius=6, height=4)
-    self.level2Break.grid(row=1, column=0, sticky="nsew")
+    self.level3Break = customtkinter.CTkFrame(master=self.taskFrame["frame"]["level 3"], fg_color=["gray92", "gray14"], corner_radius=6, height=4)
+    self.level3Break.grid(row=1, column=0, sticky="nsew")
 
     displayTask(self, "level 3", 3)
 
-    self.level4 = customtkinter.CTkFrame(master=self.content, fg_color=topLevel(), corner_radius=6)
-    self.level4.grid(row=3, column=0, sticky="nsew", pady=padyLevel, padx=padxLevel)
+    self.taskFrame["frame"]["level 4"] = customtkinter.CTkFrame(master=self.content, fg_color=topLevel(), corner_radius=6)
+    self.taskFrame["frame"]["level 4"].grid(row=3, column=0, sticky="nsew", pady=padyLevel, padx=padxLevel)
+    self.taskFrame["frame"]["level 4"].grid_columnconfigure((0), weight=1)
 
-    self.level5 = customtkinter.CTkFrame(master=self.content, fg_color=topLevel(), corner_radius=6)
-    self.level5.grid(row=4, column=0, sticky="nsew", pady=padyLevel, padx=padxLevel)
+    self.level4Label = customtkinter.CTkLabel(master=self.taskFrame["frame"]["level 4"], text="Level 4", font=customtkinter.CTkFont(size=15))
+    self.level4Label.grid(row=0, column=0, sticky="nsew", pady=padyLevel, padx=padxLevel)
+
+    self.level4Break = customtkinter.CTkFrame(master=self.taskFrame["frame"]["level 4"], fg_color=["gray92", "gray14"], corner_radius=6, height=4)
+    self.level4Break.grid(row=1, column=0, sticky="nsew")
+
+    displayTask(self, "level 4", 4)
+
+    self.taskFrame["frame"]["level 5"] = customtkinter.CTkFrame(master=self.content, fg_color=topLevel(), corner_radius=6)
+    self.taskFrame["frame"]["level 5"].grid(row=4, column=0, sticky="nsew", pady=padyLevel, padx=padxLevel)
+    self.taskFrame["frame"]["level 5"].grid_columnconfigure((0), weight=1)
+
+    self.level5Label = customtkinter.CTkLabel(master=self.taskFrame["frame"]["level 5"], text="Level 5", font=customtkinter.CTkFont(size=15))
+    self.level5Label.grid(row=0, column=0, sticky="nsew", pady=padyLevel, padx=padxLevel)
+
+    self.level5Break = customtkinter.CTkFrame(master=self.taskFrame["frame"]["level 5"], fg_color=["gray92", "gray14"], corner_radius=6, height=4)
+    self.level5Break.grid(row=1, column=0, sticky="nsew")
+
+    displayTask(self, "level 5", 5)
 
 def workTask(self, id, i):
     pass

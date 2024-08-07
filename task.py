@@ -29,6 +29,12 @@ def database():
     if __name__ == "__main__":
         print("Database created successfully")
 
+def deleteDatabase():
+    if os.path.exists("study.db"):
+        os.remove("study.db")
+
+    database()
+
 def addMainTask(taskName, taskID, className, classID, day, month, year, subLink, ptsValue, importance, type):
     if ptsValue == "":
         ptsValue = "None"

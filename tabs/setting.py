@@ -223,6 +223,17 @@ def settings(self):
 
     self.version = customtkinter.CTkLabel(master=self.versionFrame, text="  Current Version: " + self.setupDir["version"] + "  ")
     self.version.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    self.docFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
+    self.docFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
+    self.docFrame.grid_columnconfigure((0), weight=1)
+
+    RowI += 1
+
+    self.openDoc = customtkinter.CTkButton(master=self.docFrame, text="Open Documentation", command=lambda: openDoc())
+    self.openDoc.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
     
 
 def changeAppearanceMode(new_appearance_mode: str):
@@ -405,3 +416,6 @@ def loadTask(self):
     shutil.copyfile(f"{file_path}", f"{current}/study.db")
 
     makeTestTask()
+
+def openDoc():
+    webbrowser.open("https://dino-dev.gitbook.io/studysync")

@@ -21,3 +21,10 @@ def getUserVersion():
 
     return setupDir["version"]
 
+def checkIfBeta():
+    test = requests.get("https://mason-dino.github.io/StudySync/")
+    decode = test.content.decode("utf-8")
+    res = json.loads(decode)
+
+    return res["active beta"]
+

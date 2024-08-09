@@ -35,10 +35,10 @@ def classroom(self, id, className):
                                             anchor="w", justify="left")
     self.className.grid(row=0, column=0, sticky="nsew", padx=10, pady=7)
 
-    self.classTeacher = customtkinter.CTkLabel(master=self.header, text=f"Teacher: {classInfo["teacher"]}", cursor="hand2",
+    self.classTeacher = customtkinter.CTkLabel(master=self.header, text=f"Teacher: {classInfo['teacher']}", cursor="hand2",
                                                 font=customtkinter.CTkFont(size=15), anchor="w", justify="left")
     self.classTeacher.grid(row=1, column=0, sticky="nsew", padx=10, pady=7)
-    self.classTeacher.bind("<Button-1>", lambda event: teacherEmail(self, classInfo["email"]))
+    self.classTeacher.bind("<Button-1>", lambda event: teacherEmail(self, classInfo['email']))
 
     self.editClass = customtkinter.CTkButton(master=self.buttonFrame, text="Edit", command=lambda: classAddEdit(self, "edit", className))
     self.editClass.grid(row=0, column=0, sticky="nsew", padx=10, pady=7)

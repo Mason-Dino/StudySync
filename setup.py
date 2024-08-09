@@ -12,6 +12,7 @@ from themes.theme import *
 class setup(customtkinter.CTk):
     def __init__(self):
         self.version = "v0.9.0"
+        self.beta = True
         """
         This is the constructor for the Setup class. It initializes the setup window and its elements.
         """
@@ -293,6 +294,7 @@ class setup(customtkinter.CTk):
                     self.setupDir["progress"] = 0
                     self.setupDir["level"] = 0
                     self.setupDir["version"] = self.version
+                    self.setupDir["betaUser"] = False
 
                     self.setupDir["tabs"] = {
                         "home": True,
@@ -379,6 +381,7 @@ class setup(customtkinter.CTk):
                 progress = setupDir["progress"]
                 level = setupDir["level"]
                 version = setupDir["version"]
+                beta = setupDir["betaUser"]
 
                 for i in range(numClass):
                     id = setupDir[f"class{i+1}"]["id"]

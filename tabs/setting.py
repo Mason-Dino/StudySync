@@ -313,6 +313,7 @@ def loadFile():
             progress = setupDir["progress"]
             level = setupDir["level"]
             version = setupDir["version"]
+            beta = setupDir["betaUser"]
 
             for i in range(numClass):
                 id = setupDir[f"class{i+1}"]["id"]

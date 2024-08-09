@@ -259,28 +259,31 @@ def changeTheme(new_theme: str):
 
 
 def deleteClass(self, className: str):
-    with open("setup.json", "r") as f:
-        setupDir = json.load(f)
+    question = pause()
 
-    if setupDir["numClasses"] == 1:
-        messagebox.showerror("Error", "Cannot delete last class!")
+    if question == True:
+        with open("setup.json", "r") as f:
+            setupDir = json.load(f)
 
-    else:
-        for i in range(setupDir["numClasses"]):
-            if setupDir[f"class{i+1}"]["name"] == className:
-                deleteNum = i + 1
+        if setupDir["numClasses"] == 1:
+            messagebox.showerror("Error", "Cannot delete last class!")
+
+        else:
+            for i in range(setupDir["numClasses"]):
+                if setupDir[f"class{i+1}"]["name"] == className:
+                    deleteNum = i + 1
+                    del setupDir[f"class{i+1}"]
+
+            for i in range(deleteNum, setupDir["numClasses"]):
+                tempClass = setupDir[f"class{i+1}"]
+                setupDir[f"class{i}"] = tempClass
                 del setupDir[f"class{i+1}"]
 
-        for i in range(deleteNum, setupDir["numClasses"]):
-            tempClass = setupDir[f"class{i+1}"]
-            setupDir[f"class{i}"] = tempClass
-            del setupDir[f"class{i+1}"]
+            setupDir["numClasses"] -= 1
+            with open("setup.json", "w") as f:
+                json.dump(setupDir, f, indent=4)
 
-        setupDir["numClasses"] -= 1
-        with open("setup.json", "w") as f:
-            json.dump(setupDir, f, indent=4)
-
-        messagebox.showinfo("Success", "Class Deleted!")
+            messagebox.showinfo("Success", "Class Deleted!")
 
 def editClassSave(self, newClassName: str):
     classAddEdit(self, "edit", newClassName)
@@ -334,7 +337,7 @@ def checkVersion(self):
         messagebox.showinfo(title="Success", message="StudySync is up to date!")
     else:
         self.checkVersion.configure(text="Update StudySync", command=lambda: updateStudySync(self))
-        messagebox.showwarning(title="Warning", message='StudySync is not up to date!\nClick the "Update StudySync" button to update.')
+        messagebox.showwarning(title="Warning", message='StudySync is not up to date!\nClick the "Update StudySync" button to update.\nMakse sure you save current tasks and setup file before updating!')
 
 
 def updateStudySync(self):
@@ -387,22 +390,27 @@ def updateTabs(self):
     messagebox.showinfo("Success", "Tabs updated!\nRestart StudySync to apply changes.")
 
 def resetStudySync(self):
-    with open("setup.json", "r") as f:
-        setupDir = json.load(f)
+    question = pause()
 
-    setupDir["setupComplete"] = False
+    if question == True:
+        with open("setup.json", "r") as f:
+            setupDir = json.load(f)
 
-    with open("setup.json", "w") as f:
-        json.dump(setupDir, f, indent=4)
+        setupDir["setupComplete"] = False
 
-    os.remove("study.db")
+        with open("setup.json", "w") as f:
+            json.dump(setupDir, f, indent=4)
 
-    messagebox.showinfo("Success", "StudySync has been reset!\nRestart StudySync to apply changes.")
+        os.remove("study.db")
+
+        messagebox.showinfo("Success", "StudySync has been reset!\nRestart StudySync to apply changes.")
 
 def deleteAllTasks(self):
-    deleteDatabase()
+    question = pause()
+    if question == True:
+        deleteDatabase()
 
-    messagebox.showinfo("Success", "All tasks have been deleted!")
+        messagebox.showinfo("Success", "All tasks have been deleted!")
 
 def loadTask(self):
     print("hey")
@@ -419,3 +427,11 @@ def loadTask(self):
 
 def openDoc():
     webbrowser.open("https://dino-dev.gitbook.io/studysync")
+
+def pause():
+    yesno = messagebox.askyesno("StudySunc", "Are you sure you want to continue?")
+    
+    #no = False
+    #yes = True
+
+    return yesno

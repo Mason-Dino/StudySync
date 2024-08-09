@@ -24,7 +24,7 @@ def due(self):
     day7 = date + datetime.timedelta(days=6)
 
     weekdays = [day1, day2, day3, day4, day5, day6, day7]
-    strWeekdays = [day1.strftime("%A"), day2.strftime("%A"), day3.strftime("%A"), day3.strftime("%A"), day4.strftime("%A"), day5.strftime("%A"), day6.strftime("%A"), day7.strftime("%A")]
+    strWeekdays = [day1.strftime("%A"), day2.strftime("%A"), day3.strftime("%A"), day4.strftime("%A"), day5.strftime("%A"), day6.strftime("%A"), day7.strftime("%A")]
     error = False
 
     if getOverdueTasks() == []:

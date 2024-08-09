@@ -5,7 +5,9 @@ from tabs.classes import classes
 from tabs.home import home
 from icon import loadIcon
 from tabs.due import due
+from version import checkIfBeta
 
+from tkinter import messagebox
 from setup import setup
 from PIL import Image
 import customtkinter
@@ -122,10 +124,23 @@ if __name__ == "__main__":
             app = setup()
             app.mainloop()
 
-        if setupDir["setupComplete"] == True:
+        elif setupDir["betaUser"] == True:
+            if checkIfBeta() == True:
+                app = StudySync()
+                app.mainloop()
+
+            else:
+                messagebox.showerror(title="Error", message="Beta version of StudySync has ended")
+
+        elif setupDir["setupComplete"] == True:
             app = StudySync()
             app.mainloop()
 
-    except KeyError:
+        else:
+            app = StudySync()
+            app.mainloop()
+
+    except KeyError as error:
+        messagebox.showerror(title="Error", message="Invalid setup.json file")
         app = setup()
         app.mainloop()

@@ -3,9 +3,10 @@ import json
 from tkinter import messagebox
 import datetime
 
-from themes.theme import topLevel, top2Level
+from themes.theme import topLevel, top2Level, getRadioInfo
 from id import makeID
 from task import addMainTask
+
 
 
 def assignments(self, taskName: str = None):
@@ -41,6 +42,7 @@ def assignments(self, taskName: str = None):
         self.setupDir = json.load(f)
 
     numClasses = int(self.setupDir["numClasses"])
+    theme = self.setupDir["theme"]
 
     for i in range(numClasses):
         classes.append(self.setupDir[f"class{i+1}"]["name"])
@@ -76,16 +78,39 @@ def assignments(self, taskName: str = None):
     
     self.project = customtkinter.StringVar(value="project")
 
-    self.testType = customtkinter.CTkRadioButton(master=self.sideRight, text="Test", variable=self.project, value="test")
+    radio = getRadioInfo(theme)
+
+    """
+    "CTkRadioButton": {
+        "corner_radius": 1000,
+        "border_width_checked": 6,
+        "border_width_unchecked": 3,
+        "fg_color": ["#17979E", "#10676B"],
+        "border_color": ["#3E454A", "#949A9F"],
+        "hover_color":["#0A7E85", "#064B4E"],
+        "text_color": ["gray10", "#DCE4EE"],
+        "text_color_disabled": ["gray60", "gray45"]
+    },
+    """
+
+    self.testType = customtkinter.CTkRadioButton(master=self.sideRight, text="Test", variable=self.project, value="test",
+                                                fg_color=radio["fg_color"], border_color=radio["border_color"], hover_color=radio["hover_color"], text_color=radio["text_color"], text_color_disabled=radio["text_color_disabled"],
+                                                corner_radius=radio["corner_radius"], border_width_checked=radio["border_width_checked"], border_width_unchecked=radio["border_width_unchecked"])
     self.testType.grid(row=0, column=0, sticky="nsew", padx=10, pady=7)
 
-    self.assignment = customtkinter.CTkRadioButton(master=self.sideRight, text="Assignment", variable=self.project, value="assignment")
+    self.assignment = customtkinter.CTkRadioButton(master=self.sideRight, text="Assignment", variable=self.project, value="assignment",
+                                                    fg_color=radio["fg_color"], border_color=radio["border_color"], hover_color=radio["hover_color"], text_color=radio["text_color"], text_color_disabled=radio["text_color_disabled"],
+                                                    corner_radius=radio["corner_radius"], border_width_checked=radio["border_width_checked"], border_width_unchecked=radio["border_width_unchecked"])
     self.assignment.grid(row=2, column=0, sticky="nsew", padx=10, pady=7)
 
-    self.groupType = customtkinter.CTkRadioButton(master=self.sideRight, text="Group", variable=self.project, value="group")
+    self.groupType = customtkinter.CTkRadioButton(master=self.sideRight, text="Group", variable=self.project, value="group",
+                                                fg_color=radio["fg_color"], border_color=radio["border_color"], hover_color=radio["hover_color"], text_color=radio["text_color"], text_color_disabled=radio["text_color_disabled"],
+                                                corner_radius=radio["corner_radius"], border_width_checked=radio["border_width_checked"], border_width_unchecked=radio["border_width_unchecked"])
     self.groupType.grid(row=3, column=0, sticky="nsew", padx=10, pady=7)
 
-    self.essayType = customtkinter.CTkRadioButton(master=self.sideRight, text="Essay", variable=self.project, value="essay")
+    self.essayType = customtkinter.CTkRadioButton(master=self.sideRight, text="Essay", variable=self.project, value="essay",
+                                                fg_color=radio["fg_color"], border_color=radio["border_color"], hover_color=radio["hover_color"], text_color=radio["text_color"], text_color_disabled=radio["text_color_disabled"],
+                                                corner_radius=radio["corner_radius"], border_width_checked=radio["border_width_checked"], border_width_unchecked=radio["border_width_unchecked"])
     self.essayType.grid(row=4, column=0, sticky="nsew", padx=10, pady=7)
 
     self.submission = customtkinter.CTkEntry(master=self.sideLeft, placeholder_text="Submission Link")

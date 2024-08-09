@@ -46,5 +46,19 @@ def loadLevelColor(level: int):
         return loadColor(color)
     
 
+def getSwitchInfo(theme):
+    current = os.getcwd()
+    with open(f"{current}/themes/{theme.lower()}.json", "r") as f:
+        color = json.load(f)
+
+    return color["CTkSwitch"]
+
+def getRadioInfo(theme):
+    current = os.getcwd()
+    with open(f"{current}/themes/{theme.lower()}.json", "r") as f:
+        color = json.load(f)
+
+    return color["CTkRadioButton"]
+
 if __name__ == "__main__":
     loadColor("purple")

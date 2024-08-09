@@ -2,7 +2,7 @@ from version import getMainVersion, getUserVersion
 from screen.classColor import showClassColors
 from task import deleteDatabase, makeTestTask
 from screen.classAddEdit import classAddEdit
-from themes.theme import topLevel
+from themes.theme import topLevel, getSwitchInfo
 from tkinter import messagebox
 from tkinter import filedialog
 from icon import getIcons
@@ -59,25 +59,50 @@ def settings(self):
     self.turnOffFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
     self.turnOffFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
     self.turnOffFrame.grid_columnconfigure((0,1), weight=1)
+    print("Test")
+
+    colorTheme = self.setupDir["theme"]
+
+    switch = getSwitchInfo(colorTheme)
+    print(switch)
 
     RowI += 1
+
+    """
+    "CTkSwitch": {
+        "corner_radius": 1000,
+        "border_width": 3,
+        "button_length": 0,
+        "fg_color": ["#939BA2", "#4A4D50"],
+        "progress_color": ["#17979E", "#10676B"],
+        "button_color": ["gray36", "#D5D9DE"],
+        "button_hover_color": ["gray20", "gray100"],
+        "text_color": ["gray10", "#DCE4EE"],
+        "text_color_disabled": ["gray60", "gray45"]
+    },
+    """
 
     self.sideLeft = customtkinter.CTkFrame(master=self.turnOffFrame, fg_color="transparent")
     self.sideLeft.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.homeSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Home")
+    self.homeSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Home", 
+                                                fg_color=switch["fg_color"], progress_color=switch["progress_color"], button_color=switch["button_color"], button_hover_color=switch["button_hover_color"], text_color=switch["text_color"], text_color_disabled=switch["text_color_disabled"])
     self.homeSwitch.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.classSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Classes")
+    self.classSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Classes",
+                                                fg_color=switch["fg_color"], progress_color=switch["progress_color"], button_color=switch["button_color"], button_hover_color=switch["button_hover_color"], text_color=switch["text_color"], text_color_disabled=switch["text_color_disabled"])
     self.classSwitch.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.taskSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Assignments")
+    self.taskSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Assignments",
+                                                fg_color=switch["fg_color"], progress_color=switch["progress_color"], button_color=switch["button_color"], button_hover_color=switch["button_hover_color"], text_color=switch["text_color"], text_color_disabled=switch["text_color_disabled"])
     self.taskSwitch.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.dueSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Due")
+    self.dueSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Due", 
+                                                fg_color=switch["fg_color"], progress_color=switch["progress_color"], button_color=switch["button_color"], button_hover_color=switch["button_hover_color"], text_color=switch["text_color"], text_color_disabled=switch["text_color_disabled"])
     self.dueSwitch.grid(row=3, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.importSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Important")
+    self.importSwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Important",
+                                                fg_color=switch["fg_color"], progress_color=switch["progress_color"], button_color=switch["button_color"], button_hover_color=switch["button_hover_color"], text_color=switch["text_color"], text_color_disabled=switch["text_color_disabled"])
     self.importSwitch.grid(row=4, column=0, sticky="nsew", padx=10, pady=10)
 
     self.sideRight = customtkinter.CTkFrame(master=self.turnOffFrame, fg_color="transparent")

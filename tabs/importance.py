@@ -114,5 +114,5 @@ def displayTask(self, levelSTR: str, levelINT: int):
     if levelINT == 5:
         if len(getTaskbyLevel(1)) == 0 and len(getTaskbyLevel(2)) == 0 and len(getTaskbyLevel(3)) == 0 and len(getTaskbyLevel(4)) == 0 and len(getTaskbyLevel(5)) == 0:
 
-            self.noTask = customtkinter.CTkLabel(master=self.content, text="No Tasks foung", font=customtkinter.CTkFont(size=15, weight="bold"))
+            self.noTask = customtkinter.CTkLabel(master=self.content, text="No Tasks found", font=customtkinter.CTkFont(size=15, weight="bold"))
             self.noTask.grid(row=0, column=0, sticky="nsew", padx=5, pady=4)

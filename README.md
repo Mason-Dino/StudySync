@@ -76,6 +76,10 @@ _For more questions based on the application, please refer to the [Documentation
 _For questions based on the code, please make an [issue](https://github.com/Mason-Dino/StudySync/issues/new)_
 ## Roadmap
 
+Upnext:
+- [ ] Beta Revise
+
+Coming Soon:
 - [ ] Study Timer
     - [ ] Every 5 min progress bar increases by 5%
     - [ ] New Tab Button

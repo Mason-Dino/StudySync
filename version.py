@@ -13,20 +13,20 @@ def getLittleVersion():
     decode = test.content.decode("utf-8")
     res = json.loads(decode)
 
-    return res["version"]
+    return res["stable"]["little"]
 
 def getUserVersion():
     with open("setup.json", "r") as f:
         setupDir = json.load(f)
 
-    return setupDir["version"]
+    return setupDir["stable"]["main"]
 
 def checkIfBeta():
     test = requests.get("https://mason-dino.github.io/StudySync/")
     decode = test.content.decode("utf-8")
     res = json.loads(decode)
 
-    return res["active beta"]
+    return res["beta"]["active"]
 
 def getJson():
     test = requests.get("https://mason-dino.github.io/StudySync/")

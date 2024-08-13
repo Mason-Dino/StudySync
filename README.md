@@ -4,7 +4,7 @@
 <div align="center">
 
 <a href="https://github.com/Mason-Dino/StudySync">
-<img src="https://github.com/Mason-Dino/StudySync/blob/main/logo/logo_png.png?raw=true" alt="Logo" width="80" height="80">
+<img src="https://github.com/Mason-Dino/StudySync/blob/main/logo/StudySync.png?raw=true" alt="Logo" width="80" height="80">
 
 </a>
 <h3 align="center">StudySync</h3>

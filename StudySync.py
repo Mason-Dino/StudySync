@@ -25,6 +25,8 @@ class StudySync(customtkinter.CTk):
         self.geometry("700x450")
         self.title("StudySync")
 
+        self.after(201, lambda :self.iconbitmap('logo\logo_ico_tran.ico'))
+
         icon_path = os.path.join(os.path.dirname(__file__), "icons")
         self.settingImage = loadIcon("settings")
 

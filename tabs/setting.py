@@ -59,28 +59,13 @@ def settings(self):
     self.turnOffFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
     self.turnOffFrame.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
     self.turnOffFrame.grid_columnconfigure((0,1), weight=1)
-    print("Test")
+    self.turnOffFrame.grid_rowconfigure((0), weight=1)
 
     colorTheme = self.setupDir["theme"]
 
     switch = getSwitchInfo(colorTheme)
-    print(switch)
 
     RowI += 1
-
-    """
-    "CTkSwitch": {
-        "corner_radius": 1000,
-        "border_width": 3,
-        "button_length": 0,
-        "fg_color": ["#939BA2", "#4A4D50"],
-        "progress_color": ["#17979E", "#10676B"],
-        "button_color": ["gray36", "#D5D9DE"],
-        "button_hover_color": ["gray20", "gray100"],
-        "text_color": ["gray10", "#DCE4EE"],
-        "text_color_disabled": ["gray60", "gray45"]
-    },
-    """
 
     self.sideLeft = customtkinter.CTkFrame(master=self.turnOffFrame, fg_color="transparent")
     self.sideLeft.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
@@ -105,6 +90,10 @@ def settings(self):
                                                 fg_color=switch["fg_color"], progress_color=switch["progress_color"], button_color=switch["button_color"], button_hover_color=switch["button_hover_color"], text_color=switch["text_color"], text_color_disabled=switch["text_color_disabled"])
     self.importSwitch.grid(row=4, column=0, sticky="nsew", padx=10, pady=10)
 
+    self.studySwitch = customtkinter.CTkSwitch(master=self.sideLeft, text="Study Timer",
+                                                fg_color=switch["fg_color"], progress_color=switch["progress_color"], button_color=switch["button_color"], button_hover_color=switch["button_hover_color"], text_color=switch["text_color"], text_color_disabled=switch["text_color_disabled"])
+    self.studySwitch.grid(row=5, column=0, sticky="nsew", padx=10, pady=10)
+
     self.sideRight = customtkinter.CTkFrame(master=self.turnOffFrame, fg_color="transparent")
     self.sideRight.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
     self.sideRight.grid_columnconfigure((0), weight=1)
@@ -122,13 +111,13 @@ def settings(self):
     self.update.grid(row=3, column=0, sticky="nsew", padx=10, pady=10)
 
 
-    pageSwitch = [self.homeSwitch, self.classSwitch, self.taskSwitch, self.dueSwitch, self.importSwitch]
-    name = ["home", "class", "task", "due", "important"]
+    pageSwitch = [self.homeSwitch, self.classSwitch, self.taskSwitch, self.dueSwitch, self.importSwitch, self.studySwitch]
+    name = ["home", "class", "task", "due", "important", "sleep-timer"]
 
     with open("setup.json", "r") as f:
         setupDir = json.load(f)
 
-    for i in range(5):
+    for i in range(len(pageSwitch)):
         if setupDir["tabs"][name[i]] == True:
             pageSwitch[i].select()
 
@@ -396,14 +385,14 @@ def updateTabs(self):
     with open("setup.json", "r") as f:
         setupDir = json.load(f)
 
-    pageSwitch = [self.homeSwitch, self.classSwitch, self.taskSwitch, self.dueSwitch, self.importSwitch]
-    name = ["home", "class", "task", "due", "important"]
+    pageSwitch = [self.homeSwitch, self.classSwitch, self.taskSwitch, self.dueSwitch, self.importSwitch, self.studySwitch]
+    name = ["home", "class", "task", "due", "important", "sleep-timer"]
     value = []
 
     for page in pageSwitch:
         value.append(page.get())
 
-    for i in range(5):
+    for i in range(len(pageSwitch)):
         if value[i] == 1:
             setupDir["tabs"][name[i]] = True
 

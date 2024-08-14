@@ -3,6 +3,7 @@ from tabs.importance import importance
 from tabs.setting import settings
 from tabs.classes import classes
 from tabs.home import home
+from tabs.studyTimer import sleepTimer
 from icon import loadIcon
 from tabs.due import due
 from version import checkIfBeta
@@ -25,7 +26,7 @@ class StudySync(customtkinter.CTk):
         self.geometry("700x450")
         self.title("StudySync")
 
-        self.after(201, lambda :self.iconbitmap("logo\StudySync-ico.ico"))
+        self.after(201, lambda :self.iconbitmap(r"logo\StudySync-ico.ico"))
 
         icon_path = os.path.join(os.path.dirname(__file__), "icons")
         self.settingImage = loadIcon("settings")
@@ -87,6 +88,12 @@ class StudySync(customtkinter.CTk):
 
             b += 1
 
+        if self.setupDir["tabs"]["sleep-timer"] == True:
+            self.sleep = customtkinter.CTkButton(master=self.infoFrame, text="Sleep Timer", command=lambda: sleepTimer(self))
+            self.sleep.grid(row=b, column=0, padx=15, pady=5)
+
+            b += 1
+
         self.settingsButton = customtkinter.CTkButton(master=self.side, text="Settings", command=lambda: self.settingsMain(), image=self.settingImage)
         #self.settingsButton.grid(row=3, column=0, padx=15, pady=100)
         self.settingsButton.place(relx=.09, rely=.9)
@@ -97,6 +104,7 @@ class StudySync(customtkinter.CTk):
         self.bind("<Control_L><d>", lambda event: due(self))
         self.bind("<Control_L><s>", lambda event: settings(self))
         self.bind("<Control_L><i>", lambda event: importance(self))
+        self.bind("<Control_L><t>", lambda event: sleepTimer(self))
 
         self.bind("<Control_R><h>", lambda event: home(self))
         self.bind("<Control_R><c>", lambda event: classes(self))
@@ -104,6 +112,7 @@ class StudySync(customtkinter.CTk):
         self.bind("<Control_R><d>", lambda event: due(self))
         self.bind("<Control_R><s>", lambda event: settings(self))
         self.bind("<Control_R><i>", lambda event: importance(self))
+        self.bind("<Control_R><t>", lambda event: sleepTimer(self))
 
         home(self)
 
@@ -143,6 +152,7 @@ if __name__ == "__main__":
             app.mainloop()
 
     except KeyError as error:
+        print(error)
         messagebox.showerror(title="Error", message="Invalid setup.json file")
         app = setup()
         app.mainloop()

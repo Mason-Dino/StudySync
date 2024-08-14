@@ -1,4 +1,3 @@
-from version import getMainVersion, getUserVersion
 from screen.classColor import showClassColors
 from task import deleteDatabase, makeTestTask
 from screen.classAddEdit import classAddEdit
@@ -6,6 +5,7 @@ from themes.theme import topLevel, getSwitchInfo
 from tkinter import messagebox
 from tkinter import filedialog
 from icon import getIcons
+from version import *
 import customtkinter
 import webbrowser
 import shutil
@@ -346,7 +346,7 @@ def loadFile():
 
 def checkVersion(self):
     userVersion = getUserVersion()
-    version = getMainVersion()
+    version = getReleaseVersion()
 
     if version == userVersion:
         messagebox.showinfo(title="Success", message="StudySync is up to date!")

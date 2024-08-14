@@ -303,7 +303,8 @@ class setup(customtkinter.CTk):
                         "class": True,
                         "task": True,
                         "due": True,
-                        "important": True
+                        "important": True,
+                        "study-timer": True
                     }
 
                     # Convert the setup directory to JSON format and store it in a variable

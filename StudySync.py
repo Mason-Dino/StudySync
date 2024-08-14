@@ -3,7 +3,7 @@ from tabs.importance import importance
 from tabs.setting import settings
 from tabs.classes import classes
 from tabs.home import home
-from tabs.studyTimer import sleepTimer
+from tabs.studyTimer import studyTimer
 from icon import loadIcon
 from tabs.due import due
 from version import checkIfBeta
@@ -89,7 +89,7 @@ class StudySync(customtkinter.CTk):
             b += 1
 
         if self.setupDir["tabs"]["sleep-timer"] == True:
-            self.sleep = customtkinter.CTkButton(master=self.infoFrame, text="Sleep Timer", command=lambda: sleepTimer(self))
+            self.sleep = customtkinter.CTkButton(master=self.infoFrame, text="Sleep Timer", command=lambda: studyTimer(self))
             self.sleep.grid(row=b, column=0, padx=15, pady=5)
 
             b += 1
@@ -104,7 +104,7 @@ class StudySync(customtkinter.CTk):
         self.bind("<Control_L><d>", lambda event: due(self))
         self.bind("<Control_L><s>", lambda event: settings(self))
         self.bind("<Control_L><i>", lambda event: importance(self))
-        self.bind("<Control_L><t>", lambda event: sleepTimer(self))
+        self.bind("<Control_L><t>", lambda event: studyTimer(self))
 
         self.bind("<Control_R><h>", lambda event: home(self))
         self.bind("<Control_R><c>", lambda event: classes(self))
@@ -112,7 +112,7 @@ class StudySync(customtkinter.CTk):
         self.bind("<Control_R><d>", lambda event: due(self))
         self.bind("<Control_R><s>", lambda event: settings(self))
         self.bind("<Control_R><i>", lambda event: importance(self))
-        self.bind("<Control_R><t>", lambda event: sleepTimer(self))
+        self.bind("<Control_R><t>", lambda event: studyTimer(self))
 
         home(self)
 

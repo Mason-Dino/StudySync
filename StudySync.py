@@ -89,7 +89,7 @@ class StudySync(customtkinter.CTk):
             b += 1
 
         if self.setupDir["tabs"]["sleep-timer"] == True:
-            self.sleep = customtkinter.CTkButton(master=self.infoFrame, text="Sleep Timer", command=lambda: studyTimer(self))
+            self.sleep = customtkinter.CTkButton(master=self.infoFrame, text="Study Timer", command=lambda: studyTimer(self))
             self.sleep.grid(row=b, column=0, padx=15, pady=5)
 
             b += 1

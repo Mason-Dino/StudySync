@@ -23,7 +23,7 @@ class setup(customtkinter.CTk):
         customtkinter.set_appearance_mode("System")
         customtkinter.set_default_color_theme("themes/teal.json")
 
-        self.after(201, lambda :self.iconbitmap("logo\StudySync-ico.ico"))
+        self.after(201, lambda :self.iconbitmap(r"logo\StudySync-ico.ico"))
 
         # Initialize the attributes
         self.setupDir = {}  # Dictionary to store the setup directory

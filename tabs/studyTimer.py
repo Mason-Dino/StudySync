@@ -11,3 +11,16 @@ def studyTimer(self):
 
     self.timeLabel = customtkinter.CTkLabel(master=self.header, text="00:00:00", font=customtkinter.CTkFont(size=30, weight="bold"))
     self.timeLabel.grid(row=0, column=0, sticky="nsew")
+
+    self.timeInput = customtkinter.CTkFrame(master=self.content, fg_color="transparent")
+    self.timeInput.grid(row=1, column=0, sticky="nsew")
+    self.timeInput.grid_columnconfigure((0, 1, 2), weight=1)
+
+    self.hour = customtkinter.CTkEntry(master=self.timeInput, placeholder_text="Hour", font=customtkinter.CTkFont(size=15))
+    self.hour.grid(row=0, column=0, sticky="nsew", pady=10, padx=10)
+
+    self.minute = customtkinter.CTkEntry(master=self.timeInput, placeholder_text="Minute", font=customtkinter.CTkFont(size=15))
+    self.minute.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
+
+    self.second = customtkinter.CTkEntry(master=self.timeInput, placeholder_text="Second", font=customtkinter.CTkFont(size=15))
+    self.second.grid(row=0, column=2, sticky="nsew", pady=10, padx=10)

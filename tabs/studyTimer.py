@@ -56,17 +56,23 @@ def studyTimer(self):
     #self.miniContent.grid(row=3, column=0, sticky="nsew")
     self.miniContent.grid_columnconfigure((0,1,2), weight=1)
 
-    self.breakFrame = customtkinter.CTkFrame(master=self.miniContent, fg_color=topLevel())
+    self.breakFrame = customtkinter.CTkFrame(master=self.miniContent, fg_color=topLevel(), height=168)
     self.breakFrame.grid(row=0, column=0, sticky="nsew", pady=10, padx=10)
     self.breakFrame.grid_columnconfigure((0), weight=1)
 
-    self.break5 = customtkinter.CTkButton(master=self.breakFrame, text="5 min")
-    self.break5.grid(row=0, column=0, sticky="nsew", pady=10, padx=10)
+    self.break5 = customtkinter.CTkButton(master=self.breakFrame, text="5 Min Break")
+    self.break5.grid(row=0, column=0, sticky="nsew", pady=7, padx=10)
 
-    self.break10 = customtkinter.CTkButton(master=self.breakFrame, text="10 min")
-    self.break10.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)
+    self.break10 = customtkinter.CTkButton(master=self.breakFrame, text="10 Min Break")
+    self.break10.grid(row=1, column=0, sticky="nsew", pady=7, padx=10)
 
-    self.subFrame = customtkinter.CTkScrollableFrame(master=self.miniContent, corner_radius=6, fg_color=topLevel())
+    self.add5 = customtkinter.CTkButton(master=self.breakFrame, text="5 Min Add")
+    self.add5.grid(row=2, column=0, sticky="nsew", pady=7, padx=10)
+
+    self.add10 = customtkinter.CTkButton(master=self.breakFrame, text="10 Min Add")
+    self.add10.grid(row=3, column=0, sticky="nsew", pady=7, padx=10)
+
+    self.subFrame = customtkinter.CTkScrollableFrame(master=self.miniContent, corner_radius=6, fg_color=topLevel(), height=168)
     self.subFrame.grid(row=0, column=1, columnspan=2, sticky="nsew", pady=10, padx=10)
     self.subFrame.grid_columnconfigure((0), weight=1)
 
@@ -80,9 +86,6 @@ def studyTimer(self):
     self.start = customtkinter.CTkButton(master=self.controlButtons, text="Start", font=customtkinter.CTkFont(size=15), command=lambda:test(self))
     self.start.grid(row=0, column=0, sticky="nsew", pady=10, padx=10)
 
-    self.pause = customtkinter.CTkButton(master=self.controlButtons, text="Pause", font=customtkinter.CTkFont(size=15))
-    #self.pause.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
-
     self.stop = customtkinter.CTkButton(master=self.controlButtons, text="Stop", font=customtkinter.CTkFont(size=15))
     #self.stop.grid(row=0, column=2, sticky="nsew", pady=10, padx=10)
 
@@ -90,9 +93,8 @@ def test(self):
     self.miniContent.grid(row=3, column=0, sticky="nsew")
     self.taskFrame.grid_forget()
 
-    self.controlButtons.grid_columnconfigure((0,1,2), weight=1)
-    self.pause.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
-    self.stop.grid(row=0, column=2, sticky="nsew", pady=10, padx=10)
+    self.controlButtons.grid_columnconfigure((0,1), weight=1)
+    self.stop.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
 
     for time in self.timeOption:
         time.configure(state="disabled")

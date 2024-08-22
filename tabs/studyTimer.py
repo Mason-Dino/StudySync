@@ -1,5 +1,8 @@
 import customtkinter
 
+from themes.theme import *
+from task import *
+
 def studyTimer(self):
     self.content = customtkinter.CTkFrame(master=self, corner_radius=6)
     self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
@@ -12,8 +15,8 @@ def studyTimer(self):
     self.timeLabel = customtkinter.CTkLabel(master=self.header, text="00:00:00", font=customtkinter.CTkFont(size=30, weight="bold"))
     self.timeLabel.grid(row=0, column=0, sticky="nsew")
 
-    self.timeInput = customtkinter.CTkFrame(master=self.content, fg_color="transparent")
-    self.timeInput.grid(row=1, column=0, sticky="nsew")
+    self.timeInput = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
+    self.timeInput.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)
     self.timeInput.grid_columnconfigure((0, 1, 2), weight=1)
 
     self.hour = customtkinter.CTkEntry(master=self.timeInput, placeholder_text="Hour", font=customtkinter.CTkFont(size=15))
@@ -24,3 +27,22 @@ def studyTimer(self):
 
     self.second = customtkinter.CTkEntry(master=self.timeInput, placeholder_text="Second", font=customtkinter.CTkFont(size=15))
     self.second.grid(row=0, column=2, sticky="nsew", pady=10, padx=10)
+
+    self.taskFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
+    self.taskFrame.grid(row=2, column=0, sticky="nsew", pady=10, padx=10)
+    self.taskFrame.grid_columnconfigure((0,1), weight=1)
+
+    tasks = getMainTasks()
+    taskList = ["None"]
+
+    for task in tasks:
+        taskList.append(task[1])
+
+    self.taskSel = customtkinter.CTkOptionMenu(master=self.taskFrame, values=taskList, font=customtkinter.CTkFont(size=15))
+    self.taskSel.grid(row=0, column=0, columnspan=2, sticky="nsew", pady=10, padx=10)
+
+    self.confirm = customtkinter.CTkButton(master=self.taskFrame, text="Confirm", font=customtkinter.CTkFont(size=15))
+    self.confirm.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)
+
+    self.reset = customtkinter.CTkButton(master=self.taskFrame, text="Reset", font=customtkinter.CTkFont(size=15))
+    self.reset.grid(row=1, column=1, sticky="nsew", pady=10, padx=10)

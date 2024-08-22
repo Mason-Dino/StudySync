@@ -46,3 +46,21 @@ def studyTimer(self):
 
     self.reset = customtkinter.CTkButton(master=self.taskFrame, text="Reset", font=customtkinter.CTkFont(size=15))
     self.reset.grid(row=1, column=1, sticky="nsew", pady=10, padx=10)
+
+    self.controlButtons = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
+    self.controlButtons.grid(row=3, column=0, sticky="nsew", pady=10, padx=10)
+    self.controlButtons.grid_columnconfigure((0), weight=1)
+
+    self.start = customtkinter.CTkButton(master=self.controlButtons, text="Start", font=customtkinter.CTkFont(size=15), command=lambda:test(self))
+    self.start.grid(row=0, column=0, sticky="nsew", pady=10, padx=10)
+
+    self.pause = customtkinter.CTkButton(master=self.controlButtons, text="Pause", font=customtkinter.CTkFont(size=15))
+    #self.pause.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
+
+    self.stop = customtkinter.CTkButton(master=self.controlButtons, text="Stop", font=customtkinter.CTkFont(size=15))
+    #self.stop.grid(row=0, column=2, sticky="nsew", pady=10, padx=10)
+
+def test(self):
+    self.controlButtons.grid_columnconfigure((0,1,2), weight=1)
+    self.pause.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
+    self.stop.grid(row=0, column=2, sticky="nsew", pady=10, padx=10)

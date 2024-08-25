@@ -47,17 +47,54 @@ def studyTimer(self):
 
     for task in tasks:
         self.taskContent.append(task)
-        self.taskList.append(f"{task[1]} - {counter}")
+        self.taskList.append(f"{task[1]}")
+
 
         counter += 1
 
-    print(self.taskContent)
+    duplicatedTasks = []
+    duplicatedIndex = []
+
+    for i in range(len(tasks)):
+        for c in range(len(tasks)):
+            if tasks[i][1] == tasks[c][1] and i != c:
+                duplicatedIndex.append(i)
+                print(c)
+
+
+    print(duplicatedIndex)
+
+    counter = 0
+    dupGroup = []
+
+    for dupI in range(len(duplicatedIndex)):
+        dupGroup = []
+        for j in range(len(duplicatedIndex)):
+            if duplicatedIndex[dupI] == duplicatedIndex[j]:
+                dupGroup.append((tasks[j][0], tasks[j][1], j))
+
+        duplicatedTasks.append(dupGroup)
+
+
+    print(duplicatedTasks)
+
+    """
+    for task in tasks:
+        if task[1] in self.taskList:
+            duplicated = task[1]
+            duplicatedTasks.append([])
+            for task in tasks:
+                if duplicated == task[1]:
+                    duplicatedTasks[i].append((task[0], task[1], tasks.index(task)))
+
+            i += 1
+
+    print(duplicatedTasks)
+
+    """
 
     self.taskSel = customtkinter.CTkOptionMenu(master=self.taskFrame, values=self.taskList, font=customtkinter.CTkFont(size=15))
     self.taskSel.grid(row=0, column=0, columnspan=2, sticky="nsew", pady=10, padx=10)
-
-    print(self.taskSel._values)
-    print(self.taskSel.index)
 
     self.confirm = customtkinter.CTkButton(master=self.taskFrame, text="Confirm", font=customtkinter.CTkFont(size=15), command=lambda: confirm(self))
     self.confirm.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)

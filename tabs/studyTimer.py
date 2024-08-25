@@ -37,16 +37,29 @@ def studyTimer(self):
     self.taskFrame.grid(row=2, column=0, sticky="nsew", pady=10, padx=10)
     self.taskFrame.grid_columnconfigure((0,1), weight=1)
 
+    #working on trying to get index value of selected element, incase of duplicate values
+
     tasks = getMainTasks()
-    taskList = ["None"]
+    self.taskList = ["None"]
+    self.taskContent = ["None"]
+
+    counter = 1
 
     for task in tasks:
-        taskList.append(task[1])
+        self.taskContent.append(task)
+        self.taskList.append(f"{task[1]} - {counter}")
 
-    self.taskSel = customtkinter.CTkOptionMenu(master=self.taskFrame, values=taskList, font=customtkinter.CTkFont(size=15))
+        counter += 1
+
+    print(self.taskContent)
+
+    self.taskSel = customtkinter.CTkOptionMenu(master=self.taskFrame, values=self.taskList, font=customtkinter.CTkFont(size=15))
     self.taskSel.grid(row=0, column=0, columnspan=2, sticky="nsew", pady=10, padx=10)
 
-    self.confirm = customtkinter.CTkButton(master=self.taskFrame, text="Confirm", font=customtkinter.CTkFont(size=15))
+    print(self.taskSel._values)
+    print(self.taskSel.index)
+
+    self.confirm = customtkinter.CTkButton(master=self.taskFrame, text="Confirm", font=customtkinter.CTkFont(size=15), command=lambda: confirm(self))
     self.confirm.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)
 
     self.reset = customtkinter.CTkButton(master=self.taskFrame, text="Reset", font=customtkinter.CTkFont(size=15))
@@ -64,6 +77,14 @@ def studyTimer(self):
 
 def confirm(self):
     print("hey")
+
+    self.taskSel.get()
+
+    #self.
+
+    self.confirmTask = self.taskSel.get()
+
+    print(self.confirmTask)
 
 def start(self):
     print("hey")

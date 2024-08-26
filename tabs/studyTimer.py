@@ -38,6 +38,7 @@ def studyTimer(self):
     self.taskFrame.grid_columnconfigure((0,1), weight=1)
 
     #working on trying to get index value of selected element, incase of duplicate values
+    #trying to make each option have a unique value if it is a dup task, not really working
 
     tasks = getMainTasks()
     self.taskList = ["None"]
@@ -60,8 +61,6 @@ def studyTimer(self):
             if tasks[i][1] == tasks[c][1] and i != c:
                 duplicatedIndex.append(i)
 
-
-    print(duplicatedIndex)
     dupGroup = []
 
     for dupI in duplicatedIndex:
@@ -69,19 +68,22 @@ def studyTimer(self):
 
     counter = 0
 
-    print(duplicatedTasks)
+    for i in range(len(duplicatedTasks)):
+        for c in range(len(duplicatedTasks)):
+            if duplicatedTasks[i][1] == duplicatedTasks[c][1] and i != c:
+                dupGroup.append((duplicatedTasks[i][2], duplicatedTasks[c][2]))
 
-    for task in duplicatedTasks:
-        dupGroup.append([])
-        for i in range(len(duplicatedTasks)):
-            if task[1] == duplicatedTasks[i][1]:
-                if i in dupGroup:
-                    continue
 
-                else:
-                    dupGroup[counter].append(i)
+    for i in range(len(dupGroup)):
+        dupGroup[i] = sorted(dupGroup[i])
+        dupGroup[i] = tuple(dupGroup[i])
 
-        counter += 1
+    print(dupGroup)
+    print(type(dupGroup))
+
+    dupGroup = list(set(dupGroup))  
+
+    print(dupGroup)
 
     self.taskSel = customtkinter.CTkOptionMenu(master=self.taskFrame, values=self.taskList, font=customtkinter.CTkFont(size=15))
     self.taskSel.grid(row=0, column=0, columnspan=2, sticky="nsew", pady=10, padx=10)

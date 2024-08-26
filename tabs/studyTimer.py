@@ -44,6 +44,10 @@ def studyTimer(self):
     self.taskList = ["None"]
     self.taskContent = ["None"]
 
+    print(tasks)
+
+
+    
     counter = 1
 
     for task in tasks:
@@ -53,6 +57,8 @@ def studyTimer(self):
 
         counter += 1
 
+
+    """
     duplicatedTasks = []
     duplicatedIndex = []
 
@@ -68,6 +74,7 @@ def studyTimer(self):
 
     counter = 0
 
+    
     for i in range(len(duplicatedTasks)):
         for c in range(len(duplicatedTasks)):
             if duplicatedTasks[i][1] == duplicatedTasks[c][1] and i != c:
@@ -84,6 +91,9 @@ def studyTimer(self):
     dupGroup = list(set(dupGroup))  
 
     print(dupGroup)
+
+    print(duplicatedTasks)
+    """
 
     self.taskSel = customtkinter.CTkOptionMenu(master=self.taskFrame, values=self.taskList, font=customtkinter.CTkFont(size=15))
     self.taskSel.grid(row=0, column=0, columnspan=2, sticky="nsew", pady=10, padx=10)

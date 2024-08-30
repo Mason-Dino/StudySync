@@ -161,6 +161,10 @@ def makeTask(self):
         messagebox.showerror(title="Error", message="Missing required field")
         error = True
 
+    elif "-" in name:
+        messagebox.showerror(title="Error", message="""you cannot have an "-" in your task/assignment name""")
+        error = True
+
     elif day.isdigit() == False or month.isdigit() == False or year.isdigit() == False:
         messagebox.showerror(title="Error", message="Invalid date")
         error = True

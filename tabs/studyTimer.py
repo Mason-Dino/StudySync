@@ -48,9 +48,6 @@ def studyTimer(self):
     self.taskFrame.grid(row=2, column=0, sticky="nsew", pady=10, padx=10)
     self.taskFrame.grid_columnconfigure((0,1), weight=1)
 
-    #working on trying to get index value of selected element, incase of duplicate values
-    #trying to make each option have a unique value if it is a dup task, not really working
-
     tasks = getMainTasks()
     dupTask = findDupTask(tasks)
 
@@ -79,8 +76,12 @@ def studyTimer(self):
     self.reset = customtkinter.CTkButton(master=self.taskFrame, text="Reset", font=customtkinter.CTkFont(size=15))
     self.reset.grid(row=1, column=1, sticky="nsew", pady=10, padx=10)
 
+    self.subTaskFrame = customtkinter.CTkScrollableFrame(master=self.content, fg_color=topLevel())
+    #self.subTaskFrame.grid(row=2, column=0, sticky="nsew", pady=10, padx=10)
+    self.subTaskFrame.grid_columnconfigure((0), weight=1)
+
     self.controlButtons = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
-    self.controlButtons.grid(row=4, column=0, sticky="nsew", pady=10, padx=10)
+    self.controlButtons.grid(row=3, column=0, sticky="nsew", pady=10, padx=10)
     self.controlButtons.grid_columnconfigure((0), weight=1)
 
     self.start = customtkinter.CTkButton(master=self.controlButtons, text="Start", font=customtkinter.CTkFont(size=15), command=lambda: start(self))
@@ -112,3 +113,6 @@ def start(self):
 
     self.timeInput.grid_forget()
     self.breakFrame.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)
+
+    self.taskFrame.grid_forget()
+    self.subTaskFrame.grid(row=2, column=0, sticky="nsew", pady=10, padx=10)

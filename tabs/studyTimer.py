@@ -100,6 +100,8 @@ def confirm(self):
     if self.confirmTask == "No Task Selected":
         self.confirmTask = None
 
+    messagebox.showinfo(title="Task Selected", message=f"Task Selected: {self.confirmTask}")
+
 def start(self):
     try:
         task = self.confirmTask
@@ -113,7 +115,7 @@ def start(self):
         print(results)
 
     else:
-        allTask = getMainTasks()
+        allTask = getMainTasks("ORDER BY date ASC")
 
         task = allTask[self.taskList.index(task)-1]
         moveOn = True
@@ -134,4 +136,29 @@ def start(self):
 
         self.taskFrame.grid_forget()
         self.subTaskFrame.grid(row=2, column=0, sticky="nsew", pady=10, padx=10)
+
+        subTask = getSubTasks(task[0])
+
+        addSubTask = len(subTask)
+
+        subTaskInfo = {}
+
+        for i in range(len(subTask)):
+            subTaskInfo[i] = {}
+
+            subTaskInfo[i]["id"] = subTask[i][0]
+
+            subTaskInfo[i]["frame"] = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=top2Level())
+            subTaskInfo[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=10, pady=3)
+            subTaskInfo[i]["frame"].grid_columnconfigure((0), weight=1)
+
+            self.subTask = customtkinter.CTkLabel(master=subTaskInfo[i]["frame"], text=f"{subTask[i][1]}", font=customtkinter.CTkFont(size=15), anchor="w", justify="left")
+            self.subTask.grid(row=0, column=0, sticky="nsew", padx=10, pady=2)
+
+            subTaskInfo[i]["done"] = customtkinter.CTkButton(master=subTaskInfo[i]["frame"], text="Done", width=50)
+            subTaskInfo[i]["done"].grid(row=0, column=1, sticky="nsew", padx=10, pady=4)
+
+        self.addSubTask = customtkinter.CTkButton(master=self.subTaskFrame, text="Add Sub-Task", fg_color="transparent", hover_color=top2Level(), text_color=["gray10", "#DCE4EE"], compound="left", anchor="w",
+                                                font=customtkinter.CTkFont(size=15), command=lambda: print("display"))
+        self.addSubTask.grid(row=len(subTask), column=0, sticky="nsew", padx=10, pady=6)
 

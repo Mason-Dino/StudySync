@@ -24,6 +24,7 @@ duplicate["group1"].append(dupTask[0])
 
 groupNum = 1
 
+foundGroup = False
 
 for i in range(1, len(dupTask)):
     print(i)
@@ -34,10 +35,15 @@ for i in range(1, len(dupTask)):
             duplicate[f"group{j+1}"].append(dupTask[i])
 
             anotherGroup = False
-            continue
+            foundGroup = True
 
         else:
             anotherGroup = True
+            foundGroup = False
+
+        if foundGroup == True:
+            break
+
 
     if anotherGroup == True:
         groupNum += 1
@@ -46,8 +52,8 @@ for i in range(1, len(dupTask)):
 
         duplicate[f"group{groupNum}"] = [dupTask[i]]
 
-
-print(json.dumps(duplicate, indent=4))
+with open("test.json", "w") as f:
+    json.dump(duplicate, f, indent=4)
 
 
 

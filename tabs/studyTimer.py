@@ -34,6 +34,16 @@ def studyTimer(self):
 
     self.timeOption = [self.hour, self.minute, self.second]
 
+    self.breakFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
+    #self.breakFrame.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)
+    self.breakFrame.grid_columnconfigure((0,1), weight=1)
+
+    self.break5 = customtkinter.CTkButton(master=self.breakFrame, text="Break: 5 Min", font=customtkinter.CTkFont(size=15))
+    self.break5.grid(row=0, column=0, sticky="nsew", pady=10, padx=10)
+
+    self.add5 = customtkinter.CTkButton(master=self.breakFrame, text="Add: 5 Min", font=customtkinter.CTkFont(size=15))
+    self.add5.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
+
     self.taskFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
     self.taskFrame.grid(row=2, column=0, sticky="nsew", pady=10, padx=10)
     self.taskFrame.grid_columnconfigure((0,1), weight=1)
@@ -76,8 +86,11 @@ def studyTimer(self):
     self.start = customtkinter.CTkButton(master=self.controlButtons, text="Start", font=customtkinter.CTkFont(size=15), command=lambda: start(self))
     self.start.grid(row=0, column=0, sticky="nsew", pady=10, padx=10)
 
+    self.pause = customtkinter.CTkButton(master=self.controlButtons, text="Pause", font=customtkinter.CTkFont(size=15))
+    #self.pause.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
+
     self.stop = customtkinter.CTkButton(master=self.controlButtons, text="Stop", font=customtkinter.CTkFont(size=15))
-    #self.stop.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
+    #self.stop.grid(row=0, column=2, sticky="nsew", pady=10, padx=10)
 
 def confirm(self):
     print("hey")
@@ -93,5 +106,9 @@ def confirm(self):
 def start(self):
     print("hey")
 
-    self.controlButtons.grid_columnconfigure((0,1), weight=1)
-    self.stop.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
+    self.controlButtons.grid_columnconfigure((0,1,2), weight=1)
+    self.stop.grid(row=0, column=2, sticky="nsew", pady=10, padx=10)
+    self.pause.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
+
+    self.timeInput.grid_forget()
+    self.breakFrame.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)

@@ -51,10 +51,10 @@ def studyTimer(self):
     tasks = getMainTasks()
     dupTask = findDupTask(tasks)
 
-    taskList = ["No Task Selected"]
+    self.taskList = ["No Task Selected"]
 
     for task in tasks:
-        taskList.append(task[1])
+        self.taskList.append(task[1])
 
     if dupTask == False:
         pass
@@ -63,11 +63,11 @@ def studyTimer(self):
         for i in range(dupTask["groupNum"]):
             counter = 1
             for c in range(len(dupTask[f"group{i+1}"])):
-                taskList[dupTask[f"group{i+1}"][c][2]+1] = f"{dupTask[f"group{i+1}"][c][1]} - {counter}"
+                self.taskList[dupTask[f"group{i+1}"][c][2]+1] = f"{dupTask[f"group{i+1}"][c][1]} - {counter}"
 
                 counter += 1
 
-    self.taskSel = customtkinter.CTkOptionMenu(master=self.taskFrame, values=taskList, font=customtkinter.CTkFont(size=15))
+    self.taskSel = customtkinter.CTkOptionMenu(master=self.taskFrame, values=self.taskList, font=customtkinter.CTkFont(size=15))
     self.taskSel.grid(row=0, column=0, columnspan=2, sticky="nsew", pady=10, padx=10)
 
     self.confirm = customtkinter.CTkButton(master=self.taskFrame, text="Confirm", font=customtkinter.CTkFont(size=15), command=lambda: confirm(self))
@@ -94,18 +94,21 @@ def studyTimer(self):
     #self.stop.grid(row=0, column=2, sticky="nsew", pady=10, padx=10)
 
 def confirm(self):
-    print("hey")
-
-    self.taskSel.get()
-
-    #self.
-
     self.confirmTask = self.taskSel.get()
 
-    print(self.confirmTask)
+    if self.confirmTask == "No Task Selected":
+        self.confirmTask = None
 
 def start(self):
-    print("hey")
+    task = self.confirmTask
+
+    if task == None:
+        pass
+
+    else:
+        allTask = getMainTasks()
+
+        task = allTask[self.taskList.index(task)-1]
 
     self.controlButtons.grid_columnconfigure((0,1,2), weight=1)
     self.stop.grid(row=0, column=2, sticky="nsew", pady=10, padx=10)
@@ -116,3 +119,4 @@ def start(self):
 
     self.taskFrame.grid_forget()
     self.subTaskFrame.grid(row=2, column=0, sticky="nsew", pady=10, padx=10)
+

@@ -49,7 +49,7 @@ def studyTimer(self):
     self.taskFrame.grid(row=2, column=0, sticky="nsew", pady=10, padx=10)
     self.taskFrame.grid_columnconfigure((0,1), weight=1)
 
-    tasks = getMainTasks()
+    tasks = getMainTasks("ORDER BY date ASC")
     dupTask = findDupTask(tasks)
 
     self.taskList = ["No Task Selected"]
@@ -103,6 +103,7 @@ def confirm(self):
 def start(self):
     try:
         task = self.confirmTask
+        results = None
 
     except:
         task = None

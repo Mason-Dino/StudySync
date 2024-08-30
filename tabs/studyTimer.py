@@ -2,6 +2,7 @@ import customtkinter
 
 from themes.theme import *
 from task import *
+from dupTask import findDupTask
 
 def studyTimer(self):
     self.breakTime = 0
@@ -41,61 +42,25 @@ def studyTimer(self):
     #trying to make each option have a unique value if it is a dup task, not really working
 
     tasks = getMainTasks()
-    self.taskList = ["None"]
-    self.taskContent = ["None"]
+    dupTask = findDupTask(tasks)
 
-    print(tasks)
-
-
-    
-    counter = 1
+    taskList = ["No Task Selected"]
 
     for task in tasks:
-        self.taskContent.append(task)
-        self.taskList.append(f"{task[1]}")
+        taskList.append(task[1])
 
+    if dupTask == False:
+        pass
 
-        counter += 1
+    elif dupTask != True:
+        for i in range(dupTask["groupNum"]):
+            counter = 1
+            for c in range(len(dupTask[f"group{i+1}"])):
+                taskList[dupTask[f"group{i+1}"][c][2]+1] = f"{dupTask[f"group{i+1}"][c][1]} - {counter}"
 
+                counter += 1
 
-    """
-    duplicatedTasks = []
-    duplicatedIndex = []
-
-    for i in range(len(tasks)):
-        for c in range(len(tasks)):
-            if tasks[i][1] == tasks[c][1] and i != c:
-                duplicatedIndex.append(i)
-
-    dupGroup = []
-
-    for dupI in duplicatedIndex:
-        duplicatedTasks.append((tasks[dupI][0], tasks[dupI][1], dupI))
-
-    counter = 0
-
-    
-    for i in range(len(duplicatedTasks)):
-        for c in range(len(duplicatedTasks)):
-            if duplicatedTasks[i][1] == duplicatedTasks[c][1] and i != c:
-                dupGroup.append((duplicatedTasks[i][2], duplicatedTasks[c][2]))
-
-
-    for i in range(len(dupGroup)):
-        dupGroup[i] = sorted(dupGroup[i])
-        dupGroup[i] = tuple(dupGroup[i])
-
-    print(dupGroup)
-    print(type(dupGroup))
-
-    dupGroup = list(set(dupGroup))  
-
-    print(dupGroup)
-
-    print(duplicatedTasks)
-    """
-
-    self.taskSel = customtkinter.CTkOptionMenu(master=self.taskFrame, values=self.taskList, font=customtkinter.CTkFont(size=15))
+    self.taskSel = customtkinter.CTkOptionMenu(master=self.taskFrame, values=taskList, font=customtkinter.CTkFont(size=15))
     self.taskSel.grid(row=0, column=0, columnspan=2, sticky="nsew", pady=10, padx=10)
 
     self.confirm = customtkinter.CTkButton(master=self.taskFrame, text="Confirm", font=customtkinter.CTkFont(size=15), command=lambda: confirm(self))

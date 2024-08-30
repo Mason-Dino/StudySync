@@ -254,6 +254,16 @@ def addBlankSubTaskFunction(self):
 
     else:
         print(self.subTaskEntry.get())
+        subTaskName = self.subTaskEntry.get()
+        id = makeID(20)
+
+        day = datetime.datetime.now().day
+        month = datetime.datetime.now().month
+        year = datetime.datetime.now().year
+
+        addSubTask(subTaskName, id, "StudyTimer", "None", day, month, year, "StudyTimer")
+
+        print(getStudySubTasks())
 
 def makeButtonWork(self, i, id):
     self.subTaskInfo[i]["done"].configure(command=lambda: doneSubTaskClick(self, id, i))

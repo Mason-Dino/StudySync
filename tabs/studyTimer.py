@@ -4,6 +4,7 @@ from tkinter import messagebox
 from themes.theme import *
 from task import *
 from dupTask import findDupTask
+from id import makeID
 
 def studyTimer(self):
     self.breakTime = 0
@@ -139,7 +140,7 @@ def start(self):
 
         subTask = getSubTasks(task[0])
 
-        addSubTask = len(subTask)
+        self.numSubTask = len(subTask)
 
         subTaskInfo = {}
 
@@ -147,6 +148,7 @@ def start(self):
             subTaskInfo[i] = {}
 
             subTaskInfo[i]["id"] = subTask[i][0]
+            subTaskInfo[i]["classID"] = subTask[i][8]
 
             subTaskInfo[i]["frame"] = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=top2Level())
             subTaskInfo[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=10, pady=3)
@@ -155,10 +157,38 @@ def start(self):
             self.subTask = customtkinter.CTkLabel(master=subTaskInfo[i]["frame"], text=f"{subTask[i][1]}", font=customtkinter.CTkFont(size=15), anchor="w", justify="left")
             self.subTask.grid(row=0, column=0, sticky="nsew", padx=10, pady=2)
 
-            subTaskInfo[i]["done"] = customtkinter.CTkButton(master=subTaskInfo[i]["frame"], text="Done", width=50)
+            subTaskInfo[i]["done"] = customtkinter.CTkButton(master=subTaskInfo[i]["frame"], text="Done", width=50, command=lambda: print("done"))
             subTaskInfo[i]["done"].grid(row=0, column=1, sticky="nsew", padx=10, pady=4)
 
         self.addSubTask = customtkinter.CTkButton(master=self.subTaskFrame, text="Add Sub-Task", fg_color="transparent", hover_color=top2Level(), text_color=["gray10", "#DCE4EE"], compound="left", anchor="w",
-                                                font=customtkinter.CTkFont(size=15), command=lambda: print("display"))
-        self.addSubTask.grid(row=len(subTask), column=0, sticky="nsew", padx=10, pady=6)
+                                                font=customtkinter.CTkFont(size=15), command=lambda: addSubTaskDisplay(self, task[0], task[8], subTask))
+        self.addSubTask.grid(row=self.numSubTask, column=0, sticky="nsew", padx=10, pady=6)
+
+def addSubTaskDisplay(self, parentID, classID, taskInfo):
+    self.addSubTaskFrame = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=topLevel())
+    self.addSubTaskFrame.grid(row=self.numSubTask, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
+    self.addSubTaskFrame.grid_columnconfigure((0), weight=1)
+
+    self.subTaskEntry = customtkinter.CTkEntry(master=self.addSubTaskFrame, placeholder_text="Sub-Task Name (max: 30)")
+    self.subTaskEntry.grid(row=0, column=0, sticky="nsew", padx=10, pady=6)
+    self.subTaskEntry.focus()
+
+    self.subTaskButton = customtkinter.CTkButton(master=self.addSubTaskFrame, text="Add Sub-Task", command=lambda: addSubTaskFunction(self, parentID, taskInfo))
+    self.subTaskButton.grid(row=0, column=1, sticky="nsew", padx=0, pady=6)
+
+    self.bind("<Return>", lambda event: addSubTaskFunction(self, parentID, taskInfo))
+
+def addSubTaskFunction(self, parentID, taskInfo):
+    if len(self.subTaskEntry.get()) > 30:
+        messagebox.showerror("Error", "Sub-Task Name is too long")
+
+    else:
+        subTaskName = self.subTaskEntry.get()
+
+        self.addSubTaskFrame.destroy()
+        self.addSubTask.grid(row=self.numSubTask, column=0, sticky="nsew")
+
+        id = makeID(20)
+        addSubTask(subTaskName, id, taskInfo[0][7], taskInfo[0][8], taskInfo[0][2], taskInfo[0][3], taskInfo[0][4], parentID)
+        print("hey")
 

@@ -142,29 +142,29 @@ def start(self):
 
         self.numSubTask = len(subTask)
 
-        subTaskInfo = {}
+        self.subTaskInfo = {}
 
         for i in range(len(subTask)):
-            subTaskInfo[i] = {}
+            self.subTaskInfo[i] = {}
 
-            subTaskInfo[i]["id"] = subTask[i][0]
-            subTaskInfo[i]["classID"] = subTask[i][8]
+            self.subTaskInfo[i]["id"] = subTask[i][0]
+            self.subTaskInfo[i]["classID"] = subTask[i][8]
 
-            subTaskInfo[i]["frame"] = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=top2Level())
-            subTaskInfo[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=10, pady=3)
-            subTaskInfo[i]["frame"].grid_columnconfigure((0), weight=1)
+            self.subTaskInfo[i]["frame"] = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=top2Level())
+            self.subTaskInfo[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=10, pady=3)
+            self.subTaskInfo[i]["frame"].grid_columnconfigure((0), weight=1)
 
-            self.subTask = customtkinter.CTkLabel(master=subTaskInfo[i]["frame"], text=f"{subTask[i][1]}", font=customtkinter.CTkFont(size=15), anchor="w", justify="left")
+            self.subTask = customtkinter.CTkLabel(master=self.subTaskInfo[i]["frame"], text=f"{subTask[i][1]}", font=customtkinter.CTkFont(size=15), anchor="w", justify="left")
             self.subTask.grid(row=0, column=0, sticky="nsew", padx=10, pady=2)
 
-            subTaskInfo[i]["done"] = customtkinter.CTkButton(master=subTaskInfo[i]["frame"], text="Done", width=50, command=lambda: print("done"))
-            subTaskInfo[i]["done"].grid(row=0, column=1, sticky="nsew", padx=10, pady=4)
+            self.subTaskInfo[i]["done"] = customtkinter.CTkButton(master=self.subTaskInfo[i]["frame"], text="Done", width=50, command=lambda: print("done"))
+            self.subTaskInfo[i]["done"].grid(row=0, column=1, sticky="nsew", padx=10, pady=4)
 
         self.addSubTask = customtkinter.CTkButton(master=self.subTaskFrame, text="Add Sub-Task", fg_color="transparent", hover_color=top2Level(), text_color=["gray10", "#DCE4EE"], compound="left", anchor="w",
-                                                font=customtkinter.CTkFont(size=15), command=lambda: addSubTaskDisplay(self, task[0], task[8], subTask))
+                                                font=customtkinter.CTkFont(size=15), command=lambda: addSubTaskDisplay(self, task[0], task[8], subTask, self.subTaskInfo))
         self.addSubTask.grid(row=self.numSubTask, column=0, sticky="nsew", padx=10, pady=6)
 
-def addSubTaskDisplay(self, parentID, classID, taskInfo):
+def addSubTaskDisplay(self, parentID, classID, taskInfo, frameInfo):
     self.addSubTaskFrame = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=topLevel())
     self.addSubTaskFrame.grid(row=self.numSubTask, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
     self.addSubTaskFrame.grid_columnconfigure((0), weight=1)
@@ -173,12 +173,12 @@ def addSubTaskDisplay(self, parentID, classID, taskInfo):
     self.subTaskEntry.grid(row=0, column=0, sticky="nsew", padx=10, pady=6)
     self.subTaskEntry.focus()
 
-    self.subTaskButton = customtkinter.CTkButton(master=self.addSubTaskFrame, text="Add Sub-Task", command=lambda: addSubTaskFunction(self, parentID, taskInfo))
+    self.subTaskButton = customtkinter.CTkButton(master=self.addSubTaskFrame, text="Add Sub-Task", command=lambda: addSubTaskFunction(self, parentID, taskInfo, frameInfo))
     self.subTaskButton.grid(row=0, column=1, sticky="nsew", padx=0, pady=6)
 
-    self.bind("<Return>", lambda event: addSubTaskFunction(self, parentID, taskInfo))
+    self.bind("<Return>", lambda event: addSubTaskFunction(self, parentID, taskInfo, frameInfo))
 
-def addSubTaskFunction(self, parentID, taskInfo):
+def addSubTaskFunction(self, parentID, taskInfo, frameInfo):
     if len(self.subTaskEntry.get()) > 30:
         messagebox.showerror("Error", "Sub-Task Name is too long")
 
@@ -190,5 +190,36 @@ def addSubTaskFunction(self, parentID, taskInfo):
 
         id = makeID(20)
         addSubTask(subTaskName, id, taskInfo[0][7], taskInfo[0][8], taskInfo[0][2], taskInfo[0][3], taskInfo[0][4], parentID)
-        print("hey")
+        print(self.numSubTask)
+
+        for i in range(self.numSubTask):
+            frameInfo[i]["frame"].grid_forget()
+
+        subTask = getSubTasks(parentID)
+
+        self.numSubTask = len(subTask)
+
+        self.subTaskInfo = {}
+
+        for i in range(len(subTask)):
+            self.subTaskInfo[i] = {}
+
+            self.subTaskInfo[i]["id"] = subTask[i][0]
+            self.subTaskInfo[i]["classID"] = subTask[i][8]
+
+            self.subTaskInfo[i]["frame"] = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=top2Level())
+            self.subTaskInfo[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=10, pady=3)
+            self.subTaskInfo[i]["frame"].grid_columnconfigure((0), weight=1)
+
+            self.subTask = customtkinter.CTkLabel(master=self.subTaskInfo[i]["frame"], text=f"{subTask[i][1]}", font=customtkinter.CTkFont(size=15), anchor="w", justify="left")
+            self.subTask.grid(row=0, column=0, sticky="nsew", padx=10, pady=2)
+
+            self.subTaskInfo[i]["done"] = customtkinter.CTkButton(master=self.subTaskInfo[i]["frame"], text="Done", width=50, command=lambda: print("done"))
+            self.subTaskInfo[i]["done"].grid(row=0, column=1, sticky="nsew", padx=10, pady=4)
+
+        #addSubTaskDisplay(self, parentID, classID, taskInfo, frameInfo)
+
+        self.addSubTask = customtkinter.CTkButton(master=self.subTaskFrame, text="Add Sub-Task", fg_color="transparent", hover_color=top2Level(), text_color=["gray10", "#DCE4EE"], compound="left", anchor="w",
+                                                font=customtkinter.CTkFont(size=15), command=lambda: addSubTaskDisplay(self, parentID, taskInfo[0][8], subTask, self.subTaskInfo))
+        self.addSubTask.grid(row=self.numSubTask, column=0, sticky="nsew", padx=10, pady=6)
 

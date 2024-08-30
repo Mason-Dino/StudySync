@@ -30,7 +30,6 @@ def findDupTask(tasks):
         foundGroup = False
 
         for i in range(1, len(dupTask)):
-            print(i)
             anotherGroup = False
             beforeGroupNum = duplicate["groupNum"]
             for j in range(duplicate["groupNum"]):

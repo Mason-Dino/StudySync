@@ -1,4 +1,5 @@
 import customtkinter
+from tkinter import messagebox
 
 from themes.theme import *
 from task import *
@@ -100,23 +101,36 @@ def confirm(self):
         self.confirmTask = None
 
 def start(self):
-    task = self.confirmTask
+    try:
+        task = self.confirmTask
+
+    except:
+        task = None
 
     if task == None:
-        pass
+        results = messagebox.askyesno(title="Error", message="No Task Selected\nDo you wish to continue without a task?")
+        print(results)
 
     else:
         allTask = getMainTasks()
 
         task = allTask[self.taskList.index(task)-1]
+        moveOn = True
 
-    self.controlButtons.grid_columnconfigure((0,1,2), weight=1)
-    self.stop.grid(row=0, column=2, sticky="nsew", pady=10, padx=10)
-    self.pause.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
+    if results == True:
+        moveOn = True
 
-    self.timeInput.grid_forget()
-    self.breakFrame.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)
+    elif results == False:
+        moveOn = False
 
-    self.taskFrame.grid_forget()
-    self.subTaskFrame.grid(row=2, column=0, sticky="nsew", pady=10, padx=10)
+    if moveOn == True:
+        self.controlButtons.grid_columnconfigure((0,1,2), weight=1)
+        self.stop.grid(row=0, column=2, sticky="nsew", pady=10, padx=10)
+        self.pause.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
+
+        self.timeInput.grid_forget()
+        self.breakFrame.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)
+
+        self.taskFrame.grid_forget()
+        self.subTaskFrame.grid(row=2, column=0, sticky="nsew", pady=10, padx=10)
 

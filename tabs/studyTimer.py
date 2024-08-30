@@ -160,6 +160,8 @@ def start(self):
             self.subTaskInfo[i]["done"] = customtkinter.CTkButton(master=self.subTaskInfo[i]["frame"], text="Done", width=50, command=lambda: print("done"))
             self.subTaskInfo[i]["done"].grid(row=0, column=1, sticky="nsew", padx=10, pady=4)
 
+            makeButtonWork(self, i, self.subTaskInfo[i]["id"])
+
         self.addSubTask = customtkinter.CTkButton(master=self.subTaskFrame, text="Add Sub-Task", fg_color="transparent", hover_color=top2Level(), text_color=["gray10", "#DCE4EE"], compound="left", anchor="w",
                                                 font=customtkinter.CTkFont(size=15), command=lambda: addSubTaskDisplay(self, task[0], task[8], subTask, self.subTaskInfo))
         self.addSubTask.grid(row=self.numSubTask, column=0, sticky="nsew", padx=10, pady=6)
@@ -217,9 +219,18 @@ def addSubTaskFunction(self, parentID, taskInfo, frameInfo):
             self.subTaskInfo[i]["done"] = customtkinter.CTkButton(master=self.subTaskInfo[i]["frame"], text="Done", width=50, command=lambda: print("done"))
             self.subTaskInfo[i]["done"].grid(row=0, column=1, sticky="nsew", padx=10, pady=4)
 
+            makeButtonWork(self, i, self.subTaskInfo[i]["id"])
+
         #addSubTaskDisplay(self, parentID, classID, taskInfo, frameInfo)
 
         self.addSubTask = customtkinter.CTkButton(master=self.subTaskFrame, text="Add Sub-Task", fg_color="transparent", hover_color=top2Level(), text_color=["gray10", "#DCE4EE"], compound="left", anchor="w",
                                                 font=customtkinter.CTkFont(size=15), command=lambda: addSubTaskDisplay(self, parentID, taskInfo[0][8], subTask, self.subTaskInfo))
         self.addSubTask.grid(row=self.numSubTask, column=0, sticky="nsew", padx=10, pady=6)
 
+def makeButtonWork(self, i, id):
+    self.subTaskInfo[i]["done"].configure(command=lambda: doneSubTaskClick(self, id, i))
+
+def doneSubTaskClick(self, id: str, i):
+    finishSubTask(self, id)
+
+    self.subTaskInfo[i]["frame"].destroy()

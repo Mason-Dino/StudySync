@@ -192,6 +192,7 @@ def addSubTaskDisplay(self, parentID, classID, taskInfo, frameInfo):
     self.subTaskButton.grid(row=0, column=1, sticky="nsew", padx=0, pady=6)
 
     self.bind("<Return>", lambda event: addSubTaskFunction(self, parentID, taskInfo, frameInfo))
+    self.bind("<Escape>", lambda event: print("escape"))
 
 def addBlankSubTaskDisplay(self):
     self.addSubTask.destroy()
@@ -231,6 +232,7 @@ def addSubTaskFunction(self, parentID, taskInfo, frameInfo):
         self.numSubTask = len(subTask)
 
         self.subTaskInfo = {}
+        self.subTaskInfo["type"] = "task"
 
         for i in range(len(subTask)):
             self.subTaskInfo[i] = {}
@@ -277,6 +279,7 @@ def addBlankSubTaskFunction(self):
         self.numSubTask = len(subTask)
 
         self.subTaskInfo = {}
+        self.subTaskInfo["type"] = "blank"
 
         for i in range(len(subTask)):
             self.subTaskInfo[i] = {}
@@ -305,6 +308,24 @@ def makeButtonWork(self, i, id):
     self.subTaskInfo[i]["done"].configure(command=lambda: doneSubTaskClick(self, id, i))
 
 def doneSubTaskClick(self, id: str, i):
+    #code isn't deleting the task from the list all the time so its being a little wired right now
     print(id)
+    print(i)
     finishSubTask(self, id)
-    self.subTaskInfo[i]["frame"].destroy()
+    self.subTaskInfo[i]["frame"].grid_forget()
+
+    del self.subTaskInfo[i]
+
+    keys = list(self.subTaskInfo.keys())
+
+    keys.pop(0)
+    
+    for key in keys:
+        self.subTaskInfo[key]["frame"].grid(row=key, column=0, sticky="nsew", padx=10, pady=3)
+
+    self.addSubTask.grid(row=self.numSubTask, column=0, sticky="nsew", padx=10, pady=6)
+
+    #for j in range(len(keys)):
+    #    self.subTaskInfo[j]["frame"].grid(row=j, column=0, sticky="nsew", padx=10, pady=3)
+
+    #self.addSubTask.grid(row=self.numSubTask, column=0, sticky="nsew", padx=10, pady=6)

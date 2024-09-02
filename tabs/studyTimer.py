@@ -177,8 +177,11 @@ def start(self):
 
             self.addSubTask.grid(row=self.numSubTask, column=0, sticky="nsew", padx=10, pady=6)
 
+    self.bind("<Return>", lambda event: print("none"))
+
 def addSubTaskDisplay(self, parentID, classID, taskInfo, frameInfo):
     self.addSubTask.destroy()
+    print(taskInfo)
 
     self.addSubTaskFrame = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=topLevel())
     self.addSubTaskFrame.grid(row=self.numSubTask, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)
@@ -311,21 +314,80 @@ def doneSubTaskClick(self, id: str, i):
     #code isn't deleting the task from the list all the time so its being a little wired right now
     print(id)
     print(i)
+    parentID = getSubTaskParentID(id)[0][0]
     finishSubTask(self, id)
     self.subTaskInfo[i]["frame"].grid_forget()
 
-    del self.subTaskInfo[i]
+    typeOfTask = self.subTaskInfo["type"]
 
-    keys = list(self.subTaskInfo.keys())
+    self.subTaskFrame.destroy()
 
-    keys.pop(0)
-    
-    for key in keys:
-        self.subTaskInfo[key]["frame"].grid(row=key, column=0, sticky="nsew", padx=10, pady=3)
+    self.subTaskFrame = customtkinter.CTkScrollableFrame(master=self.content, fg_color=topLevel())
+    self.subTaskFrame.grid(row=2, column=0, sticky="nsew", pady=10, padx=10)
+    self.subTaskFrame.grid_columnconfigure((0), weight=1)
 
-    self.addSubTask.grid(row=self.numSubTask, column=0, sticky="nsew", padx=10, pady=6)
+    if typeOfTask == "blank":
+        subTask = getStudySubTasks()
 
-    #for j in range(len(keys)):
-    #    self.subTaskInfo[j]["frame"].grid(row=j, column=0, sticky="nsew", padx=10, pady=3)
+        self.numSubTask = len(subTask)
 
-    #self.addSubTask.grid(row=self.numSubTask, column=0, sticky="nsew", padx=10, pady=6)
+        self.subTaskInfo = {}
+        self.subTaskInfo["type"] = "blank"
+
+        for i in range(len(subTask)):
+            self.subTaskInfo[i] = {}
+
+            self.subTaskInfo[i]["id"] = subTask[i][0]
+            self.subTaskInfo[i]["classID"] = subTask[i][8]
+
+            self.subTaskInfo[i]["frame"] = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=top2Level(), height=50)
+            self.subTaskInfo[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=10, pady=3)
+            self.subTaskInfo[i]["frame"].grid_columnconfigure((0), weight=1)
+
+            self.subTask = customtkinter.CTkLabel(master=self.subTaskInfo[i]["frame"], text=f"{subTask[i][1]}", font=customtkinter.CTkFont(size=15), anchor="w", justify="left")
+            self.subTask.grid(row=0, column=0, sticky="nsew", padx=10, pady=2)
+
+            self.subTaskInfo[i]["done"] = customtkinter.CTkButton(master=self.subTaskInfo[i]["frame"], text="Done", width=50, command=lambda: print("done"))
+            self.subTaskInfo[i]["done"].grid(row=0, column=1, sticky="nsew", padx=10, pady=4)
+
+            makeButtonWork(self, i, self.subTaskInfo[i]["id"])
+
+        self.addSubTask = customtkinter.CTkButton(master=self.subTaskFrame, text="Add Sub-Task", fg_color="transparent", hover_color=top2Level(), text_color=["gray10", "#DCE4EE"], compound="left", anchor="w",
+                                                font=customtkinter.CTkFont(size=15), command=lambda: addBlankSubTaskDisplay(self))
+
+        self.addSubTask.grid(row=self.numSubTask, column=0, sticky="nsew", padx=10, pady=6)
+
+    if typeOfTask == "task":
+        subTask = getSubTasks(parentID)
+        mainTask = getMainTaskSingle(parentID)
+
+        print(mainTask)
+
+        self.numSubTask = len(subTask)
+
+        self.subTaskInfo = {}
+        self.subTaskInfo["type"] = "task"
+
+        for i in range(len(subTask)):
+            self.subTaskInfo[i] = {}
+
+            self.subTaskInfo[i]["id"] = subTask[i][0]
+            self.subTaskInfo[i]["classID"] = subTask[i][8]
+
+            self.subTaskInfo[i]["frame"] = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=top2Level(), height=50)
+            self.subTaskInfo[i]["frame"].grid(row=i, column=0, sticky="nsew", padx=10, pady=3)
+            self.subTaskInfo[i]["frame"].grid_columnconfigure((0), weight=1)
+
+            self.subTask = customtkinter.CTkLabel(master=self.subTaskInfo[i]["frame"], text=f"{subTask[i][1]}", font=customtkinter.CTkFont(size=15), anchor="w", justify="left")
+            self.subTask.grid(row=0, column=0, sticky="nsew", padx=10, pady=2)
+
+            self.subTaskInfo[i]["done"] = customtkinter.CTkButton(master=self.subTaskInfo[i]["frame"], text="Done", width=50, command=lambda: print("done"))
+            self.subTaskInfo[i]["done"].grid(row=0, column=1, sticky="nsew", padx=10, pady=4)
+
+            makeButtonWork(self, i, self.subTaskInfo[i]["id"])
+
+        #def addSubTaskDisplay(self, parentID, classID, taskInfo, frameInfo):
+        self.addSubTask = customtkinter.CTkButton(master=self.subTaskFrame, text="Add Sub-Task", fg_color="transparent", hover_color=top2Level(), text_color=["gray10", "#DCE4EE"], compound="left", anchor="w",
+                                                font=customtkinter.CTkFont(size=15), command=lambda: addSubTaskDisplay(self, parentID, mainTask[0][8], mainTask, self.subTaskInfo))
+
+        self.addSubTask.grid(row=self.numSubTask, column=0, sticky="nsew", padx=10, pady=6)

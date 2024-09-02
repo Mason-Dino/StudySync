@@ -151,6 +151,16 @@ def getStudySubTasks():
 
     return rows
 
+def getSubTaskParentID(id):
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    c.execute(f"SELECT parentID FROM tasks WHERE id = '{id}'")
+    rows = c.fetchall()
+    conn.close()
+
+    return rows
+
 def getClassTasks(classID):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()

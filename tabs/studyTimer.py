@@ -41,11 +41,18 @@ def studyTimer(self):
     #self.breakFrame.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)
     self.breakFrame.grid_columnconfigure((0,1), weight=1)
 
-    self.break5 = customtkinter.CTkButton(master=self.breakFrame, text="Break: 5 Min", font=customtkinter.CTkFont(size=15))
+    self.break5 = customtkinter.CTkButton(master=self.breakFrame, text="Break: 5 Min", font=customtkinter.CTkFont(size=15), command=lambda: break5min(self))
     self.break5.grid(row=0, column=0, sticky="nsew", pady=10, padx=10)
 
     self.add5 = customtkinter.CTkButton(master=self.breakFrame, text="Add: 5 Min", font=customtkinter.CTkFont(size=15), command=lambda: add5min(self))
     self.add5.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
+
+    self.breakFrame2 = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
+    #self.breakFrame2.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)
+    self.breakFrame2.grid_columnconfigure((0), weight=1)
+
+    self.endBreakEarly = customtkinter.CTkButton(master=self.breakFrame2, text="End Break Early", font=customtkinter.CTkFont(size=15), command=lambda: stopBreakEarly(self))
+    self.endBreakEarly.grid(row=0, column=0, sticky="nsew", pady=10, padx=10)
 
     self.taskFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
     self.taskFrame.grid(row=2, column=0, sticky="nsew", pady=10, padx=10)
@@ -163,6 +170,7 @@ def start(self):
             global totalSec
             global timer
             global add5minTime
+            global breakNow
 
             totalSec = sec + (min * 60) + (hour * 3600)
             timeNow = datetime.datetime.now()
@@ -173,6 +181,7 @@ def start(self):
             )
 
             add5minTime = False
+            breakNow = False
             updateTimer(self)
 
             self.controlButtons.grid_columnconfigure((0,1,2), weight=1)
@@ -231,16 +240,30 @@ def updateTimer(self):
     global totalSec
     global timer
     global add5minTime
+    global TimeStampBreak
+    global totalSecBreak
+    global breakNow
 
     timer = self.after(1000, lambda: updateTimer(self))
 
-    totalSec -= 1
 
-    print(add5minTime)
+    if breakNow == True:
+        totalSecBreak -= 1
+        TimeStampBreak = TimeStampBreak - timedelta(seconds=1)
 
-    TimeStamp = TimeStamp - timedelta(seconds=1)
+        self.timeLabel.configure(text="Break: " + TimeStampBreak.strftime("%H:%M:%S"))
 
-    self.timeLabel.configure(text=TimeStamp.strftime("%H:%M:%S"))
+        if totalSecBreak <= 0 or breakNow == False:
+            breakNow = False
+
+    if breakNow == False:
+        totalSec -= 1
+        TimeStamp = TimeStamp - timedelta(seconds=1)
+
+        self.breakFrame2.grid_forget()
+        self.breakFrame.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)
+
+        self.timeLabel.configure(text=TimeStamp.strftime("%H:%M:%S"))
 
 
     if totalSec <= 0:
@@ -254,6 +277,29 @@ def add5min(self):
     TimeStamp = TimeStamp + timedelta(minutes=5)
     totalSec += 300
     self.timeLabel.configure(text=TimeStamp.strftime("%H:%M:%S"))
+
+def break5min(self):
+    global add5minTime
+    global TimeStampBreak
+    global totalSecBreak
+    global breakNow
+
+    breakNow = True
+
+    totalSecBreak = 300
+    timeNow = datetime.datetime.now()
+
+    TimeStampBreak = datetime.datetime.strptime(
+        f"""{timeNow.strftime("%m")}/{timeNow.strftime("%d")}/{timeNow.strftime("%Y")} 00:05:00""",
+        "%m/%d/%Y %H:%M:%S"
+    )
+
+    self.breakFrame.grid_forget()
+    self.breakFrame2.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)
+
+def stopBreakEarly(self):
+    global breakNow
+    breakNow = False
 
 def addSubTaskDisplay(self, parentID, classID, taskInfo, frameInfo):
     self.addSubTask.destroy()

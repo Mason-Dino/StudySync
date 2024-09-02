@@ -44,7 +44,7 @@ def studyTimer(self):
     self.break5 = customtkinter.CTkButton(master=self.breakFrame, text="Break: 5 Min", font=customtkinter.CTkFont(size=15))
     self.break5.grid(row=0, column=0, sticky="nsew", pady=10, padx=10)
 
-    self.add5 = customtkinter.CTkButton(master=self.breakFrame, text="Add: 5 Min", font=customtkinter.CTkFont(size=15))
+    self.add5 = customtkinter.CTkButton(master=self.breakFrame, text="Add: 5 Min", font=customtkinter.CTkFont(size=15), command=lambda: add5min(self))
     self.add5.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
 
     self.taskFrame = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
@@ -162,6 +162,7 @@ def start(self):
             global TimeStamp
             global totalSec
             global timer
+            global add5minTime
 
             totalSec = sec + (min * 60) + (hour * 3600)
             timeNow = datetime.datetime.now()
@@ -171,6 +172,7 @@ def start(self):
                 "%m/%d/%Y %H:%M:%S"
             )
 
+            add5minTime = False
             updateTimer(self)
 
             self.controlButtons.grid_columnconfigure((0,1,2), weight=1)
@@ -227,23 +229,34 @@ def start(self):
 def updateTimer(self):
     global TimeStamp
     global totalSec
+    global timer
+    global add5minTime
 
     timer = self.after(1000, lambda: updateTimer(self))
 
     totalSec -= 1
 
+    print(add5minTime)
+
     TimeStamp = TimeStamp - timedelta(seconds=1)
 
-    print(TimeStamp)
+    self.timeLabel.configure(text=TimeStamp.strftime("%H:%M:%S"))
 
-def stopUpdateTimer(self, totalSec, timer):
+
     if totalSec <= 0:
-        print("hey")
         self.after_cancel(timer)
+
+def add5min(self):
+    global add5minTime
+    global TimeStamp
+    global totalSec
+
+    TimeStamp = TimeStamp + timedelta(minutes=5)
+    totalSec += 300
+    self.timeLabel.configure(text=TimeStamp.strftime("%H:%M:%S"))
 
 def addSubTaskDisplay(self, parentID, classID, taskInfo, frameInfo):
     self.addSubTask.destroy()
-    print(taskInfo)
 
     self.addSubTaskFrame = customtkinter.CTkFrame(master=self.subTaskFrame, corner_radius=6, fg_color=topLevel())
     self.addSubTaskFrame.grid(row=self.numSubTask, column=0, columnspan=2, sticky="nsew", padx=10, pady=7)

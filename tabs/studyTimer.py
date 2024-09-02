@@ -1,5 +1,6 @@
 import customtkinter
 from tkinter import messagebox
+from datetime import *
 
 from themes.theme import *
 from task import *
@@ -158,6 +159,20 @@ def start(self):
             messagebox.showerror(title="Error", message="Invalid Time Input")
 
         elif error == False:
+            global TimeStamp
+            global totalSec
+            global timer
+
+            totalSec = sec + (min * 60) + (hour * 3600)
+            timeNow = datetime.datetime.now()
+
+            TimeStamp = datetime.datetime.strptime(
+                f"""{timeNow.strftime("%m")}/{timeNow.strftime("%d")}/{timeNow.strftime("%Y")} {hour}:{min}:{sec}""",
+                "%m/%d/%Y %H:%M:%S"
+            )
+
+            updateTimer(self)
+
             self.controlButtons.grid_columnconfigure((0,1,2), weight=1)
             self.stop.grid(row=0, column=2, sticky="nsew", pady=10, padx=10)
             self.pause.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
@@ -208,6 +223,23 @@ def start(self):
                 self.addSubTask.grid(row=self.numSubTask, column=0, sticky="nsew", padx=10, pady=6)
 
     self.bind("<Return>", lambda event: print("none"))
+
+def updateTimer(self):
+    global TimeStamp
+    global totalSec
+
+    timer = self.after(1000, lambda: updateTimer(self))
+
+    totalSec -= 1
+
+    TimeStamp = TimeStamp - timedelta(seconds=1)
+
+    print(TimeStamp)
+
+def stopUpdateTimer(self, totalSec, timer):
+    if totalSec <= 0:
+        print("hey")
+        self.after_cancel(timer)
 
 def addSubTaskDisplay(self, parentID, classID, taskInfo, frameInfo):
     self.addSubTask.destroy()

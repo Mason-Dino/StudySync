@@ -150,7 +150,6 @@ def start(self):
 
     if task == None:
         results = messagebox.askyesno(title="Error", message="No Task Selected\nDo you wish to continue without a task?")
-        print(results)
 
     else:
         allTask = getMainTasks("ORDER BY date ASC")
@@ -399,7 +398,6 @@ def addSubTaskFunction(self, parentID, taskInfo, frameInfo):
 
         taskInfo = getMainTaskSingle(parentID)
         addSubTask(subTaskName, id, taskInfo[0][7], taskInfo[0][8], taskInfo[0][2], taskInfo[0][3], taskInfo[0][4], parentID)
-        print(self.numSubTask)
 
         for i in range(self.numSubTask):
             frameInfo[i]["frame"].grid_forget()
@@ -435,12 +433,10 @@ def addSubTaskFunction(self, parentID, taskInfo, frameInfo):
         self.addSubTask.grid(row=self.numSubTask, column=0, sticky="nsew", padx=10, pady=6)
 
 def addBlankSubTaskFunction(self):
-    print("blank")
     if len(self.subTaskEntry.get()) > 30:
         messagebox.showerror("Error", "Sub-Task Name is too long")  
 
     else:
-        print(self.subTaskEntry.get())
         subTaskName = self.subTaskEntry.get()
         self.addSubTaskFrame.destroy()
         id = makeID(20)
@@ -485,9 +481,6 @@ def makeButtonWork(self, i, id):
     self.subTaskInfo[i]["done"].configure(command=lambda: doneSubTaskClick(self, id, i))
 
 def doneSubTaskClick(self, id: str, i):
-    #code isn't deleting the task from the list all the time so its being a little wired right now
-    print(id)
-    print(i)
     parentID = getSubTaskParentID(id)[0][0]
     finishSubTask(self, id)
     self.subTaskInfo[i]["frame"].grid_forget()
@@ -534,8 +527,6 @@ def doneSubTaskClick(self, id: str, i):
     if typeOfTask == "task":
         subTask = getSubTasks(parentID)
         mainTask = getMainTaskSingle(parentID)
-
-        print(mainTask)
 
         self.numSubTask = len(subTask)
 

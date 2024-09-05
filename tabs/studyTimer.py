@@ -8,8 +8,24 @@ from dupTask import findDupTask
 from id import makeID
 
 def studyTimer(self):
+    global pauseNow
+    global stopNow
+    global breakNow
+    global add5minTime
+    global TimeStamp
+    global totalSec
+    global TimeStampBreak
+    global totalSecBreak
+    global timer
+
     self.breakTime = 0
     self.studyTime = 0
+
+    try:
+        self.after_cancel(timer)
+
+    except:
+        pass
 
     self.content = customtkinter.CTkFrame(master=self, corner_radius=6)
     self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
@@ -21,6 +37,7 @@ def studyTimer(self):
 
     self.timeLabel = customtkinter.CTkLabel(master=self.header, text="00:00:00", font=customtkinter.CTkFont(size=30, weight="bold"))
     self.timeLabel.grid(row=0, column=0, sticky="nsew")
+    self.timeLabel.configure(text="00:00:00")
 
     self.timeInput = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
     self.timeInput.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)
@@ -97,11 +114,13 @@ def studyTimer(self):
     self.start = customtkinter.CTkButton(master=self.controlButtons, text="Start", font=customtkinter.CTkFont(size=15), command=lambda: start(self))
     self.start.grid(row=0, column=0, sticky="nsew", pady=10, padx=10)
 
-    self.pause = customtkinter.CTkButton(master=self.controlButtons, text="Pause", font=customtkinter.CTkFont(size=15))
+    self.pause = customtkinter.CTkButton(master=self.controlButtons, text="Pause", font=customtkinter.CTkFont(size=15), command=lambda: pause(self))
     #self.pause.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
+    pauseNow = False
 
-    self.stop = customtkinter.CTkButton(master=self.controlButtons, text="Stop", font=customtkinter.CTkFont(size=15))
+    self.stop = customtkinter.CTkButton(master=self.controlButtons, text="Stop", font=customtkinter.CTkFont(size=15), command=lambda: stop(self))
     #self.stop.grid(row=0, column=2, sticky="nsew", pady=10, padx=10)
+    stopNow = False
 
 def confirm(self):
     self.confirmTask = self.taskSel.get()
@@ -265,8 +284,12 @@ def updateTimer(self):
 
         self.timeLabel.configure(text=TimeStamp.strftime("%H:%M:%S"))
 
+    if pauseNow == False:
+        #Don't do anything during a pause
+        pass
 
-    if totalSec <= 0:
+
+    if totalSec <= 0 or stopNow == True:
         self.after_cancel(timer)
 
 def add5min(self):
@@ -515,3 +538,13 @@ def doneSubTaskClick(self, id: str, i):
                                                 font=customtkinter.CTkFont(size=15), command=lambda: addSubTaskDisplay(self, parentID, mainTask[0][8], mainTask, self.subTaskInfo))
 
         self.addSubTask.grid(row=self.numSubTask, column=0, sticky="nsew", padx=10, pady=6)
+
+def pause(self):
+    global pauseNow
+
+    pauseNow = True
+
+def stop(self):
+    global stopNow
+
+    stopNow = True

@@ -159,9 +159,6 @@ def start(self):
         min = self.minute.get()
         hour = self.hour.get()
 
-        times = [sec, min, hour]
-
-        print(sec, min, hour)
 
         if sec == "":
             sec = 0
@@ -172,11 +169,15 @@ def start(self):
         if hour == "":
             hour = 0
 
+
         try:
             sec = int(sec)
             min = int(min)
             hour = int(hour)
             error = False
+            
+            if sec == 0 and min == 0 and hour == 0:
+                error = True
 
         except:
             error = True

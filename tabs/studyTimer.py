@@ -386,7 +386,7 @@ def addSubTaskFunction(self, parentID, taskInfo, frameInfo):
         id = makeID(20)
         #can't make subtask unless there already exists a task this is because taskInfo doesn't have any info
 
-        print(parentID)
+        taskInfo = getMainTaskSingle(parentID)
         addSubTask(subTaskName, id, taskInfo[0][7], taskInfo[0][8], taskInfo[0][2], taskInfo[0][3], taskInfo[0][4], parentID)
         print(self.numSubTask)
 

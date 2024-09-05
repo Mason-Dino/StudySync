@@ -134,7 +134,7 @@ def confirm(self):
 
 def start(self):
     self.exit = False
-    
+
     try:
         task = self.confirmTask
         results = None
@@ -292,13 +292,17 @@ def updateTimer(self):
         self.timeLabel.configure(text=TimeStamp.strftime("%H:%M:%S"))
 
 
-    if totalSec <= 0 or stopNow == True:
+    if totalSec <= 0 or stopNow == True or self.exit == True:
         self.after_cancel(timer)
         self.timeLabel.configure(text="00:00:00")
 
         if stopNow == True:
             messagebox.showinfo(title="Timer Done", message="Timer Done. Good job!")
             studyTimer(self)
+
+        elif self.exit == True:
+            #exists so alarm wont run
+            pass
 
         else:
             #this will run if you don't stop the timer and an alarm will play

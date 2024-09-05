@@ -13,6 +13,8 @@ from tabs.assignments import assignments
 from themes.theme import topLevel
 
 def home(self):
+    
+    self.exit = True
     self.taskFrame = {}
 
     self.content = customtkinter.CTkFrame(master=self, corner_radius=6)

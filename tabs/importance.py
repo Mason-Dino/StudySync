@@ -4,6 +4,8 @@ from themes.theme import *
 from task import *
 
 def importance(self):
+    self.exit = True
+    
     padyLevel = 5
     padxLevel = 3
 

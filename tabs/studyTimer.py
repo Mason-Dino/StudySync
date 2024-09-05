@@ -18,6 +18,8 @@ def studyTimer(self):
     global totalSecBreak
     global timer
 
+    self.exit = True
+
     self.breakTime = 0
     self.studyTime = 0
 
@@ -131,6 +133,8 @@ def confirm(self):
     messagebox.showinfo(title="Task Selected", message=f"Task Selected: {self.confirmTask}")
 
 def start(self):
+    self.exit = False
+    
     try:
         task = self.confirmTask
         results = None
@@ -175,7 +179,7 @@ def start(self):
             min = int(min)
             hour = int(hour)
             error = False
-            
+
             if sec == 0 and min == 0 and hour == 0:
                 error = True
 
@@ -268,8 +272,6 @@ def updateTimer(self):
     global stopNow
 
     timer = self.after(1000, lambda: updateTimer(self))
-
-    print(pauseNow, stopNow)
 
     if breakNow == True and pauseNow == False:
         totalSecBreak -= 1

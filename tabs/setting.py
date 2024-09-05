@@ -14,6 +14,8 @@ import os
 
 
 def settings(self):
+    self.exit = True
+    
     classes = []
     overallPadyOutside = 9
     overallPadyInside = 9

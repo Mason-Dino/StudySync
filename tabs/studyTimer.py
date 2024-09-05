@@ -103,7 +103,7 @@ def studyTimer(self):
     self.confirm = customtkinter.CTkButton(master=self.taskFrame, text="Confirm", font=customtkinter.CTkFont(size=15), command=lambda: confirm(self))
     self.confirm.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)
 
-    self.reset = customtkinter.CTkButton(master=self.taskFrame, text="Reset", font=customtkinter.CTkFont(size=15))
+    self.reset = customtkinter.CTkButton(master=self.taskFrame, text="Reset", font=customtkinter.CTkFont(size=15), command=lambda: reset(self))
     self.reset.grid(row=1, column=1, sticky="nsew", pady=10, padx=10)
 
     self.subTaskFrame = customtkinter.CTkScrollableFrame(master=self.content, fg_color=topLevel())
@@ -132,6 +132,11 @@ def confirm(self):
         self.confirmTask = None
 
     messagebox.showinfo(title="Task Selected", message=f"Task Selected: {self.confirmTask}")
+
+def reset(self):
+    self.confirmTask = None
+
+    messagebox.showinfo(title="Task Reset", message="Task Reset")
 
 def start(self):
     self.exit = False

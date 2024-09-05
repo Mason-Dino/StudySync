@@ -1,6 +1,7 @@
 import customtkinter
 from tkinter import messagebox
 from datetime import *
+import pygame
 
 from themes.theme import *
 from task import *
@@ -297,7 +298,7 @@ def updateTimer(self):
         self.timeLabel.configure(text="00:00:00")
 
         if stopNow == True:
-            messagebox.showinfo(title="Timer Done", message="Timer Done. Good job!")
+            messagebox.showinfo(title="Timer Stopped", message="Timer Stopped")
             studyTimer(self)
 
         elif self.exit == True:
@@ -305,15 +306,20 @@ def updateTimer(self):
             pass
 
         else:
-            #this will run if you don't stop the timer and an alarm will play
-            pass
+            pygame.mixer.init()
+            sounda= pygame.mixer.Sound("alarm.mp3")
+            sounda.play()
+
+            messagebox.showinfo(title="Timer Done", message="Timer Done. Good job!")
+
+            studyTimer(self)
 
 def add5min(self):
     global add5minTime
     global TimeStamp
     global totalSec
 
-    TimeStamp = TimeStamp + timedelta(minutes=5)
+    TimeStamp = TimeStamp + timedelta(minutes=300)
     totalSec += 300
     self.timeLabel.configure(text=TimeStamp.strftime("%H:%M:%S"))
 

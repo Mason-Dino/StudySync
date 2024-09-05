@@ -203,9 +203,10 @@ def start(self):
             breakNow = False
             updateTimer(self)
 
-            self.controlButtons.grid_columnconfigure((0,1,2), weight=1)
-            self.stop.grid(row=0, column=2, sticky="nsew", pady=10, padx=10)
-            self.pause.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
+            self.controlButtons.grid_columnconfigure((0,1), weight=1)
+            self.start.grid_forget()
+            self.pause.grid(row=0, column=0, sticky="nsew", pady=10, padx=10)
+            self.stop.grid(row=0, column=1, sticky="nsew", pady=10, padx=10)
 
             self.timeInput.grid_forget()
             self.breakFrame.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)
@@ -262,11 +263,14 @@ def updateTimer(self):
     global TimeStampBreak
     global totalSecBreak
     global breakNow
+    global pauseNow
+    global stopNow
 
     timer = self.after(1000, lambda: updateTimer(self))
 
+    print(pauseNow, stopNow)
 
-    if breakNow == True:
+    if breakNow == True and pauseNow == False:
         totalSecBreak -= 1
         TimeStampBreak = TimeStampBreak - timedelta(seconds=1)
 
@@ -275,7 +279,7 @@ def updateTimer(self):
         if totalSecBreak <= 0 or breakNow == False:
             breakNow = False
 
-    if breakNow == False:
+    if breakNow == False and pauseNow == False:
         totalSec -= 1
         TimeStamp = TimeStamp - timedelta(seconds=1)
 
@@ -284,13 +288,18 @@ def updateTimer(self):
 
         self.timeLabel.configure(text=TimeStamp.strftime("%H:%M:%S"))
 
-    if pauseNow == False:
-        #Don't do anything during a pause
-        pass
-
 
     if totalSec <= 0 or stopNow == True:
         self.after_cancel(timer)
+        self.timeLabel.configure(text="00:00:00")
+
+        if stopNow == True:
+            messagebox.showinfo(title="Timer Done", message="Timer Done. Good job!")
+            studyTimer(self)
+
+        else:
+            #this will run if you don't stop the timer and an alarm will play
+            pass
 
 def add5min(self):
     global add5minTime
@@ -542,7 +551,13 @@ def doneSubTaskClick(self, id: str, i):
 def pause(self):
     global pauseNow
 
-    pauseNow = True
+    if pauseNow == True:
+        pauseNow = False
+        self.pause.configure(text="Pause")
+
+    elif pauseNow == False:
+        pauseNow = True
+        self.pause.configure(text="Resume")
 
 def stop(self):
     global stopNow

@@ -50,26 +50,27 @@ def loadGooglCal():
 
     return service
     
-def makeNewAssignment(name, dueDate):
-    load_dotenv()
+def makeNewAssignment(name, year, month, day, classID):
+    with open("setup.json", "r") as f:
+        setup = json.load(f)
 
-    DIS_Math = os.environ.get("DIS_Math")
+    calID = setup["calendar"][classID]
 
     service = loadGooglCal()
 
     event = {
         'summary': name,
         'start': {
-            'date': dueDate,
+            'date': f'{year}-{month}-{day}',
             'timeZone': 'America/Chicago',
         },
         'end': {
-            'date': dueDate,
+            'date': f'{year}-{month}-{day}',
             'timeZone': 'America/Chicago',
         }
     }
 
-    event = service.events().insert(calendarId=DIS_Math, body=event).execute()
+    event = service.events().insert(calendarId=calID, body=event).execute()
 
     
 def newEventTest():
@@ -99,7 +100,3 @@ def newEventTest():
     }
 
     """
-
-
-
-makeNewAssignment("Test: 15A", "2024-9-6")

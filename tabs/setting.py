@@ -3,6 +3,7 @@ from task import deleteDatabase, makeTestTask
 from googleCal import checkIfGoogleCal
 from screen.classAddEdit import classAddEdit
 from themes.theme import topLevel, getSwitchInfo
+from screen.googleCalScreen import *
 from tkinter import messagebox
 from tkinter import filedialog
 from icon import getIcons
@@ -188,7 +189,7 @@ def settings(self):
         self.editGoogle.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
     else:
-        self.googleSetup = customtkinter.CTkButton(master=self.googleCal, text="Google Calendar Setup", command=lambda: print("hey"))
+        self.googleSetup = customtkinter.CTkButton(master=self.googleCal, text="Google Calendar Setup", command=lambda: googleCalSetup(self))
         self.googleSetup.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

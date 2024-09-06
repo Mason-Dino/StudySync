@@ -1,5 +1,6 @@
 from screen.classColor import showClassColors
 from task import deleteDatabase, makeTestTask
+from googleCal import checkIfGoogleCal
 from screen.classAddEdit import classAddEdit
 from themes.theme import topLevel, getSwitchInfo
 from tkinter import messagebox
@@ -173,6 +174,22 @@ def settings(self):
     self.classColor.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
 
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    self.googleCal = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
+    self.googleCal.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
+    self.googleCal.grid_columnconfigure((0), weight=1)
+
+    RowI += 1
+
+    if checkIfGoogleCal() == True:
+        self.editGoogle = customtkinter.CTkButton(master=self.googleCal, text="Google Calendar Edit", command=lambda: print("hey"))
+        self.editGoogle.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    else:
+        self.googleSetup = customtkinter.CTkButton(master=self.googleCal, text="Google Calendar Setup", command=lambda: print("hey"))
+        self.googleSetup.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

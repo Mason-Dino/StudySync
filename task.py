@@ -4,6 +4,8 @@ import sqlite3
 import json
 import os
 
+from googleCal import *
+
 def database():
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
@@ -83,6 +85,12 @@ def addMainTask(taskName, taskID, className, classID, day, month, year, subLink,
     c = conn.cursor()
 
     c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, dateNum, "None", className, classID, subLink, ptsValue, importance, type))
+
+    #def makeNewAssignment(name, year, month, day, classID):
+    if checkIfGoogleCal() == True:
+        print("make new assignment")
+        makeNewAssignment(taskName, year, month, day, classID)
+    
     conn.commit()
     conn.close()
 

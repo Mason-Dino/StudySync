@@ -23,7 +23,9 @@ def database():
         subLink text,
         ptsValue integer,
         importance integer,
-        type text
+        type text,
+        googleCalID text,
+        todoistID text
         )""")
     conn.commit()
     conn.close()
@@ -42,7 +44,7 @@ def makeTestTask():
         conn = sqlite3.connect('study.db')
         c = conn.cursor()
 
-        c.execute("""INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", ("test123456789", "Birthday", 1, 2, 2006, 2012006, "None", "test", "test", "test", 10, 1, "test"))
+        c.execute("""INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", ("test123456789", "Birthday", 1, 2, 2006, 2012006, "None", "test", "test", "test", 10, 1, "test", "None", "None"))
 
         conn.commit()
         conn.close()
@@ -84,12 +86,17 @@ def addMainTask(taskName, taskID, className, classID, day, month, year, subLink,
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
-    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, dateNum, "None", className, classID, subLink, ptsValue, importance, type))
 
     #def makeNewAssignment(name, year, month, day, classID):
     if checkIfGoogleCal() == True:
         print("make new assignment")
-        makeNewAssignment(taskName, year, month, day, classID)
+        event = makeNewAssignment(taskName, year, month, day, classID)
+        googleCalID = event["id"]
+
+    elif checkIfGoogleCal() == False:
+        googleCalID = "None"
+
+    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, dateNum, "None", className, classID, subLink, ptsValue, importance, type, googleCalID, "None"))
     
     conn.commit()
     conn.close()
@@ -112,7 +119,7 @@ def addSubTask(taskName, taskID, className, classID, day, month, year, parentID)
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
-    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, dateNum, parentID, className, classID, "None", "None", "None", "None"))
+    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, dateNum, parentID, className, classID, "None", "None", "None", "None", "None", "None"))
     conn.commit()
     conn.close()
 
@@ -329,9 +336,19 @@ def deleteTask(id):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
-    c.execute(f"DELETE FROM tasks WHERE id='{id}'")
+    c.execute(f"SELECT * FROM tasks WHERE id='{id}'")
 
+    rows = c.fetchall()
     conn.commit()
+
+    deleteEvent(rows[0][13], rows[0][8])
+
+    c.execute(f"DELETE FROM tasks WHERE id='{id}'")
+    conn.commit()
+
+    c.execute(f"DELETE FROM tasks WHERE parentID='{id}'")
+    conn.commit()
+
     conn.close()
 
 def deleteSubTask(parentID):

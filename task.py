@@ -330,6 +330,15 @@ def editTask(id, type: str, value: str):
         c.execute(f"UPDATE tasks SET type='{value}' WHERE id='{id}'")
 
     conn.commit()
+
+    c.execute(f"SELECT * FROM tasks WHERE id='{id}'")
+
+    row = c.fetchall()
+
+    #editEvent(eventID, classID, summary, year, month, day):
+    editEvent(row[0][13], row[0][8], row[0][1], row[0][4], row[0][3], row[0][2])
+
+    conn.commit()
     conn.close()
 
 def deleteTask(id):

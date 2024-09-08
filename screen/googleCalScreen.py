@@ -139,6 +139,11 @@ def continueButton(self, answer):
     self.docButton = customtkinter.CTkButton(master=self.controlButtons, text="Documentation", command=lambda: webbrowser.open("https://dino-dev.gitbook.io/studysync/settings/google-calendar-setup"))
     self.docButton.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
+def googleCalEdit(self):
+    self.content2 = customtkinter.CTkFrame(master=self)
+    self.content2.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
+    self.content2.grid_columnconfigure((0), weight=1)
+
 def setupButton(self, answer):
     with open("setup.json", "r") as f:
         setup = json.load(f)

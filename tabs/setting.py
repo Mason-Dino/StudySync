@@ -185,7 +185,7 @@ def settings(self):
     RowI += 1
 
     if checkIfGoogleCal() == True:
-        self.editGoogle = customtkinter.CTkButton(master=self.googleCal, text="Google Calendar Edit", command=lambda: print("hey"))
+        self.editGoogle = customtkinter.CTkButton(master=self.googleCal, text="Google Calendar Edit", command=lambda: googleCalEdit(self))
         self.editGoogle.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
     else:

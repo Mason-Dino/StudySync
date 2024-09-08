@@ -12,7 +12,7 @@ def googleCalSetup(self):
     self.header.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
     self.question = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
-    self.question.grid(row=1, column=0, sticky="nsew", pady=10, padx=10)
+    self.question.grid(row=1, column=0, sticky="nsew", pady=5, padx=10)
     self.question.grid_columnconfigure((0), weight=1)
 
     self.questionLabel = customtkinter.CTkLabel(master=self.question, text="Do you want all tasks to be under the same calendar or different?", font=customtkinter.CTkFont(size=15))
@@ -36,11 +36,23 @@ def googleCalSetup(self):
 def continueButton(self, answer):
     if answer == "same":
         self.setupFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
-        self.setupFrame.grid(row=4, column=0, sticky="nsew", padx=10, pady=10)
+        self.setupFrame.grid(row=4, column=0, sticky="nsew", padx=10, pady=5)
+
+        self.calInfoFrame = customtkinter.CTkFrame(master=self.setupFrame, corner_radius=6, fg_color=topLevel())
+        self.calInfoFrame.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+        self.calInfoFrame.grid_columnconfigure((0), weight=1)
+        self.calInfoFrame.grid_rowconfigure((0,1), weight=1)
+
+        self.className = customtkinter.CTkLabel(master=self.calInfoFrame, text="Calendar:", font=customtkinter.CTkFont(size=15))
+        self.className.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+        self.calID = customtkinter.CTkEntry(master=self.calInfoFrame, placeholder_text="Calendar ID")
+        self.calID.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+
 
     elif answer == "different":
         self.setupFrame = customtkinter.CTkScrollableFrame(master=self.content, corner_radius=6, fg_color=topLevel())
-        self.setupFrame.grid(row=4, column=0, sticky="nsew", padx=10, pady=10)
+        self.setupFrame.grid(row=4, column=0, sticky="nsew", padx=10, pady=5)
         self.setupFrame.grid_columnconfigure((0,1), weight=1)
 
         self.classNames = customtkinter.CTkFrame(master=self.setupFrame, corner_radius=6, fg_color=topLevel())
@@ -68,3 +80,15 @@ def continueButton(self, answer):
 
             self.calClass[i]["input"] = customtkinter.CTkEntry(master=self.calInput, placeholder_text="Calendar ID")
             self.calClass[i]["input"].grid(row=i, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.continueOn.destroy()
+
+    self.controlButtons = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+    self.controlButtons.grid(row=5, column=0, sticky="nsew", padx=10, pady=5)
+    self.controlButtons.grid_columnconfigure((0,1), weight=1)
+
+    self.setupButton = customtkinter.CTkButton(master=self.controlButtons, text="Setup", command=lambda: print("hey"))
+    self.setupButton.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.docButton = customtkinter.CTkButton(master=self.controlButtons, text="Documentation", command=lambda: print("hey"))
+    self.docButton.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)

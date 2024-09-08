@@ -48,3 +48,10 @@
 47) Now click the continue button, this just allows StudySync to make events for you. 
 48) You should now get a screen that has the text "The authentication flow has completed. You may close this window." or something similar"
 49) Head back to StudySync to finish the process!
+50) How to find the Calendar ID
+51) Go to Google Calendar online
+52) Hover over one of the calendar you would like to use for StudySync
+53) Click the 3 vertical lines
+54) Then click "Settings and sharing"
+55) Scroll down to the "Calendar ID"
+56) The text bellow that is the Calendar ID that you past into StudySync

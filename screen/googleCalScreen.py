@@ -39,7 +39,7 @@ def continueButton(self, answer):
         self.setupFrame.grid(row=4, column=0, sticky="nsew", padx=10, pady=5)
 
         self.calInfoFrame = customtkinter.CTkFrame(master=self.setupFrame, corner_radius=6, fg_color=topLevel())
-        self.calInfoFrame.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+        self.calInfoFrame.place(relx=0.5, rely=0.5, anchor="center")
         self.calInfoFrame.grid_columnconfigure((0), weight=1)
         self.calInfoFrame.grid_rowconfigure((0,1), weight=1)
 
@@ -92,3 +92,10 @@ def continueButton(self, answer):
 
     self.docButton = customtkinter.CTkButton(master=self.controlButtons, text="Documentation", command=lambda: print("hey"))
     self.docButton.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
+def setupButton(self, answer):
+    if answer == "same":
+        pass
+
+    elif answer == "different":
+        pass

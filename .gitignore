@@ -165,6 +165,7 @@ test.json
 .vscode/*
 creds.json
 token.json
+info.txt
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can

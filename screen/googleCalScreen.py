@@ -74,6 +74,16 @@ def continueButton(self, answer):
 
         # Need to add in a none class calendar option for users
 
+        self.calClass[0] = {}
+
+        self.className = customtkinter.CTkLabel(master=self.classNames, text="None:", font=customtkinter.CTkFont(size=15))
+        self.className.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+        self.calClass[0]["id"] = "0000000000"
+
+        self.calClass[0]["input"] = customtkinter.CTkEntry(master=self.calInput, placeholder_text="Calendar ID")
+        self.calClass[0]["input"].grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
         for i in range(numClasses):
             self.className = customtkinter.CTkLabel(master=self.classNames, text=f"{setup[f'class{i+1}']['name']}:", font=customtkinter.CTkFont(size=15))
             self.className.grid(row=i+1, column=0, sticky="nsew", padx=10, pady=10)
@@ -98,18 +108,23 @@ def continueButton(self, answer):
     self.docButton.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
 def setupButton(self, answer):
+    with open("setup.json", "r") as f:
+        setup = json.load(f)
+
+    setup["calendar"] = {}
+
     if answer == "same":
         pass
 
     elif answer == "different":
-        with open("setup.json", "r") as f:
-            setup = json.load(f)
 
         numClasses = setup["numClasses"]
 
         for i in range(numClasses):
             classID = setup[f"class{i+1}"]["id"]
-            setup[f"calendar"][classID] = self.calClass[i]["input"].get()
+            setup[f"calendar"][classID] = self.calClass[i+1]["input"].get()
+
+        setup["calendar"]["0000000000"] = self.calClass[0]["input"].get()
 
         setup["googleCal"] = True
 

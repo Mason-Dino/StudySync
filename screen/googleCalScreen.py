@@ -7,8 +7,6 @@ from tkinter import messagebox, filedialog
 import webbrowser
 
 def googleCalSetup(self):
-    # Not fully setup yet
-    # I need to allow users to import their cred files
     self.content2 = customtkinter.CTkFrame(master=self)
     self.content2.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
     self.content2.grid_columnconfigure((0), weight=1)

@@ -2,6 +2,9 @@ from themes.theme import *
 from googleCal import *
 import customtkinter
 
+from tkinter import messagebox
+import webbrowser
+
 def googleCalSetup(self):
     # Not fully setup yet
     # I need to allow users to import their cred files
@@ -104,7 +107,7 @@ def continueButton(self, answer):
     self.setupButton = customtkinter.CTkButton(master=self.controlButtons, text="Setup", command=lambda: setupButton(self, answer))
     self.setupButton.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.docButton = customtkinter.CTkButton(master=self.controlButtons, text="Documentation", command=lambda: print("hey"))
+    self.docButton = customtkinter.CTkButton(master=self.controlButtons, text="Documentation", command=lambda: webbrowser.open("https://dino-dev.gitbook.io/studysync/settings/google-calendar-setup"))
     self.docButton.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
 def setupButton(self, answer):
@@ -130,3 +133,5 @@ def setupButton(self, answer):
 
         with open("setup.json", "w") as f:
             json.dump(setup, f, indent=4)
+
+        messagebox.showinfo("Success", "Google Calendar Setup!")

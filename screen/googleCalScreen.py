@@ -1,6 +1,7 @@
 from themes.theme import *
 from googleCal import *
 import customtkinter
+from tabs.home import home
 
 from tkinter import messagebox, filedialog
 import webbrowser
@@ -145,7 +146,20 @@ def setupButton(self, answer):
     setup["calendar"] = {}
 
     if answer == "same":
-        pass
+        numClasses = setup["numClasses"]
+
+        for i in range(numClasses):
+            classID = setup[f"class{i+1}"]["id"]
+            setup[f"calendar"][classID] = self.calID.get()
+
+        setup["calendar"]["0000000000"] = self.calID.get()
+
+        setup["googleCal"] = True
+
+        with open("setup.json", "w") as f:
+            json.dump(setup, f, indent=4)
+
+        messagebox.showinfo("Success", "Google Calendar Setup!")
 
     elif answer == "different":
 
@@ -164,14 +178,40 @@ def setupButton(self, answer):
 
         messagebox.showinfo("Success", "Google Calendar Setup!")
 
+
+    home(self)
+
 def importCredFile(self):
     file = filedialog.askopenfile(mode='r', filetypes=[('JSON Files', '*.json')])
 
     if file is not None:
-        with open(file, "r") as f:
+        print(file.name)
+        print(type(file))
+        with open(file.name, "r") as f:
             cred = json.load(f)
 
-        with open("creds.json",  "w") as f:
-            json.dump(cred, f, indent=4)
+        try:
+            cred["installed"]["client_id"]
+            cred["installed"]["client_secret"]
+            cred["installed"]["project_id"]
+            cred["installed"]["auth_uri"]
+            cred["installed"]["token_uri"]
+            cred["installed"]["auth_provider_x509_cert_url"]
+            cred["installed"]["redirect_uris"]
+            error = False
+
+        except:
+            error = True
+            messagebox.showerror("Error", "Invalid Cred File")
+
+        if error == False:
+            print(cred)
+
+            with open("creds.json",  "w") as f:
+                json.dump(cred, f, indent=4)
+
+            loadGooglCal()
+
+            self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
 
         

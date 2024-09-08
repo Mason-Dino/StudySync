@@ -2,14 +2,40 @@ from themes.theme import *
 from googleCal import *
 import customtkinter
 
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
 import webbrowser
 
 def googleCalSetup(self):
     # Not fully setup yet
     # I need to allow users to import their cred files
+    self.content2 = customtkinter.CTkFrame(master=self)
+    self.content2.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
+    self.content2.grid_columnconfigure((0), weight=1)
+
+    self.header = customtkinter.CTkLabel(master=self.content2, text="Google Calendar Setup", font=customtkinter.CTkFont(size=20, weight="bold"))
+    self.header.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.question = customtkinter.CTkFrame(master=self.content2, corner_radius=6, fg_color=topLevel())
+    self.question.grid(row=1, column=0, sticky="nsew", pady=5, padx=10)
+    self.question.grid_columnconfigure((0), weight=1)
+
+    self.questionLabel = customtkinter.CTkLabel(master=self.question, text="Click the docs button below to setup your Google Calendar", font=customtkinter.CTkFont(size=15))
+    self.questionLabel.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.docsButton = customtkinter.CTkButton(master=self.question, text="Docs", command=lambda: webbrowser.open("https://dino-dev.gitbook.io/studysync/settings/google-calendar-setup"))
+    self.docsButton.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.questionLabel2 = customtkinter.CTkLabel(master=self.question, text="Once done import your cred file", font=customtkinter.CTkFont(size=15))
+    self.questionLabel2.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.importCredButton = customtkinter.CTkButton(master=self.question, text="Import Cred File", command=lambda: importCredFile(self))
+    self.importCredButton.grid(row=3, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.content2.grid_columnconfigure((0), weight=1)
+    self.content2.grid_rowconfigure((4), weight=1)
+
     self.content = customtkinter.CTkFrame(master=self)
-    self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
+    #self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
     self.content.grid_columnconfigure((0), weight=1)
     self.content.grid_rowconfigure((4), weight=1)
 
@@ -19,6 +45,8 @@ def googleCalSetup(self):
     self.question = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
     self.question.grid(row=1, column=0, sticky="nsew", pady=5, padx=10)
     self.question.grid_columnconfigure((0), weight=1)
+
+
 
     self.questionLabel = customtkinter.CTkLabel(master=self.question, text="Do you want all tasks to be under the same calendar or different?", font=customtkinter.CTkFont(size=15))
     self.questionLabel.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
@@ -135,3 +163,15 @@ def setupButton(self, answer):
             json.dump(setup, f, indent=4)
 
         messagebox.showinfo("Success", "Google Calendar Setup!")
+
+def importCredFile(self):
+    file = filedialog.askopenfile(mode='r', filetypes=[('JSON Files', '*.json')])
+
+    if file is not None:
+        with open(file, "r") as f:
+            cred = json.load(f)
+
+        with open("creds.json",  "w") as f:
+            json.dump(cred, f, indent=4)
+
+        

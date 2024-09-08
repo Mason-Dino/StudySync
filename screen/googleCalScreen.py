@@ -87,7 +87,7 @@ def continueButton(self, answer):
     self.controlButtons.grid(row=5, column=0, sticky="nsew", padx=10, pady=5)
     self.controlButtons.grid_columnconfigure((0,1), weight=1)
 
-    self.setupButton = customtkinter.CTkButton(master=self.controlButtons, text="Setup", command=lambda: print("hey"))
+    self.setupButton = customtkinter.CTkButton(master=self.controlButtons, text="Setup", command=lambda: setupButton(self, answer))
     self.setupButton.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
     self.docButton = customtkinter.CTkButton(master=self.controlButtons, text="Documentation", command=lambda: print("hey"))
@@ -98,4 +98,16 @@ def setupButton(self, answer):
         pass
 
     elif answer == "different":
-        pass
+        with open("setup.json", "r") as f:
+            setup = json.load(f)
+
+        numClasses = setup["numClasses"]
+
+        for i in range(numClasses):
+            classID = setup[f"class{i+1}"]["id"]
+            setup[f"calendar"][classID] = self.calClass[i]["input"].get()
+
+        setup["googleCal"] = True
+
+        with open("setup.json", "w") as f:
+            json.dump(setup, f, indent=4)

@@ -87,6 +87,22 @@ def deleteEvent(eventID, classID):
 
     service.events().delete(calendarId=calID, eventId=eventID).execute()
 
+def editEvent(eventID, classID, summary, year, month, day):
+    service = loadGooglCal()
+
+    with open("setup.json", "r") as f:
+        setup = json.load(f)
+
+    calID = setup["calendar"][classID]
+
+    event = service.events().get(calendarId=calID, eventId=eventID).execute()
+
+    event["summary"] = summary
+    event["start"]["date"] = f"{year}-{month}-{day}"
+    event["end"]["date"] = f"{year}-{month}-{day}"
+
+    service.events().update(calendarId=calID, eventId=eventID, body=event).execute()
+
     
 def newEventTest():
     event = {

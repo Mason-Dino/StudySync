@@ -45,8 +45,6 @@ def googleCalSetup(self):
     self.question.grid(row=1, column=0, sticky="nsew", pady=5, padx=10)
     self.question.grid_columnconfigure((0), weight=1)
 
-
-
     self.questionLabel = customtkinter.CTkLabel(master=self.question, text="Do you want all tasks to be under the same calendar or different?", font=customtkinter.CTkFont(size=15))
     self.questionLabel.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
@@ -55,11 +53,27 @@ def googleCalSetup(self):
     self.answer.grid_columnconfigure((0,1), weight=1)
 
     self.calAnswer = customtkinter.StringVar(value="none")
+    with open("setup.json", "r") as f:
+        setup = json.load(f)
 
-    self.same = customtkinter.CTkRadioButton(master=self.answer, text="Same Calendar", value="same", variable=self.calAnswer)
+    theme = setup["theme"]
+
+    radio = getRadioInfo(theme=theme)
+    
+    self.same = customtkinter.CTkRadioButton(master=self.answer, text="Same Calendar", value="same", variable=self.calAnswer,
+                                            width=radio["width"], height=radio["height"], radiobutton_width=radio["radiobutton_width"], radiobutton_height=radio["radiobutton_height"],
+                                            corner_radius=radio["corner_radius"], border_width_unchecked=radio["border_width_unchecked"], border_width_checked=radio["border_width_checked"],
+                                            bg_color=radio["bg_color"], fg_color=radio["fg_color"], hover_color=radio["hover_color"], border_color=radio["border_color"],
+                                            text_color=radio["text_color"], text_color_disabled=radio["text_color_disabled"])
+    
+    self.something = customtkinter.CTkRadioButton()
     self.same.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.different = customtkinter.CTkRadioButton(master=self.answer, text="Different Calendar", value="different", variable=self.calAnswer)
+    self.different = customtkinter.CTkRadioButton(master=self.answer, text="Different Calendar", value="different", variable=self.calAnswer,
+                                                width=radio["width"], height=radio["height"], radiobutton_width=radio["radiobutton_width"], radiobutton_height=radio["radiobutton_height"],
+                                                corner_radius=radio["corner_radius"], border_width_unchecked=radio["border_width_unchecked"], border_width_checked=radio["border_width_checked"],
+                                                bg_color=radio["bg_color"], fg_color=radio["fg_color"], hover_color=radio["hover_color"], border_color=radio["border_color"],
+                                                text_color=radio["text_color"], text_color_disabled=radio["text_color_disabled"])
     self.different.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
     self.continueOn = customtkinter.CTkButton(master=self.question, text="Continue", command=lambda: continueButton(self, self.calAnswer.get()))

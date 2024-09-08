@@ -147,12 +147,19 @@ def setupButton(self, answer):
 
     if answer == "same":
         numClasses = setup["numClasses"]
+        steps = numClasses + 1
+        currentLevel = 0
+        eachStep = 1 / steps
 
         for i in range(numClasses):
             classID = setup[f"class{i+1}"]["id"]
             setup[f"calendar"][classID] = self.calID.get()
 
+            testEvent(self.calID.get())
+
         setup["calendar"]["0000000000"] = self.calID.get()
+
+        testEvent(self.calID.get())
 
         setup["googleCal"] = True
 
@@ -169,7 +176,11 @@ def setupButton(self, answer):
             classID = setup[f"class{i+1}"]["id"]
             setup[f"calendar"][classID] = self.calClass[i+1]["input"].get()
 
+            testEvent(self.calClass[i+1]["input"].get())
+
         setup["calendar"]["0000000000"] = self.calClass[0]["input"].get()
+
+        testEvent(self.calClass[0]["input"].get())
 
         setup["googleCal"] = True
 
@@ -213,5 +224,3 @@ def importCredFile(self):
             loadGooglCal()
 
             self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
-
-        

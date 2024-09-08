@@ -1,0 +1,50 @@
+1) go to https://console.cloud.google.com/welcome
+2) Click Dropdown in top left of the screen
+3) Click "New Project"
+4) Type in a project name in the respected field
+5) Click the "Create" button
+6) Wait for the project to be made
+7) Click the dropdown menu again to select the project you just made
+8) Now search for "Google Calendar Api"
+9) Select the option from "Google Enterprise Api"
+10) Enable the API now
+11) You should now be in the API & Services screen
+12) Click the "Credentials" button on the left of the screen
+13) Click the Create Credentials Button towards the top of the screen
+14) Click the "OAuth client ID" option
+15) Click the "Configure Consent Screen"
+16) Select the "External Option"
+17) Click "Create"
+18) For the app name you could put "StudySync" but that is up to you
+19) For "User Support Email" add your email address
+20) Scroll down all the way to the bottom and add your own email to the "Developer Email Address"
+21) Now click "Save and Continue"
+22) Click "Add or Remove Scopes" 
+23) Search for "/auth/calendar"
+24) There should now be a google calendar option
+    a) The user-facing description should be "See, edit, share, and permanently delete all the calendars you can access using Google Calendar"
+25) Select the checkbox
+26) Click the update button now
+27) Scroll down to the bottom of the screen
+28) click "Save & Continue"
+29) Skip past the test users section and click "Save & Continue"
+30) You should now be in the summary section
+31) Scroll down to the bottom of the screen
+32) Click the "Back to Dashboard" button
+33) Now that you are in the "OAuth consent screen"
+34) Find the "Publish App" button and click it, and then confirm
+35) Click the "Credentials" button on the left screen again
+36) Click "Create Credentials"
+37) Select the "OAuth Client ID" option
+38) For "Application Type" select "Desktop App"
+39) Click "Create"
+40) Download the JSON file and save it somewhere you will remember where you put it
+41) Go to StudySync and import the Credentials file now inside StudySync
+42) Once imported it should bring you to a google sign in page
+43) Click the account where the calendars for your classes are in
+44) You should be in a warning screen now, this is your app that you made
+45) Click the "Advanced" button
+46) Then click the "Go to (name you put)"
+47) Now click the continue button, this just allows StudySync to make events for you. 
+48) You should now get a screen that has the text "The authentication flow has completed. You may close this window." or something similar"
+49) Head back to StudySync to finish the process!

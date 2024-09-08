@@ -151,7 +151,7 @@ class setup(customtkinter.CTk):
         self.congratsFrame.grid_columnconfigure(0, weight=1)  # Column weight
         self.congratsFrame.grid_rowconfigure(0, weight=1)  # Row weight
 
-        self.congrats = customtkinter.CTkLabel(master=self.congratsFrame, text="Congratulations!\nYou have finished the setup!\nClick Next to start using StudySync!")  # Create the congratulations label
+        self.congrats = customtkinter.CTkLabel(master=self.congratsFrame, text="Congratulations!\nYou have finished the setup!\nRestart StudySync to start using it!")  # Create the congratulations label
         self.congrats.grid(row=0, column=0, padx=5, pady=5, sticky="nswe")  # Position the congratulations label
 
         # Store the frames for the page function

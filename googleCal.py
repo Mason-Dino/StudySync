@@ -8,6 +8,8 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+from tkinter import messagebox
+
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 def checkIfGoogleCal():
@@ -116,9 +118,16 @@ def testEvent(calID):
         }
     }
 
-    event = service.events().insert(calendarId=calID, body=event).execute()
-    print(event["id"])
-    event = service.events().delete(calendarId=calID, eventId=event["id"]).execute()
+    error = False
+
+    try:
+        event = service.events().insert(calendarId=calID, body=event).execute()
+        print(event["id"])
+        event = service.events().delete(calendarId=calID, eventId=event["id"]).execute()
+    except:
+        error = True
 
     print(event)
+
+    return error
 

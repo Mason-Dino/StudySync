@@ -149,29 +149,32 @@ def setupButton(self, answer):
         setup = json.load(f)
 
     setup["calendar"] = {}
+    numClasses = setup["numClasses"]
+    errorList = []
 
     if answer == "same":
-        numClasses = setup["numClasses"]
-        steps = numClasses + 1
-        currentLevel = 0
-        eachStep = 1 / steps
-
         for i in range(numClasses):
             classID = setup[f"class{i+1}"]["id"]
             setup[f"calendar"][classID] = self.calID.get()
 
-            testEvent(self.calID.get())
+            error = testEvent(self.calID.get())
+            errorList.append(error)
 
         setup["calendar"]["0000000000"] = self.calID.get()
 
-        testEvent(self.calID.get())
+        error = testEvent(self.calID.get())
+        errorList.append(error)
 
-        setup["googleCal"] = True
+        if True in errorList:
+            messagebox.showerror("Error", "Invalid Calendar ID")
 
-        with open("setup.json", "w") as f:
-            json.dump(setup, f, indent=4)
+        else:
+            setup["googleCal"] = True
 
-        messagebox.showinfo("Success", "Google Calendar Setup!")
+            with open("setup.json", "w") as f:
+                json.dump(setup, f, indent=4)
+
+            messagebox.showinfo("Success", "Google Calendar Setup!")
 
     elif answer == "different":
 
@@ -181,21 +184,30 @@ def setupButton(self, answer):
             classID = setup[f"class{i+1}"]["id"]
             setup[f"calendar"][classID] = self.calClass[i+1]["input"].get()
 
-            testEvent(self.calClass[i+1]["input"].get())
+            error = testEvent(self.calClass[i+1]["input"].get())
+            errorList.append(error)
 
         setup["calendar"]["0000000000"] = self.calClass[0]["input"].get()
 
-        testEvent(self.calClass[0]["input"].get())
+        error = testEvent(self.calClass[0]["input"].get())
+        errorList.append(error)
 
-        setup["googleCal"] = True
+        if True in errorList:
+            messagebox.showerror("Error", "Invalid Calendar ID")
 
-        with open("setup.json", "w") as f:
-            json.dump(setup, f, indent=4)
+        else:
+            setup["googleCal"] = True
 
-        messagebox.showinfo("Success", "Google Calendar Setup!")
+            with open("setup.json", "w") as f:
+                json.dump(setup, f, indent=4)
 
+            messagebox.showinfo("Success", "Google Calendar Setup!")
 
-    home(self)
+    if True in errorList:
+        pass
+
+    else:
+        home(self)
 
 def importCredFile(self):
     file = filedialog.askopenfile(mode='r', filetypes=[('JSON Files', '*.json')])

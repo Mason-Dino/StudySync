@@ -100,3 +100,25 @@ def newEventTest():
     }
 
     """
+
+def testEvent(calID):
+    service = loadGooglCal()
+
+    event = {
+        'summary': 'Test Event',
+        'start': {
+            'date': f'2006-2-1',
+            'timeZone': 'America/Chicago',
+        },
+        'end': {
+            'date': f'2006-2-1',
+            'timeZone': 'America/Chicago',
+        }
+    }
+
+    event = service.events().insert(calendarId=calID, body=event).execute()
+    print(event["id"])
+    event = service.events().delete(calendarId=calID, eventId=event["id"]).execute()
+
+    print(event)
+

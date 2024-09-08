@@ -72,16 +72,18 @@ def continueButton(self, answer):
 
         self.calClass = {}
 
+        # Need to add in a none class calendar option for users
+
         for i in range(numClasses):
             self.className = customtkinter.CTkLabel(master=self.classNames, text=f"{setup[f'class{i+1}']['name']}:", font=customtkinter.CTkFont(size=15))
-            self.className.grid(row=i, column=0, sticky="nsew", padx=10, pady=10)
+            self.className.grid(row=i+1, column=0, sticky="nsew", padx=10, pady=10)
 
-            self.calClass[i] = {}
+            self.calClass[i+1] = {}
 
-            self.calClass[i]["id"] = setup[f"class{i+1}"]["id"]
+            self.calClass[i+1]["id"] = setup[f"class{i+1}"]["id"]
 
-            self.calClass[i]["input"] = customtkinter.CTkEntry(master=self.calInput, placeholder_text="Calendar ID")
-            self.calClass[i]["input"].grid(row=i, column=0, sticky="nsew", padx=10, pady=10)
+            self.calClass[i+1]["input"] = customtkinter.CTkEntry(master=self.calInput, placeholder_text="Calendar ID")
+            self.calClass[i+1]["input"].grid(row=i+1, column=0, sticky="nsew", padx=10, pady=10)
 
     self.continueOn.destroy()
 

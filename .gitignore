@@ -155,15 +155,14 @@ dmypy.json
 cython_debug/
 
 # Misc Files:
-setup.json
-setup-backup.json
+setup*.json
 *.db
 test.py
 Output/*
 *.iss
 test.json
 .vscode/*
-creds.json
+creds*.json
 token.json
 info.txt
 

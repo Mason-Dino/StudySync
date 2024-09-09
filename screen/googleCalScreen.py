@@ -169,6 +169,34 @@ def googleCalEdit(self):
     self.docButton = customtkinter.CTkButton(master=self.resetFrame, text="Documentation", command=lambda: webbrowser.open("https://dino-dev.gitbook.io/studysync/settings/google-calendar-setup"))
     self.docButton.grid(row=1, column=0,  columnspan=2, sticky="nsew", padx=10, pady=10)
 
+    self.option = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+    self.option.grid(row=2, column=0, sticky="nsew", padx=10, pady=5)
+    self.option.grid_columnconfigure((0,1), weight=1)
+
+    self.calAnswer = customtkinter.StringVar(value="none")
+    with open("setup.json", "r") as f:
+        setup = json.load(f)
+
+    theme = setup["theme"]
+
+    radio = getRadioInfo(theme=theme)
+    print(radio)
+    
+    self.same = customtkinter.CTkRadioButton(master=self.option, text="Same Calendar", value="same", variable=self.calAnswer,
+                                            corner_radius=radio["corner_radius"], border_width_unchecked=radio["border_width_unchecked"], border_width_checked=radio["border_width_checked"],
+                                            fg_color=radio["fg_color"], hover_color=radio["hover_color"], border_color=radio["border_color"],
+                                            text_color=radio["text_color"], text_color_disabled=radio["text_color_disabled"])
+    self.same.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.different = customtkinter.CTkRadioButton(master=self.option, text="Different Calendars", value="different", variable=self.calAnswer,
+                                                corner_radius=radio["corner_radius"], border_width_unchecked=radio["border_width_unchecked"], border_width_checked=radio["border_width_checked"],
+                                                fg_color=radio["fg_color"], hover_color=radio["hover_color"], border_color=radio["border_color"],
+                                                text_color=radio["text_color"], text_color_disabled=radio["text_color_disabled"])
+    self.different.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
+    self.continueButton = customtkinter.CTkButton(master=self.option, text="Continue", command=lambda: print("continueEdit"))
+    self.continueButton.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
+
 def setupButton(self, answer):
     with open("setup.json", "r") as f:
         setup = json.load(f)
@@ -244,6 +272,8 @@ def resetButton(self):
     with open("setup.json", "w") as f:
         json.dump(setup, f, indent=4)
 
+    messagebox.showinfo("Success", "Google Calendar Reset!\nGo back into settings to re-setup. ")
+
     home(self)
 
 def importCredFile(self):
@@ -278,3 +308,6 @@ def importCredFile(self):
             loadGooglCal()
 
             self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
+
+def continueEdit(self):
+    pass

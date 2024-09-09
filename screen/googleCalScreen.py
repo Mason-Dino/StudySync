@@ -79,7 +79,7 @@ def googleCalSetup(self):
 def continueButton(self, answer):
     self.different.configure(state="disabled")
     self.same.configure(state="disabled")
-    
+
     if answer == "same":
         self.setupFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
         self.setupFrame.grid(row=4, column=0, sticky="nsew", padx=10, pady=5)
@@ -317,6 +317,8 @@ def continueEdit(self, answer):
     self.continueButton.destroy()
     self.different.configure(state="disabled")
     self.same.configure(state="disabled")
+    self.content.grid_rowconfigure((4), weight=1)
+    self.resetFrame.destroy()
 
     with open("setup.json", "r") as f:
         setup = json.load(f)
@@ -389,3 +391,24 @@ def continueEdit(self, answer):
 
         if pType == "same":
             self.calID.insert(0, setup["calendar"]["0000000000"])
+
+    self.controlFame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+    self.controlFame.grid(row=5, column=0, sticky="nsew", padx=10, pady=5)
+    self.controlFame.grid_columnconfigure((0,1), weight=1)
+
+    self.update = customtkinter.CTkButton(master=self.controlFame, text="Update", command=lambda: print("update"))
+    self.update.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.cancel = customtkinter.CTkButton(master=self.controlFame, text="Cancel", command=lambda: print("cancel"))
+    self.cancel.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
+def updateEdit(self, answer):
+    if answer == "same":
+        with open("setup.json", "r") as f:
+            setup = json.load(f)
+
+    if answer == "different":
+        with open("setup.json", "r") as f:
+            setup = json.load(f)
+
+        

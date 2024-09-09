@@ -58,26 +58,30 @@ def makeNewAssignment(name, year, month, day, classID):
     with open("setup.json", "r") as f:
         setup = json.load(f)
 
-    calID = setup["calendar"][classID]
+    try:
+        calID = setup["calendar"][classID]
 
-    service = loadGooglCal()
+        service = loadGooglCal()
 
-    event = {
-        'summary': name,
-        'start': {
-            'date': f'{year}-{month}-{day}',
-            'timeZone': 'America/Chicago',
-        },
-        'end': {
-            'date': f'{year}-{month}-{day}',
-            'timeZone': 'America/Chicago',
-        },
-        "description": "Import from StudySync"
-    }
+        event = {
+            'summary': name,
+            'start': {
+                'date': f'{year}-{month}-{day}',
+                'timeZone': 'America/Chicago',
+            },
+            'end': {
+                'date': f'{year}-{month}-{day}',
+                'timeZone': 'America/Chicago',
+            },
+            "description": "Import from StudySync"
+        }
 
-    event = service.events().insert(calendarId=calID, body=event).execute()
+        event = service.events().insert(calendarId=calID, body=event).execute()
 
-    return event
+        return event
+    
+    except:
+        return {"id": None}
 
 def deleteEvent(eventID, classID):
     service = loadGooglCal()

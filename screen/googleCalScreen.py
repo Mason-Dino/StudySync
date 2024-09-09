@@ -152,9 +152,14 @@ def continueButton(self, answer):
     self.docButton.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
 def googleCalEdit(self):
-    self.content2 = customtkinter.CTkFrame(master=self)
-    self.content2.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
-    self.content2.grid_columnconfigure((0), weight=1)
+    self.content = customtkinter.CTkFrame(master=self)
+    self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
+    self.content.grid_columnconfigure((0), weight=1)
+
+    self.resetFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+    self.resetFrame.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.resetButton = customtkinter.CTkButton(master=self.resetFrame, text="Reset Google Calendar Setup", command=lambda: resetButton(self))
 
 def setupButton(self, answer):
     with open("setup.json", "r") as f:
@@ -220,6 +225,18 @@ def setupButton(self, answer):
 
     else:
         home(self)
+
+def resetButton(self):
+    with open("setup.json", "r") as f:
+        setup = json.load(f)
+
+    setup["calendar"] = {}
+    setup["googleCal"] = False
+
+    with open("setup.json", "w") as f:
+        json.dump(setup, f, indent=4)
+
+    home(self)
 
 def importCredFile(self):
     file = filedialog.askopenfile(mode='r', filetypes=[('JSON Files', '*.json')])

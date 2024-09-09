@@ -77,6 +77,9 @@ def googleCalSetup(self):
     self.continueOn.grid(row=3, column=0, sticky="nsew", padx=10, pady=10)
 
 def continueButton(self, answer):
+    self.different.configure(state="disabled")
+    self.same.configure(state="disabled")
+    
     if answer == "same":
         self.setupFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
         self.setupFrame.grid(row=4, column=0, sticky="nsew", padx=10, pady=5)
@@ -194,7 +197,7 @@ def googleCalEdit(self):
                                                 text_color=radio["text_color"], text_color_disabled=radio["text_color_disabled"])
     self.different.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
-    self.continueButton = customtkinter.CTkButton(master=self.option, text="Continue", command=lambda: print("continueEdit"))
+    self.continueButton = customtkinter.CTkButton(master=self.option, text="Continue", command=lambda: continueEdit(self, answer=self.calAnswer.get()))
     self.continueButton.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
 
 def setupButton(self, answer):
@@ -206,6 +209,7 @@ def setupButton(self, answer):
     errorList = []
 
     if answer == "same":
+        setup["calendar"]["type"] = "same"
         for i in range(numClasses):
             classID = setup[f"class{i+1}"]["id"]
             setup[f"calendar"][classID] = self.calID.get()
@@ -230,7 +234,7 @@ def setupButton(self, answer):
             messagebox.showinfo("Success", "Google Calendar Setup!")
 
     elif answer == "different":
-
+        setup["calendar"]["type"] = "different"
         numClasses = setup["numClasses"]
 
         for i in range(numClasses):
@@ -309,5 +313,79 @@ def importCredFile(self):
 
             self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
 
-def continueEdit(self):
-    pass
+def continueEdit(self, answer):
+    self.continueButton.destroy()
+    self.different.configure(state="disabled")
+    self.same.configure(state="disabled")
+
+    with open("setup.json", "r") as f:
+        setup = json.load(f)
+
+    pType = setup["calendar"]["type"]
+
+    if answer == "different":
+        self.setupFrame = customtkinter.CTkScrollableFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+        self.setupFrame.grid(row=4, column=0, sticky="nsew", padx=10, pady=5)
+        self.setupFrame.grid_columnconfigure((0,1), weight=1)
+
+        self.classNames = customtkinter.CTkFrame(master=self.setupFrame, corner_radius=6, fg_color=topLevel())
+        self.classNames.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+        self.classNames.grid_columnconfigure((0), weight=1)
+
+        self.calInput = customtkinter.CTkFrame(master=self.setupFrame, corner_radius=6, fg_color=topLevel())
+        self.calInput.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+        self.calInput.grid_columnconfigure((0), weight=1)
+
+        with open("setup.json", "r") as f:
+            setup = json.load(f)
+
+        numClasses = setup["numClasses"]
+
+        self.calClass = {}
+
+        # Need to add in a none class calendar option for users
+
+        self.calClass[0] = {}
+
+        self.className = customtkinter.CTkLabel(master=self.classNames, text="None:", font=customtkinter.CTkFont(size=15))
+        self.className.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+        self.calClass[0]["id"] = "0000000000"
+
+        self.calClass[0]["input"] = customtkinter.CTkEntry(master=self.calInput, placeholder_text="Calendar ID")
+        self.calClass[0]["input"].grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+        if pType == "different":
+            self.calClass[0]["input"].insert(0, setup["calendar"]["0000000000"])
+
+        for i in range(numClasses):
+            self.className = customtkinter.CTkLabel(master=self.classNames, text=f"{setup[f'class{i+1}']['name']}:", font=customtkinter.CTkFont(size=15))
+            self.className.grid(row=i+1, column=0, sticky="nsew", padx=10, pady=10)
+
+            self.calClass[i+1] = {}
+
+            self.calClass[i+1]["id"] = setup[f"class{i+1}"]["id"]
+
+            self.calClass[i+1]["input"] = customtkinter.CTkEntry(master=self.calInput, placeholder_text="Calendar ID")
+            self.calClass[i+1]["input"].grid(row=i+1, column=0, sticky="nsew", padx=10, pady=10)
+
+            if pType == "different":
+                self.calClass[i+1]["input"].insert(0, setup["calendar"][self.calClass[i+1]["id"]])
+
+    if answer == "same":
+        self.setupFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+        self.setupFrame.grid(row=4, column=0, sticky="nsew", padx=10, pady=5)
+
+        self.calInfoFrame = customtkinter.CTkFrame(master=self.setupFrame, corner_radius=6, fg_color=topLevel())
+        self.calInfoFrame.place(relx=0.5, rely=0.5, anchor="center")
+        self.calInfoFrame.grid_columnconfigure((0), weight=1)
+        self.calInfoFrame.grid_rowconfigure((0,1), weight=1)
+
+        self.className = customtkinter.CTkLabel(master=self.calInfoFrame, text="Calendar:", font=customtkinter.CTkFont(size=15))
+        self.className.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+        self.calID = customtkinter.CTkEntry(master=self.calInfoFrame, placeholder_text="Calendar ID")
+        self.calID.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+
+        if pType == "same":
+            self.calID.insert(0, setup["calendar"]["0000000000"])

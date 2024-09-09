@@ -59,7 +59,6 @@ def googleCalSetup(self):
     theme = setup["theme"]
 
     radio = getRadioInfo(theme=theme)
-    print(radio)
     
     self.same = customtkinter.CTkRadioButton(master=self.answer, text="Same Calendar", value="same", variable=self.calAnswer,
                                             corner_radius=radio["corner_radius"], border_width_unchecked=radio["border_width_unchecked"], border_width_checked=radio["border_width_checked"],
@@ -183,7 +182,6 @@ def googleCalEdit(self):
     theme = setup["theme"]
 
     radio = getRadioInfo(theme=theme)
-    print(radio)
     
     self.same = customtkinter.CTkRadioButton(master=self.option, text="Same Calendar", value="same", variable=self.calAnswer,
                                             corner_radius=radio["corner_radius"], border_width_unchecked=radio["border_width_unchecked"], border_width_checked=radio["border_width_checked"],
@@ -358,7 +356,11 @@ def continueEdit(self, answer):
         self.calClass[0]["input"].grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
         if pType == "different":
-            self.calClass[0]["input"].insert(0, setup["calendar"]["0000000000"])
+            try:
+                self.calClass[0]["input"].insert(0, setup["calendar"]["0000000000"])
+
+            except:
+                pass
 
         for i in range(numClasses):
             self.className = customtkinter.CTkLabel(master=self.classNames, text=f"{setup[f'class{i+1}']['name']}:", font=customtkinter.CTkFont(size=15))
@@ -372,7 +374,11 @@ def continueEdit(self, answer):
             self.calClass[i+1]["input"].grid(row=i+1, column=0, sticky="nsew", padx=10, pady=10)
 
             if pType == "different":
-                self.calClass[i+1]["input"].insert(0, setup["calendar"][self.calClass[i+1]["id"]])
+                try:
+                    self.calClass[i+1]["input"].insert(0, setup["calendar"][self.calClass[i+1]["id"]])
+
+                except:
+                    pass
 
     if answer == "same":
         self.setupFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
@@ -390,25 +396,82 @@ def continueEdit(self, answer):
         self.calID.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
 
         if pType == "same":
-            self.calID.insert(0, setup["calendar"]["0000000000"])
+            try:
+                self.calID.insert(0, setup["calendar"]["0000000000"])
+
+            except:
+                pass
 
     self.controlFame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
     self.controlFame.grid(row=5, column=0, sticky="nsew", padx=10, pady=5)
     self.controlFame.grid_columnconfigure((0,1), weight=1)
 
-    self.update = customtkinter.CTkButton(master=self.controlFame, text="Update", command=lambda: print("update"))
+    self.update = customtkinter.CTkButton(master=self.controlFame, text="Update", command=lambda: updateEdit(self, answer))
     self.update.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
     self.cancel = customtkinter.CTkButton(master=self.controlFame, text="Cancel", command=lambda: print("cancel"))
     self.cancel.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
 def updateEdit(self, answer):
+    with open("setup.json", "r") as f:
+        setup = json.load(f)
+
+    setup["calendar"] = {}
+    numClasses = setup["numClasses"]
+    errorList = []
+
     if answer == "same":
-        with open("setup.json", "r") as f:
-            setup = json.load(f)
+        setup["calendar"]["type"] = "same"
+        for i in range(numClasses):
+            classID = setup[f"class{i+1}"]["id"]
+            setup[f"calendar"][classID] = self.calID.get()
 
-    if answer == "different":
-        with open("setup.json", "r") as f:
-            setup = json.load(f)
+            error = testEvent(self.calID.get())
+            errorList.append(error)
 
-        
+        setup["calendar"]["0000000000"] = self.calID.get()
+
+        error = testEvent(self.calID.get())
+        errorList.append(error)
+
+        if True in errorList:
+            messagebox.showerror("Error", "Invalid Calendar ID")
+
+        else:
+            setup["googleCal"] = True
+
+            with open("setup.json", "w") as f:
+                json.dump(setup, f, indent=4)
+
+            messagebox.showinfo("Success", "Google Calendar Updated!")
+
+            home(self)
+
+    elif answer == "different":
+        setup["calendar"]["type"] = "different"
+        numClasses = setup["numClasses"]
+
+        for i in range(numClasses):
+            classID = setup[f"class{i+1}"]["id"]
+            setup[f"calendar"][classID] = self.calClass[i+1]["input"].get()
+
+            error = testEvent(self.calClass[i+1]["input"].get())
+            errorList.append(error)
+
+        setup["calendar"]["0000000000"] = self.calClass[0]["input"].get()
+
+        error = testEvent(self.calClass[0]["input"].get())
+        errorList.append(error)
+
+        if True in errorList:
+            messagebox.showerror("Error", "Invalid Calendar ID")
+
+        else:
+            setup["googleCal"] = True
+
+            with open("setup.json", "w") as f:
+                json.dump(setup, f, indent=4)
+
+            messagebox.showinfo("Success", "Google Calendar Updated!")
+
+            home(self)

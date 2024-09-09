@@ -129,20 +129,29 @@ def updateAdd(self, type: str, classNum: int = None):
 
             if isValidColorCode(newColor) == True:
                 color = newColor
+                error = False
 
             else:
                 messagebox.showerror(title="Error", message="Invalid color code")
+                error = True
                 color = setupDir[f"class{classNum}"]["color"]
 
-        setupDir[f"class{classNum}"]["name"] = name
-        setupDir[f"class{classNum}"]["subject"] = subject
-        setupDir[f"class{classNum}"]["icon"] = icon
-        setupDir[f"class{classNum}"]["color"] = color
-        setupDir[f"class{classNum}"]["teacher"] = teacher
-        setupDir[f"class{classNum}"]["email"] = email
+        else:
+            error = False
 
-        with open("setup.json", "w") as f:
-            json.dump(setupDir, f, indent=4)
+        if error == False:
+            setupDir[f"class{classNum}"]["name"] = name
+            setupDir[f"class{classNum}"]["subject"] = subject
+            setupDir[f"class{classNum}"]["icon"] = icon
+            setupDir[f"class{classNum}"]["color"] = color
+            setupDir[f"class{classNum}"]["teacher"] = teacher
+            setupDir[f"class{classNum}"]["email"] = email
+
+            with open("setup.json", "w") as f:
+                json.dump(setupDir, f, indent=4)
+
+            messagebox.showinfo(title="Success", message=f"Class {type.capitalize()}!")
+            home(self)
 
     if type == "Added":
         numClass = setupDir["numClasses"]
@@ -178,8 +187,8 @@ def updateAdd(self, type: str, classNum: int = None):
         with open("setup.json", "w") as f:
             json.dump(setupDir, f, indent=4)
 
-    messagebox.showinfo(title="Success", message=f"Class {type.capitalize()}!")
-    home(self)
+        messagebox.showinfo(title="Success", message=f"Class {type.capitalize()}!")
+        home(self)
 
 def cancel(self):
     home(self)

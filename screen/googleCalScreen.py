@@ -59,20 +59,17 @@ def googleCalSetup(self):
     theme = setup["theme"]
 
     radio = getRadioInfo(theme=theme)
+    print(radio)
     
     self.same = customtkinter.CTkRadioButton(master=self.answer, text="Same Calendar", value="same", variable=self.calAnswer,
-                                            width=radio["width"], height=radio["height"], radiobutton_width=radio["radiobutton_width"], radiobutton_height=radio["radiobutton_height"],
                                             corner_radius=radio["corner_radius"], border_width_unchecked=radio["border_width_unchecked"], border_width_checked=radio["border_width_checked"],
-                                            bg_color=radio["bg_color"], fg_color=radio["fg_color"], hover_color=radio["hover_color"], border_color=radio["border_color"],
+                                            fg_color=radio["fg_color"], hover_color=radio["hover_color"], border_color=radio["border_color"],
                                             text_color=radio["text_color"], text_color_disabled=radio["text_color_disabled"])
-    
-    self.something = customtkinter.CTkRadioButton()
     self.same.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
     self.different = customtkinter.CTkRadioButton(master=self.answer, text="Different Calendar", value="different", variable=self.calAnswer,
-                                                width=radio["width"], height=radio["height"], radiobutton_width=radio["radiobutton_width"], radiobutton_height=radio["radiobutton_height"],
                                                 corner_radius=radio["corner_radius"], border_width_unchecked=radio["border_width_unchecked"], border_width_checked=radio["border_width_checked"],
-                                                bg_color=radio["bg_color"], fg_color=radio["fg_color"], hover_color=radio["hover_color"], border_color=radio["border_color"],
+                                                fg_color=radio["fg_color"], hover_color=radio["hover_color"], border_color=radio["border_color"],
                                                 text_color=radio["text_color"], text_color_disabled=radio["text_color_disabled"])
     self.different.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
@@ -156,10 +153,21 @@ def googleCalEdit(self):
     self.content.grid(row=0, column=1, rowspan=3, columnspan=2, sticky="nsew", padx=10, pady=10)
     self.content.grid_columnconfigure((0), weight=1)
 
-    self.resetFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
-    self.resetFrame.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+    self.header = customtkinter.CTkLabel(master=self.content, text="Google Calendar Edit", font=customtkinter.CTkFont(size=20, weight="bold"))
+    self.header.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.resetButton = customtkinter.CTkButton(master=self.resetFrame, text="Reset Google Calendar Setup", command=lambda: resetButton(self))
+    self.resetFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+    self.resetFrame.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
+    self.resetFrame.grid_columnconfigure((0,1), weight=1)
+
+    self.resetButton = customtkinter.CTkButton(master=self.resetFrame, text="Reset Setup", command=lambda: resetButton(self))
+    self.resetButton.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    self.importNewFile = customtkinter.CTkButton(master=self.resetFrame, text="Import New File", command=lambda: print("importNewFile"))
+    self.importNewFile.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
+    self.docButton = customtkinter.CTkButton(master=self.resetFrame, text="Documentation", command=lambda: webbrowser.open("https://dino-dev.gitbook.io/studysync/settings/google-calendar-setup"))
+    self.docButton.grid(row=1, column=0,  columnspan=2, sticky="nsew", padx=10, pady=10)
 
 def setupButton(self, answer):
     with open("setup.json", "r") as f:

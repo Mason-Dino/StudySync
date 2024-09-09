@@ -241,84 +241,87 @@ class setup(customtkinter.CTk):
 
                     if isValidColorCode(newColor) == True:
                         color = newColor
+                        error = False
 
                     else:
                         color = "Blue"
+                        messagebox.showerror(title="Error", message="Invalid color code")
+                        error = True
 
                 else:
-                    messagebox.showerror(title="Error", message="Invalid color code")
-                    color = "Blue"
+                    error = False
 
+                if error == False:
                 # Create a dictionary to store the details of the current class
-                class_details = {
-                    "id": makeID(),  # Generate a unique ID for the class
-                    "name": self.className.get(),  # Store the class name
-                    "subject": subject,  # Store the class subject
-                    "icon": icon,  # Store the class icon
-                    "color": color.lower(),  # Store the class color
-                    "teacher": self.classTeacher.get(),  # Store the class teacher/instructor
-                    "email": self.classTeacherEmail.get(),  # Store the class email
-                }
-
-                database()
-
-                # Add the current class to the setup directory
-                self.setupDir[f"class{self.currentClass}"] = class_details
-
-                # Clear the class name entry widget
-                self.className.delete(0, "end")
-                # Reconfigure the class name entry widget to display the placeholder text
-                self.className.configure(placeholder_text="What is the class name?")
-
-                # Reset the class subject option menu to display the default value
-                self.classSubject.configure(variable=customtkinter.StringVar(value="Subject"))
-
-                self.classColor.configure(variable=customtkinter.StringVar(value="Color"))
-
-                # Clear the class teacher/instructor entry widget
-                self.classTeacher.delete(0, "end")
-                # Reconfigure the class teacher/instructor entry widget to display the placeholder text
-                self.classTeacher.configure(placeholder_text="Who is the teacher/instructor?")
-
-                # Clear the class email entry widget
-                self.classTeacherEmail.delete(0, "end")
-                # Reconfigure the class email entry widget to display the placeholder text
-                self.classTeacherEmail.configure(placeholder_text="What is the email?")
-
-                # Reset the class icon option menu to display the default value
-                self.classIcon.configure(variable=customtkinter.StringVar(value="Icon"))
-
-                # If the current class count is equal to the number of classes, print the setup directory as JSON,
-                # display the final page, and reset the class entry widgets
-                if self.currentClass == self.numClasses:
-                    self.setupDir["setupComplete"] = True  # Set the setup complete flag in the setup directory
-
-                    self.setupDir["progress"] = 0
-                    self.setupDir["level"] = 0
-                    self.setupDir["version"] = self.version
-                    self.setupDir["betaUser"] = False
-
-                    self.setupDir["tabs"] = {
-                        "home": True,
-                        "class": True,
-                        "task": True,
-                        "due": True,
-                        "important": True,
-                        "study-timer": True
+                    class_details = {
+                        "id": makeID(),  # Generate a unique ID for the class
+                        "name": self.className.get(),  # Store the class name
+                        "subject": subject,  # Store the class subject
+                        "icon": icon,  # Store the class icon
+                        "color": color.lower(),  # Store the class color
+                        "teacher": self.classTeacher.get(),  # Store the class teacher/instructor
+                        "email": self.classTeacherEmail.get(),  # Store the class email
                     }
 
-                    # Convert the setup directory to JSON format and store it in a variable
-                    json_obj = json.dumps(self.setupDir, indent=4)
+                    database()
 
-                    # Open the setup.json file in write mode and write the JSON data to the file
-                    with open("setup.json", "w") as f:
-                        f.write(json_obj)
+                    # Add the current class to the setup directory
+                    self.setupDir[f"class{self.currentClass}"] = class_details
 
-                    # Print the setup directory as JSON
-                    print(json_obj)
+                    # Clear the class name entry widget
+                    self.className.delete(0, "end")
+                    # Reconfigure the class name entry widget to display the placeholder text
+                    self.className.configure(placeholder_text="What is the class name?")
 
-                    # Display the final page
-                    self.pageInfo[4].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
+                    # Reset the class subject option menu to display the default value
+                    self.classSubject.configure(variable=customtkinter.StringVar(value="Subject"))
+
+                    self.classColor.configure(variable=customtkinter.StringVar(value="Color"))
+
+                    # Clear the class teacher/instructor entry widget
+                    self.classTeacher.delete(0, "end")
+                    # Reconfigure the class teacher/instructor entry widget to display the placeholder text
+                    self.classTeacher.configure(placeholder_text="Who is the teacher/instructor?")
+
+                    # Clear the class email entry widget
+                    self.classTeacherEmail.delete(0, "end")
+                    # Reconfigure the class email entry widget to display the placeholder text
+                    self.classTeacherEmail.configure(placeholder_text="What is the email?")
+
+                    # Reset the class icon option menu to display the default value
+                    self.classIcon.configure(variable=customtkinter.StringVar(value="Icon"))
+
+                    # If the current class count is equal to the number of classes, print the setup directory as JSON,
+                    # display the final page, and reset the class entry widgets
+                    if self.currentClass == self.numClasses:
+                        self.setupDir["setupComplete"] = True  # Set the setup complete flag in the setup directory
+
+                        self.setupDir["progress"] = 0
+                        self.setupDir["level"] = 0
+                        self.setupDir["version"] = self.version
+                        self.setupDir["betaUser"] = False
+
+                        self.setupDir["tabs"] = {
+                            "home": True,
+                            "class": True,
+                            "task": True,
+                            "due": True,
+                            "important": True,
+                            "study-timer": True
+                        }
+
+                        # Convert the setup directory to JSON format and store it in a variable
+                        json_obj = json.dumps(self.setupDir, indent=4)
+
+                        # Open the setup.json file in write mode and write the JSON data to the file
+                        with open("setup.json", "w") as f:
+                            f.write(json_obj)
+
+                        # Print the setup directory as JSON
+                        print(json_obj)
+
+                        # Display the final page
+                        self.pageInfo[4].grid(row=0, column=1, columnspan=3, rowspan=2, padx=5, pady=5, sticky="nswe")
 
 
         # If the value is "Last", move to the previous page

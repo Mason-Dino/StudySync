@@ -99,7 +99,7 @@ class StudySync(customtkinter.CTk):
         self.settingsButton.place(relx=.09, rely=.9)
 
         self.bind("<Control_L><h>", lambda event: home(self))
-        self.bind("<Control_L><c>", lambda event: classes(self))
+        self.bind("<Control_L><f>", lambda event: classes(self))
         self.bind("<Control_L><q>", lambda event: assignments(self))
         self.bind("<Control_L><d>", lambda event: due(self))
         self.bind("<Control_L><s>", lambda event: settings(self))
@@ -107,7 +107,7 @@ class StudySync(customtkinter.CTk):
         self.bind("<Control_L><t>", lambda event: studyTimer(self))
 
         self.bind("<Control_R><h>", lambda event: home(self))
-        self.bind("<Control_R><c>", lambda event: classes(self))
+        self.bind("<Control_R><f>", lambda event: classes(self))
         self.bind("<Control_R><q>", lambda event: assignments(self))
         self.bind("<Control_R><d>", lambda event: due(self))
         self.bind("<Control_R><s>", lambda event: settings(self))

@@ -409,7 +409,7 @@ def continueEdit(self, answer):
     self.update = customtkinter.CTkButton(master=self.controlFame, text="Update", command=lambda: updateEdit(self, answer))
     self.update.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.cancel = customtkinter.CTkButton(master=self.controlFame, text="Cancel", command=lambda: print("cancel"))
+    self.cancel = customtkinter.CTkButton(master=self.controlFame, text="Cancel", command=lambda: home(self))
     self.cancel.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
 def updateEdit(self, answer):

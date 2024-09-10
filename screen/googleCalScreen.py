@@ -265,18 +265,24 @@ def setupButton(self, answer):
         home(self)
 
 def resetButton(self):
-    with open("setup.json", "r") as f:
-        setup = json.load(f)
+    warning = messagebox.askyesno("Warning", "Are you sure you want to reset the Google Calendar?\nNo Events will be deleted.")
 
-    setup["calendar"] = {}
-    setup["googleCal"] = False
+    if warning == True:
+        with open("setup.json", "r") as f:
+            setup = json.load(f)
 
-    with open("setup.json", "w") as f:
-        json.dump(setup, f, indent=4)
+        setup["calendar"] = {}
+        setup["googleCal"] = False
 
-    messagebox.showinfo("Success", "Google Calendar Reset!\nGo back into settings to re-setup. ")
+        with open("setup.json", "w") as f:
+            json.dump(setup, f, indent=4)
 
-    home(self)
+        messagebox.showinfo("Success", "Google Calendar Reset!\nGo back into settings to re-setup. ")
+
+        home(self)
+
+    else:
+        pass
 
 def importCredFile(self):
     file = filedialog.askopenfile(mode='r', filetypes=[('JSON Files', '*.json')])

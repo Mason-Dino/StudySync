@@ -4,7 +4,7 @@ import sqlite3
 import json
 import os
 
-from googleCal import *
+from integration.googleCal import *
 
 def database():
     conn = sqlite3.connect('study.db')

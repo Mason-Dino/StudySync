@@ -1,5 +1,5 @@
 from themes.theme import *
-from googleCal import *
+from integration.googleCal import *
 import customtkinter
 from tabs.home import home
 

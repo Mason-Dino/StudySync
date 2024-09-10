@@ -1,6 +1,6 @@
 from screen.classColor import showClassColors
 from task import deleteDatabase, makeTestTask
-from googleCal import checkIfGoogleCal
+from integration.googleCal import checkIfGoogleCal
 from screen.classAddEdit import classAddEdit
 from themes.theme import topLevel, getSwitchInfo
 from screen.googleCalScreen import *

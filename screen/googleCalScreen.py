@@ -277,6 +277,9 @@ def resetButton(self):
         with open("setup.json", "w") as f:
             json.dump(setup, f, indent=4)
 
+        os.remove("creds.json")
+        os.remove("token.json")
+
         messagebox.showinfo("Success", "Google Calendar Reset!\nGo back into settings to re-setup. ")
 
         home(self)

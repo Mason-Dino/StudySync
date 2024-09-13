@@ -5,6 +5,7 @@ import json
 import os
 
 from integration.googleCal import *
+from integration.todoist import *
 
 def database():
     conn = sqlite3.connect('study.db')
@@ -86,8 +87,10 @@ def addMainTask(taskName, taskID, className, classID, day, month, year, subLink,
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
+    googleCalID = "None"
 
     #def makeNewAssignment(name, year, month, day, classID):
+    """
     if checkIfGoogleCal() == True:
         print("make new assignment")
         event = makeNewAssignment(taskName, year, month, day, classID)
@@ -96,7 +99,17 @@ def addMainTask(taskName, taskID, className, classID, day, month, year, subLink,
     elif checkIfGoogleCal() == False:
         googleCalID = "None"
 
-    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, dateNum, "None", className, classID, subLink, ptsValue, importance, type, googleCalID, "None"))
+    """
+
+    if checkIfTodoist() == True:
+        todoistID = makeTask(taskName, int(year), int(month), int(day), importance, classID)
+
+        todoistID = str(todoistID.id)
+
+    elif checkIfTodoist() == False:
+        todoistID = "None"
+
+    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, dateNum, "None", className, classID, subLink, ptsValue, importance, type, googleCalID, todoistID))
     
     conn.commit()
     conn.close()

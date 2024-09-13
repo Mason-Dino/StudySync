@@ -1,6 +1,24 @@
 from todoist_api_python.api import TodoistAPI
 import json
 
+def checkIfTodoist():
+    with open("setup.json", "r") as f:
+        setup = json.load(f)
+
+    
+    try:
+        if setup["todoistSetup"] == True:
+            return True
+        else:
+            return False
+        
+    except:
+        setup["todoistSetup"] = False
+        with open("setup.json", "w") as f:
+            json.dump(setup, f, indent=4)
+
+        return False
+
 def apiCall():
     with open("setup.json", "r") as f:
         setup = json.load(f)

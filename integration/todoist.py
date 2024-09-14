@@ -72,6 +72,7 @@ def makeTask(taskName, year, month, day, priority, classID):
             priority=priority,
         )
 
+    print("make task")
     return task
 
 def makeSubtask(taskID, taskName, year, month, day):
@@ -90,7 +91,7 @@ def makeSubtask(taskID, taskName, year, month, day):
         parent_id=taskID,
         priority=1,
     )
-
+    print("make sub task")
     return task
 
 def editTask(taskID, taskName, year, month, day, priority, type):
@@ -124,15 +125,17 @@ def editTask(taskID, taskName, year, month, day, priority, type):
 
     return task
 
-def deleteTask(taskID):
+def deleteTaskTodoist(taskID):
     api = apiCall()
 
     task = api.delete_task(task_id=f"{taskID}")
 
-def completeTask(taskID):
+def completeTaskTodoist(taskID):
     api = apiCall()
 
     task = api.close_task(task_id=f"{taskID}")
+
+    return "done"
 
 if __name__ == "__main__":
     pass

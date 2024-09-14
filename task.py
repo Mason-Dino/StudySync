@@ -179,6 +179,16 @@ def getMainTaskSingle(id):
 
     return rows
 
+def getSubTaskSingle(id):
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    c.execute(f"SELECT * FROM tasks WHERE id = '{id}'")
+    rows = c.fetchall()
+    conn.close()
+
+    return rows
+
 def getSubTasks(parentid):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
@@ -221,14 +231,17 @@ def getClassTasks(classID):
 
 def finishMainTask(self, id):
     subTask = getSubTasks(id)
+    mainTask = getMainTaskSingle(id)
 
     if len(subTask) > 0:
         for i in range(len(subTask)):
+            completeTaskTodoist(subTask[i][14])
             finishSubTask(self, subTask[i][0])
 
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
+    completeTaskTodoist(mainTask[0][14])
     c.execute(f"DELETE FROM tasks WHERE id='{id}'")
 
     conn.commit()
@@ -254,9 +267,12 @@ def finishMainTask(self, id):
         json.dump(self.setupDir, f, indent=4)
 
 def finishSubTask(self, id: str):
+    subTask = getSubTaskSingle(id)
+
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
+    completeTaskTodoist(subTask[0][14])
     c.execute(f"DELETE FROM tasks WHERE id='{id}'")
 
     conn.commit()
@@ -273,7 +289,6 @@ def finishSubTask(self, id: str):
     
     if before > after:
         self.setupDir["level"] += 1
-
 
     self.setupDir["progress"] = self.progressbar.get()
 
@@ -383,10 +398,16 @@ def deleteTask(id):
     rows = c.fetchall()
     conn.commit()
 
+    deleteTaskTodoist(rows[0][14])
     deleteEvent(rows[0][13], rows[0][8])
 
     c.execute(f"DELETE FROM tasks WHERE id='{id}'")
     conn.commit()
+
+    subtask = getSubTasks(id)
+
+    for i in range(len(subtask)):
+        deleteTaskTodoist(subtask[i][14])
 
     c.execute(f"DELETE FROM tasks WHERE parentID='{id}'")
     conn.commit()
@@ -403,8 +424,12 @@ def deleteSubTask(parentID):
     conn.close()
 
 def deleteOnlySubTask(id):
+    subtask = getSubTaskSingle(id)
+
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
+
+    deleteTaskTodoist(subtask[0][14])
 
     c.execute(f"DELETE FROM tasks WHERE id='{id}'")
 

@@ -90,7 +90,7 @@ def addMainTask(taskName, taskID, className, classID, day, month, year, subLink,
     googleCalID = "None"
 
     #def makeNewAssignment(name, year, month, day, classID):
-    """
+    
     if checkIfGoogleCal() == True:
         print("make new assignment")
         event = makeNewAssignment(taskName, year, month, day, classID)
@@ -99,7 +99,7 @@ def addMainTask(taskName, taskID, className, classID, day, month, year, subLink,
     elif checkIfGoogleCal() == False:
         googleCalID = "None"
 
-    """
+    
 
     if checkIfTodoist() == True:
         todoistID = makeTask(taskName, int(year), int(month), int(day), importance, classID)
@@ -115,6 +115,17 @@ def addMainTask(taskName, taskID, className, classID, day, month, year, subLink,
     conn.close()
 
 def addSubTask(taskName, taskID, className, classID, day, month, year, parentID):
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    c.execute(f"SELECT * FROM tasks WHERE id = '{parentID}'")
+    rows = c.fetchall()
+
+    parTodoistID = rows[0][14]
+
+    conn.commit()
+    conn.close()
+
     if int(day) < 10:
         daystr = "0" + str(day)
 
@@ -132,7 +143,16 @@ def addSubTask(taskName, taskID, className, classID, day, month, year, parentID)
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
-    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, dateNum, parentID, className, classID, "None", "None", "None", "None", "None", "None"))
+
+    if checkIfTodoist() == True:
+        todoistid = makeSubtask(parTodoistID, taskName, year, month, day)
+
+        todoistid = str(todoistid.id)
+
+    else:
+        todoistid = "None"
+
+    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, dateNum, parentID, className, classID, "None", "None", "None", "None", "None", todoistid))
     conn.commit()
     conn.close()
 

@@ -169,6 +169,16 @@ def getMainTasks(organize: str = None):
 
     return rows
 
+def checkTaskByTodoistID(id):
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    c.execute(f"SELECT * FROM tasks WHERE todoistID = '{id}'")
+    rows = c.fetchall()
+    conn.close()
+
+    return rows
+
 def getMainTaskSingle(id):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()

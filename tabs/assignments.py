@@ -194,7 +194,7 @@ def makeTask(self):
     if error == False:
         importance = int(importance)
 
-        addMainTask(name, id, classOption, classID, day, month, year, subLink, ptsValue, importance, type.capitalize())
+        addMainTask(name, id, classOption, classID, day, month, year, subLink, ptsValue, importance, type.capitalize(), todoistImport=False)
 
         self.taskNameEntry.delete(0, "end")
         self.taskNameEntry.configure(placeholder_text="Task Name (max: 30)")

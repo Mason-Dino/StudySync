@@ -66,7 +66,7 @@ def makeTestTask():
 
     deleteTask("test123456789")
 
-def addMainTask(taskName, taskID, className, classID, day, month, year, subLink, ptsValue, importance, type):
+def addMainTask(taskName, taskID, className, classID, day, month, year, subLink, ptsValue, importance, type, todoistImport=False, todoistID: str = "None"):
     if ptsValue == "":
         ptsValue = "None"
 
@@ -99,12 +99,13 @@ def addMainTask(taskName, taskID, className, classID, day, month, year, subLink,
     elif checkIfGoogleCal() == False:
         googleCalID = "None"
 
-    
-
-    if checkIfTodoist() == True:
+    if checkIfTodoist() == True and todoistImport == False:
         todoistID = makeTask(taskName, int(year), int(month), int(day), importance, classID)
 
         todoistID = str(todoistID.id)
+
+    if todoistImport == True:
+        todoistID = todoistID
 
     elif checkIfTodoist() == False:
         todoistID = "None"

@@ -84,14 +84,18 @@ def makeNewAssignment(name, year, month, day, classID):
         return {"id": None}
 
 def deleteEvent(eventID, classID):
-    service = loadGooglCal()
+    try:
+        service = loadGooglCal()
 
-    with open("setup.json", "r") as f:
-        setup = json.load(f)
+        with open("setup.json", "r") as f:
+            setup = json.load(f)
 
-    calID = setup["calendar"][classID]
+        calID = setup["calendar"][classID]
 
-    service.events().delete(calendarId=calID, eventId=eventID).execute()
+        service.events().delete(calendarId=calID, eventId=eventID).execute()
+
+    except:
+        pass
 
 def editEvent(eventID, classID, summary, year, month, day):
     service = loadGooglCal()

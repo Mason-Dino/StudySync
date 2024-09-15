@@ -1,5 +1,6 @@
 from todoist_api_python.api import TodoistAPI
 from id import makeID
+import sqlite3
 import json
 
 def checkIfTodoist():
@@ -29,28 +30,27 @@ def apiCall():
     api = TodoistAPI(token)
     return api
 
-def syncTodoist():
+def syncTodoist(self):
     if checkIfTodoist() == True:
         with open("setup.json", "r") as f:
             setup = json.load(f)
 
         api = apiCall()
 
+        tasks = api.get_tasks()
+
+        studySyncTasks = {}
+
         classID = []
         numClass = setup["numClasses"]
         todoistID = []
 
         for i in range(numClass):
+            print(classID)
             classID.append(setup[f"class{i+1}"]["id"])
             todoistID.append(str(setup["todoist"][setup[f"class{i+1}"]["id"]]["id"]))
 
         todoistID.append(str(setup["todoist"]["0000000000"]["id"]))
-
-        print(todoistID)
-
-        tasks = api.get_tasks()
-
-        studySyncTasks = {}
 
         for id in todoistID:
             studySyncTasks[id] = {}
@@ -114,10 +114,47 @@ def syncTodoist():
                         "subTasks": {}
                     }
 
-        with open("studySync.json", "w") as f:
-            json.dump(studySyncTasks, f, indent=4)
+        from task import addMainTask, addSubTask, checkTaskByTodoistID
+        from task import deleteTask, finishMainTask
 
-        from task import addMainTask, addSubTask
+
+        conn = sqlite3.connect('study.db')
+        c = conn.cursor()
+
+        c.execute("SELECT * FROM tasks")
+        rows = c.fetchall()
+
+        conn.close()
+
+        for row in rows:
+            check = checkTaskByTodoistID(row[14])
+            
+            for id in todoistID:
+                print(list(studySyncTasks[id].keys()))
+                if row[14] in list(studySyncTasks[id].keys()):
+                    break
+
+            if check == "delete task":
+                deleteTask(row[0])
+                print("delete task")
+
+            elif check == "task":
+                print("task")
+
+            elif check == "completed task":
+                finishMainTask(self, row[0])
+                print("completed task")
+
+        classID = []
+        numClass = setup["numClasses"]
+        todoistID = []
+
+        for i in range(numClass):
+            print(classID)
+            classID.append(setup[f"class{i+1}"]["id"])
+            todoistID.append(str(setup["todoist"][setup[f"class{i+1}"]["id"]]["id"]))
+
+        todoistID.append(str(setup["todoist"]["0000000000"]["id"]))
 
         for id in todoistID:
             for key in list(studySyncTasks[id].keys()):
@@ -131,7 +168,10 @@ def syncTodoist():
                         with open("setup.json", "r") as f:
                             setup = json.load(f)
 
+                        print(classID)
+
                         for classID in classID:
+                            print(classID)
                             if id == setup["todoist"][classID]["id"] or id == str(setup["todoist"]["0000000000"]["id"]):
                                 if id == setup["todoist"][classID]["id"]:
                                     classIDS = classID
@@ -153,24 +193,25 @@ def syncTodoist():
 
                 
                         #addMainTask(taskName, taskID, className, classID, day, month, year, subLink, ptsValue, importance, type):
-                        
-                        addMainTask(
-                            studySyncTasks[id][key]["content"],
-                            taskID,
-                            className,
-                            classIDS,
-                            studySyncTasks[id][key]["due"].split("-")[2],
-                            studySyncTasks[id][key]["due"].split("-")[1],
-                            studySyncTasks[id][key]["due"].split("-")[0],
-                            "", "", 4, "",
-                            True, studySyncTasks[id][key]["id"]
-                        )
-                        
-                        pass
+                        check = checkTaskByTodoistID(key)
+
+                        if check == "make task":
+                            addMainTask(
+                                studySyncTasks[id][key]["content"],
+                                taskID,
+                                className,
+                                classIDS,
+                                studySyncTasks[id][key]["due"].split("-")[2],
+                                studySyncTasks[id][key]["due"].split("-")[1],
+                                studySyncTasks[id][key]["due"].split("-")[0],
+                                "", "", 4, "",
+                                True, studySyncTasks[id][key]["id"]
+                            )
+                            print("make")
 
                     else:
                         pass
-
+        
         with open("studySync.json", "w") as f:
             json.dump(studySyncTasks, f, indent=4)
 

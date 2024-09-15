@@ -187,9 +187,9 @@ def checkTaskByTodoistID(id):
     
     else:
         api = apiCall()
-        task = api.get_task(id)
 
         try:
+            task = api.get_task(id)
             if task.is_completed == True:
                 return "completed task"
             
@@ -282,24 +282,24 @@ def finishMainTask(self, id):
     conn.commit()
     conn.close()
     
-    before = self.progressbar.get()
+    #before = self.progressbar.get()
 
     with open("setup.json", "r") as f:
-        self.setupDir = json.load(f)
+        setupDir = json.load(f)
 
-    self.progressbar.step()
-    self.progressbar.step()
+    #self.progressbar.step()
+    #self.progressbar.step()
 
-    after = self.progressbar.get()
+    #after = self.progressbar.get()
     
-    if before > after:
-        self.setupDir["level"] += 1
+    #if before > after:
+    #    setupDir["level"] += 1
 
 
-    self.setupDir["progress"] = self.progressbar.get()
+    #setupDir["progress"] = self.progressbar.get()
 
     with open("setup.json", "w") as f:
-        json.dump(self.setupDir, f, indent=4)
+        json.dump(setupDir, f, indent=4)
 
 def finishSubTask(self, id: str):
     subTask = getSubTaskSingle(id)

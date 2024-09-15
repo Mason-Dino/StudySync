@@ -178,6 +178,30 @@ def checkTaskByTodoistID(id):
     rows = c.fetchall()
     conn.close()
 
+    if len(rows) == 0:
+        api = apiCall()
+        task = api.get_task(id)
+
+        return "make task"
+
+    
+    else:
+        api = apiCall()
+        task = api.get_task(id)
+
+        try:
+            if task.is_completed == True:
+                return "completed task"
+            
+            else:
+                return "task"
+            
+        except:
+            return "delete task"
+        
+
+
+
     return rows
 
 def getMainTaskSingle(id):

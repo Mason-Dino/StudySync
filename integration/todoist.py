@@ -46,6 +46,7 @@ def syncTodoist(self):
         todoistID = []
         todoistTaskID = []
         makeTodoistTaskID = []
+        nothingTodoist = []
 
         for i in range(numClass):
             print(classID)
@@ -149,10 +150,26 @@ def syncTodoist(self):
             if checkTaskByTodoistID(id) == "make task":
                 makeTodoistTaskID.append(id)
 
+            elif checkTaskByTodoistID(id) == "task":
+                nothingTodoist.append(id)
+
         #tasks = api.get_tasks(ids=todoistTaskID)
 
         #print(tasks)
         print(makeTodoistTaskID)
+        print(nothingTodoist)
+
+        for task in nothingTodoist:
+            for id in todoistID:
+                try:
+                    print(task, id)
+                    del studySyncTasks[f"{id}"][task]
+
+                except:
+                    pass
+
+        with open("studySync.json", "w") as f:
+            json.dump(studySyncTasks, f, indent=4)
 
     else:
         pass

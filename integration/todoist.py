@@ -167,77 +167,7 @@ def syncTodoist(self):
         with open("studySync.json", "w") as f:
             json.dump(studySyncTasks, f, indent=4)
 
-        with open("studySync.json", "r") as f:
-            studySyncTasks = json.load(f)
-
-        with open("setup.json", "r") as f:
-            setup = json.load(f)
-
-        classesID = []
-
-        for i in range(numClass):
-            classesID.append(setup[f"class{i+1}"]["id"])
-
-        print(classesID)
-
-        #todoistClassID = list(setup["todoist"].keys())
-        #todoistClassID.remove("token")
-
-        for id in todoistID:
-            if (studySyncTasks[id]=={}) == False:
-                makeTaskList = list(studySyncTasks[id].keys())
-
-                for task in makeTaskList:
-                    #addMainTask(taskName, taskID, className, classID, day, month, year, subLink, ptsValue, importance, type, todoistImport=False, todoistID: str = "None"):
-
-                    #what do we need to get
-                    #taskName [ ]
-                    #taskID [ ]
-                    #className [ ] !!!!
-                    #classID [ ] !!!
-                    #day [ ]
-                    #month [ ]
-                    #year [ ]
-                    #subLink [x]
-                    #ptsValue [x]
-                    #importance [ ]
-                    #type [x]
-
-                    taskID = makeID(20)
-
-                    print(task)
-
-                    for classID in classesID:
-                        try:
-                            if setup["todoist"][classID]["id"] == studySyncTasks[id][task]["section_id"] or setup["todoist"][classID]["id"] == studySyncTasks[id][task]["project_id"]:
-                                taskClassId = classID
-
-                                for i in range(numClass):
-                                    if taskClassId == setup[f"class{i+1}"]["id"]:
-                                        taskClassName = setup[f"class{i+1}"]["name"]
-                        
-                                print("------------------------------------------------------")
-                                print(studySyncTasks[id][task]["content"])
-                                print(taskID)
-                                print(taskClassId)
-                                print(taskClassName)
-                                print(studySyncTasks[id][task]["due"].split("-")[0])
-                                print(studySyncTasks[id][task]["due"].split("-")[1])
-                                print(studySyncTasks[id][task]["due"].split("-")[2])
-                                print("------------------------------------------------------")
-
-                        except:
-                            print("error")
-                    
-
-
-                    #addMainTask(
-                    #    studySyncTasks[id][task]["content"],
-                    #    taskID,
-
-                    #)
-
-                    #print(task)
+        
 
     else:
         pass

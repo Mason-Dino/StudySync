@@ -171,6 +171,7 @@ def getMainTasks(organize: str = None):
     return rows
 
 def checkTaskByTodoistID(id):
+    api = apiCall()
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
@@ -178,18 +179,12 @@ def checkTaskByTodoistID(id):
     rows = c.fetchall()
     conn.close()
 
+    task = api.get_task(id)
     if len(rows) == 0:
-        api = apiCall()
-        task = api.get_task(id)
-
         return "make task"
-
     
     else:
-        api = apiCall()
-
         try:
-            task = api.get_task(id)
             if task.is_completed == True:
                 return "completed task"
             

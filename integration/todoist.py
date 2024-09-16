@@ -76,7 +76,11 @@ def syncTodoist(self):
                         "parent_id": task.parent_id,
                         "id": task.id
                     }
-                    todoistTaskID.append(task.id)
+                    todoistTaskID.append(
+                        {"id": task.id,
+                        "parent_id": task.parent_id,
+                        "location_id": task.section_id}
+                                        )
 
                 except:
                     studySyncTasks[f"{task.section_id}"][task.id] = {
@@ -90,7 +94,11 @@ def syncTodoist(self):
                         "id": task.id,
                         "subTasks": {}
                     }
-                    todoistTaskID.append(task.id)
+                    todoistTaskID.append(
+                        {"id": task.id,
+                        "parent_id": task.parent_id,
+                        "location_id": task.section_id}
+                                        )
 
             elif task.project_id in todoistID:
                 try:
@@ -104,7 +112,11 @@ def syncTodoist(self):
                         "parent_id": task.parent_id,
                         "id": task.id
                     }
-                    todoistTaskID.append(task.id)
+                    todoistTaskID.append(
+                        {"id": task.id,
+                        "parent_id": task.parent_id,
+                        "location_id": task.project_id}
+                                        )
 
                 except:
                     studySyncTasks[f"{task.project_id}"][task.id] = {
@@ -118,53 +130,20 @@ def syncTodoist(self):
                         "id": task.id,
                         "subTasks": {}
                     }
-                    todoistTaskID.append(task.id)
+                    todoistTaskID.append(
+                        {"id": task.id,
+                        "parent_id": task.parent_id,
+                        "location_id": task.project_id}
+                                        )
 
         from task import addMainTask, addSubTask, checkTaskByTodoistID
         from task import deleteTask, finishMainTask
 
-
-        conn = sqlite3.connect('study.db')
-        c = conn.cursor()
-
-        c.execute("SELECT * FROM tasks")
-        rows = c.fetchall()
-
-        conn.close()
-
-        for row in rows:
-            if row[14] in todoistTaskID:
-                pass
-            else:
-                todoistTaskID.append(row[14])
         
-        with open("studySync.json", "w") as f:
+        with open("studySync1.json", "w") as f:
             json.dump(studySyncTasks, f, indent=4)
 
-        for id in todoistTaskID:
-            print(checkTaskByTodoistID(id))
-
-            if checkTaskByTodoistID(id) == "make task":
-                makeTodoistTaskID.append(id)
-
-            elif checkTaskByTodoistID(id) == "task":
-                nothingTodoist.append(id)
-
-        #tasks = api.get_tasks(ids=todoistTaskID)
-
-        #print(tasks)
-        print(makeTodoistTaskID)
-        print(nothingTodoist)
-
-        for task in nothingTodoist:
-            for id in todoistID:
-                try:
-                    del studySyncTasks[f"{id}"][task]
-
-                except:
-                    pass
-
-        with open("studySync.json", "w") as f:
+        with open("studySync2.json", "w") as f:
             json.dump(studySyncTasks, f, indent=4)
 
         

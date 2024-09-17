@@ -165,6 +165,7 @@ def syncTodoist(self):
         subTaskChange = []
         dueChange = []
         priorityChange = []
+        makeTasks = []
 
         for i in range(len(todoist1ID)):
             if studySyncTasks[todoist1ID[i]] != studySyncTasks2[todoist2ID[i]]:
@@ -212,7 +213,17 @@ def syncTodoist(self):
                             print("they are th same")
 
                     except:
-                        print("make task")
+                        print("they are th same")
+                        makeTasks.append({
+                            "content": studySyncTasks[todoist1ID[i]][id]["content"],
+                            "due": studySyncTasks[todoist1ID[i]][id]["due"],
+                            "priority": studySyncTasks[todoist1ID[i]][id]["priority"],
+                            "todoistClassID": todoist1ID[i],
+                            "todoistID": id,
+                            "subTasks": studySyncTasks[todoist1ID[i]][id]["subTasks"],
+                            "classID": studySyncTasks["info"]["classID"][i],
+                            "className": studySyncTasks["info"]["className"][i]
+                            })
 
             elif studySyncTasks[todoist1ID[i]] == studySyncTasks2[todoist2ID[i]]:
                 print("they are th same")
@@ -222,7 +233,23 @@ def syncTodoist(self):
         print(subTaskChange)
         print(dueChange)
         print(priorityChange)
+        print(makeTasks)
 
+        for task in makeTasks:
+            parentTaskID = makeID(20)
+            addMainTask(task["content"], parentTaskID, task["className"], task["classID"], task["due"].split("-")[2], task["due"].split("-")[1], task["due"].split("-")[0], "", "", task["priority"], "", True, task["todoistID"])
+
+            if task["subTasks"] != {}:
+                subTaskKey = list(task["subTasks"].keys())
+                for i in range(len(task["subTasks"])):
+                    subTask = task["subTasks"][subTaskKey[i]]
+                    taskID = makeID(20)
+
+                    addSubTask(subTask["content"], taskID, task["className"], task["classID"], task["due"].split("-")[2], task["due"].split("-")[1], task["due"].split("-")[0], parentTaskID, True, subTask["id"])
+
+        for task in contentChange:
+            updateTaskTodoist(task["id"], task["location_id"], "content",task["content"])
+        
         
         
         with open("studySync2.json", "w") as f:
@@ -283,10 +310,10 @@ def makeTask(taskName, year, month, day, priority, classID):
 def makeSubtask(taskID, taskName, year, month, day):
     api = apiCall()
 
-    if month < 10:
+    if int(month) < 10:
         month = f"0{month}"
 
-    if day < 10:
+    if int(day) < 10:
         day = f"0{day}"
 
     task = api.add_task(

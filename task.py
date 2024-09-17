@@ -115,7 +115,7 @@ def addMainTask(taskName, taskID, className, classID, day, month, year, subLink,
     conn.commit()
     conn.close()
 
-def addSubTask(taskName, taskID, className, classID, day, month, year, parentID):
+def addSubTask(taskName, taskID, className, classID, day, month, year, parentID, todoistImport=False, todoistID: str = "None"):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
@@ -145,15 +145,18 @@ def addSubTask(taskName, taskID, className, classID, day, month, year, parentID)
     c = conn.cursor()
 
 
-    if checkIfTodoist() == True:
-        todoistid = makeSubtask(parTodoistID, taskName, year, month, day)
+    if checkIfTodoist() == True and todoistImport == False:
+        todoistID = makeSubtask(parTodoistID, taskName, year, month, day)
 
-        todoistid = str(todoistid.id)
+        todoistID = str(todoistID.id)
 
-    else:
-        todoistid = "None"
+    if todoistImport == True:
+        todoistID = todoistID
 
-    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, dateNum, parentID, className, classID, "None", "None", "None", "None", "None", todoistid))
+    elif checkIfTodoist() == False:
+        todoistID = "None"
+
+    c.execute(f"INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (taskID, taskName, day, month, year, dateNum, parentID, className, classID, "None", "None", "None", "None", "None", todoistID))
     conn.commit()
     conn.close()
 

@@ -42,17 +42,26 @@ def syncTodoist(self):
         studySyncTasks = {}
 
         classID = []
+        className = []
         numClass = setup["numClasses"]
         todoistID = []
         todoistTaskID = []
-        makeTodoistTaskID = []
-        nothingTodoist = []
+        notTheSame = {}
 
         for i in range(numClass):
             classID.append(setup[f"class{i+1}"]["id"])
+            className.append(setup[f"class{i+1}"]["name"])
             todoistID.append(str(setup["todoist"][setup[f"class{i+1}"]["id"]]["id"]))
 
         todoistID.append(str(setup["todoist"]["0000000000"]["id"]))
+        classID.append("0000000000")
+        className.append("None")
+
+        studySyncTasks["info"]={}
+
+        studySyncTasks["info"]["classID"] = classID
+        studySyncTasks["info"]["className"] = className
+        studySyncTasks["info"]["todoistID"] = todoistID
 
         for id in todoistID:
             studySyncTasks[id] = {}
@@ -143,6 +152,79 @@ def syncTodoist(self):
         with open("studySync1.json", "w") as f:
             json.dump(studySyncTasks, f, indent=4)
 
+        with open("studySync1.json", "r") as f:
+            studySyncTasks = json.load(f)
+
+        with open("studySync2.json", "r") as f:
+            studySyncTasks2 = json.load(f)
+        
+        todoist1ID = studySyncTasks["info"]["todoistID"]
+        todoist2ID = studySyncTasks2["info"]["todoistID"]
+
+        contentChange = []
+        subTaskChange = []
+        dueChange = []
+        priorityChange = []
+
+        for i in range(len(todoist1ID)):
+            if studySyncTasks[todoist1ID[i]] != studySyncTasks2[todoist2ID[i]]:
+                print("boo they suck, they arent th same")
+                print(list(studySyncTasks[todoist1ID[i]].keys()))
+
+                if len(list(studySyncTasks[todoist1ID[i]].keys())) == 0:
+                    print("deleted task")
+
+                for id in list(studySyncTasks[todoist1ID[i]].keys()):
+                    try:
+                        if studySyncTasks[todoist1ID[i]][id] != studySyncTasks2[todoist2ID[i]][id]:
+                            if studySyncTasks[todoist1ID[i]][id]["content"] != studySyncTasks2[todoist2ID[i]][id]["content"]:
+                                print("content")
+                                contentChange.append(
+                                    {"id": id,
+                                    "location_id": todoist1ID[i],
+                                    "content": studySyncTasks[todoist1ID[i]][id]["content"]}
+                                )
+
+                            if studySyncTasks[todoist1ID[i]][id]["subTasks"] != studySyncTasks2[todoist2ID[i]][id]["subTasks"]:
+                                subTaskChange.append(
+                                    {"id": id,
+                                    "location_id": todoist1ID[i],
+                                    "subTasks": studySyncTasks[todoist1ID[i]][id]["subTasks"]}
+                                )
+
+                            if studySyncTasks[todoist1ID[i]][id]["due"] != studySyncTasks2[todoist2ID[i]][id]["due"]:
+                                dueChange.append(
+                                    {"id": id,
+                                    "location_id": todoist1ID[i],
+                                    "due": studySyncTasks[todoist1ID[i]][id]["due"]}
+                                )
+                                print("due")
+
+                            if studySyncTasks[todoist1ID[i]][id]["priority"] != studySyncTasks2[todoist2ID[i]][id]["priority"]:
+                                print("priority")
+                                priorityChange.append(
+                                    {"id": id,
+                                    "location_id": todoist1ID[i],
+                                    "priority": studySyncTasks[todoist1ID[i]][id]["priority"]}
+                                )
+
+                        else:
+                            print("they are th same")
+
+                    except:
+                        print("make task")
+
+            elif studySyncTasks[todoist1ID[i]] == studySyncTasks2[todoist2ID[i]]:
+                print("they are th same")
+        
+        
+        print(contentChange)
+        print(subTaskChange)
+        print(dueChange)
+        print(priorityChange)
+
+        
+        
         with open("studySync2.json", "w") as f:
             json.dump(studySyncTasks, f, indent=4)
 

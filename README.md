@@ -77,14 +77,29 @@ _For questions based on the code, please make an [issue](https://github.com/Maso
 ## Roadmap
 
 Upnext:
-- [ ] Beta Revise
+- [x] Beta Revise
 
 Coming Soon:
-- [ ] Study Timer
-    - [ ] Every 5 min progress bar increases by 5%
-    - [ ] New Tab Button
-- [ ] Google Calendar Integration (Google Dev portal)
+- [x] Study Timer
+    - [x] Every 5 min progress bar increases by 5%
+    - [x] New Tab Button
+- [x] Google Calendar Integration (Google Dev portal)
 - [ ] Todoist Integration (Todoist Dev portal)
+    - Test Casses:
+    - [ ] Delete from Todoist
+    - [ ] Make from Todoist
+    - [ ] Complete from Todoist
+    - [ ] Rename from Todoist
+    - [ ] Change priority from Todoist
+    - [ ] change due from todoist
+    - [ ] Move from Todoist
+    - [ ] Delete from StudySync
+    - [ ] Complete from StudySync
+    - [ ] Rename from StudySync
+    - [ ] Due Date from StudySync
+    - [ ] Change priority from StudySync
+    - [ ] Make from StudySync
+
 - [ ] Little Study Dinosaur Game
     - [ ] Dinosaur is going to be an animal
     - [ ] Get points based on level/progress bar

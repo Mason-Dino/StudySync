@@ -182,12 +182,12 @@ def checkTaskByTodoistID(id):
     rows = c.fetchall()
     conn.close()
 
-    task = api.get_task(id)
     if len(rows) == 0:
         return "make task"
     
     else:
         try:
+            task = api.get_task(id)
             if task.is_completed == True:
                 return "completed task"
             
@@ -280,21 +280,26 @@ def finishMainTask(self, id):
     conn.commit()
     conn.close()
     
-    #before = self.progressbar.get()
-
     with open("setup.json", "r") as f:
         setupDir = json.load(f)
 
-    #self.progressbar.step()
-    #self.progressbar.step()
-
-    #after = self.progressbar.get()
-    
-    #if before > after:
-    #    setupDir["level"] += 1
+    try:
+        before = self.progressbar.get()
 
 
-    #setupDir["progress"] = self.progressbar.get()
+        self.progressbar.step()
+        self.progressbar.step()
+
+        after = self.progressbar.get()
+        
+        if before > after:
+            setupDir["level"] += 1
+
+
+        setupDir["progress"] = self.progressbar.get()
+
+    except:
+        pass
 
     with open("setup.json", "w") as f:
         json.dump(setupDir, f, indent=4)
@@ -311,19 +316,23 @@ def finishSubTask(self, id: str):
     conn.commit()
     conn.close()
 
-    before = self.progressbar.get()
+    try:
+        before = self.progressbar.get()
 
-    with open("setup.json", "r") as f:
-        self.setupDir = json.load(f)
+        with open("setup.json", "r") as f:
+            self.setupDir = json.load(f)
 
-    self.progressbar.step()
+        self.progressbar.step()
 
-    after = self.progressbar.get()
-    
-    if before > after:
-        self.setupDir["level"] += 1
+        after = self.progressbar.get()
+        
+        if before > after:
+            self.setupDir["level"] += 1
 
-    self.setupDir["progress"] = self.progressbar.get()
+        self.setupDir["progress"] = self.progressbar.get()
+
+    except:
+        pass
 
     with open("setup.json", "w") as f:
         json.dump(self.setupDir, f, indent=4)
@@ -361,12 +370,30 @@ def getTaskbyLevel(level: int):
 
     return rows
 
-def editTask(id, type: str, value: str):
+def getTaskfromTodoist(todoistID: str):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
+    c.execute(f"SELECT * FROM tasks WHERE todoistID='{todoistID}'")
+
+    row = c.fetchall()
+
+    conn.close()
+
+    return row
+
+def editTask(id, type: str, value: str):
+    from integration.todoist import editTask
+
+
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    row = getMainTaskSingle(id)
+
     if type == "name":
         c.execute(f"UPDATE tasks SET task='{value}' WHERE id='{id}'")
+
 
     elif type == "date":
         value = value.split("/")
@@ -418,6 +445,8 @@ def editTask(id, type: str, value: str):
 
     #editEvent(eventID, classID, summary, year, month, day):
     editEvent(row[0][13], row[0][8], row[0][1], row[0][4], row[0][3], row[0][2])
+    #editTask(taskID, taskName, year, month, day, priority, type):
+    task = editTask(row[0][14], row[0][1], row[0][4], row[0][3], row[0][2], row[0][11])
 
     conn.commit()
     conn.close()
@@ -478,6 +507,10 @@ def updateTaskByTodoist(id, type: str, value: str):
         c.execute(f"UPDATE tasks SET day={day} WHERE todoistID='{id}'")
         c.execute(f"UPDATE tasks SET month={month} WHERE todoistID='{id}'")
         c.execute(f"UPDATE tasks SET year={year} WHERE todoistID='{id}'")
+
+        row = getTaskfromTodoist(id)
+
+        editEvent(row[0][13], row[0][8], row[0][1], row[0][4], row[0][3], row[0][2])
 
     conn.commit()
     conn.close()

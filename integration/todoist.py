@@ -31,6 +31,7 @@ def apiCall():
     return api
 
 def syncTodoist(self):
+    print("start--------------------------------------------------------------------")
     if checkIfTodoist() == True:
         with open("setup.json", "r") as f:
             setup = json.load(f)
@@ -166,6 +167,7 @@ def syncTodoist(self):
         dueChange = []
         priorityChange = []
         makeTasks = []
+        delComplete = []
 
         for i in range(len(todoist1ID)):
             if studySyncTasks[todoist1ID[i]] != studySyncTasks2[todoist2ID[i]]:
@@ -173,7 +175,20 @@ def syncTodoist(self):
                 print(list(studySyncTasks[todoist1ID[i]].keys()))
 
                 if len(list(studySyncTasks[todoist1ID[i]].keys())) == 0:
-                    print("deleted task")
+                    for id in list(studySyncTasks2[todoist2ID[i]].keys()):
+                        delComplete.append({"id": id, "location_id": todoist1ID[i]})
+
+                elif len(list(studySyncTasks[todoist1ID[i]].keys())) != len(list(studySyncTasks2[todoist2ID[i]].keys())):
+                    listID1 = list(studySyncTasks[todoist1ID[i]].keys())
+                    listID2 = list(studySyncTasks2[todoist2ID[i]].keys())
+
+                    for id in listID1:
+                        if id not in listID2:
+                            delComplete.append({"id": id, "location_id": todoist1ID[i]})
+
+                    for id in listID2:
+                        if id not in listID1:
+                            delComplete.append({"id": id, "location_id": todoist2ID[i]})
 
                 for id in list(studySyncTasks[todoist1ID[i]].keys()):
                     try:
@@ -234,9 +249,12 @@ def syncTodoist(self):
         print(dueChange)
         print(priorityChange)
         print(makeTasks)
+        print(delComplete)
 
         for task in makeTasks:
             parentTaskID = makeID(20)
+
+            priority = int(task["priority"])
 
             if priority == 1:
                 priority = 4
@@ -269,11 +287,29 @@ def syncTodoist(self):
         for task in dueChange:
             print(task["due"])
             updateTaskFromTodoist(task["id"], task["location_id"], "due", task["due"])
+
+        from task import getTaskfromTodoist
         
-        
+        for task in delComplete:
+            result = checkTaskByTodoistID(task["id"])
+            print(task)
+            print(result)
+
+            if result == "completed task":
+                row = getTaskfromTodoist(task["id"])
+                finishMainTask(self, row[0][0])
+                print("complete")
+
+            elif result == "delete task":
+                row = getTaskfromTodoist(task["id"])
+                deleteTask(row[0][0])
+                print("delete")
+
         
         with open("studySync2.json", "w") as f:
             json.dump(studySyncTasks, f, indent=4)
+
+        print("end--------------------------------------------------------")
 
         
 
@@ -346,7 +382,7 @@ def makeSubtask(taskID, taskName, year, month, day):
     print("make sub task")
     return task
 
-def editTask(taskID, taskName, year, month, day, priority, type):
+def editTask(taskID, taskName, year, month, day, priority):
     api = apiCall()
 
     if month < 10:
@@ -355,18 +391,17 @@ def editTask(taskID, taskName, year, month, day, priority, type):
     if day < 10:
         day = f"0{day}"
 
-    if type.lower() == "main":
-        if priority == 1:
-            priority = 4
+    if priority == 1:
+        priority = 4
 
-        elif priority == 2:
-            priority = 3
+    elif priority == 2:
+        priority = 3
 
-        elif priority == 3:
-            priority = 2
+    elif priority == 3:
+        priority = 2
 
-        elif priority == 4 or priority == 5:
-            priority = 1
+    elif priority == 4 or priority == 5:
+        priority = 1
 
     task = api.update_task(
         task_id=f"{taskID}",

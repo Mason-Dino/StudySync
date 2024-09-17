@@ -1,3 +1,4 @@
+from integration.todoist import syncTodoist
 from tabs.assignments import assignments
 from tabs.importance import importance
 from tabs.setting import settings
@@ -38,6 +39,8 @@ class StudySync(customtkinter.CTk):
 
         except:
             customtkinter.set_default_color_theme("themes/teal.json")
+
+        syncTodoist(self)
 
 
         self.numClasses = self.setupDir["numClasses"]

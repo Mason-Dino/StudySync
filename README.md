@@ -85,7 +85,7 @@ Coming Soon:
     - [x] New Tab Button
 - [x] Google Calendar Integration (Google Dev portal)
 - [ ] Todoist Integration (Todoist Dev portal)
-    - Test Casses:
+    - Test Casses: Fail: 🟥 Pass: 🟩 (each test case will get 2 test)
     - [ ] Delete from Todoist
     - [ ] Make from Todoist
     - [ ] Complete from Todoist
@@ -99,6 +99,14 @@ Coming Soon:
     - [ ] Due Date from StudySync
     - [ ] Change priority from StudySync
     - [ ] Make from StudySync
+    - Sub Tasks:
+        - [ ] Add Sub task from todoist
+        - [ ] change name of subtask from todoist
+        - [ ] Delete from todoist
+        - [ ] Complete from todoist
+        - [ ] Add subTask from StudySync
+        - [ ] delete from todoist
+        - [ ] complete from todoist
 
 - [ ] Little Study Dinosaur Game
     - [ ] Dinosaur is going to be an animal

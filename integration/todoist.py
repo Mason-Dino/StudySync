@@ -292,18 +292,14 @@ def syncTodoist(self):
         
         for task in delComplete:
             result = checkTaskByTodoistID(task["id"])
-            print(task)
-            print(result)
 
             if result == "completed task":
                 row = getTaskfromTodoist(task["id"])
                 finishMainTask(self, row[0][0])
-                print("complete")
 
             elif result == "delete task":
                 row = getTaskfromTodoist(task["id"])
                 deleteTask(row[0][0])
-                print("delete")
 
         
         with open("studySync2.json", "w") as f:

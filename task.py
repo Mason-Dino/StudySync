@@ -459,6 +459,15 @@ def updateTaskByTodoist(id, type: str, value: str):
     if type == "content":
         c.execute(f"UPDATE tasks SET task='{value}' WHERE todoistID='{id}'")
 
+        conn.commit()
+        conn.close()
+        
+        row = getTaskfromTodoist(id)
+        print(row)
+
+        editEvent(row[0][13], row[0][8], row[0][1], row[0][4], row[0][3], row[0][2])
+
+
     if type == "priority":
         priority = int(value)
         print(priority)
@@ -477,6 +486,9 @@ def updateTaskByTodoist(id, type: str, value: str):
         print(priority)
 
         c.execute(f"UPDATE tasks SET importance={priority} WHERE todoistID='{id}'")
+
+        conn.commit()
+        conn.close()
 
     if type == "due":
         value = value.split("-")
@@ -508,12 +520,13 @@ def updateTaskByTodoist(id, type: str, value: str):
         c.execute(f"UPDATE tasks SET month={month} WHERE todoistID='{id}'")
         c.execute(f"UPDATE tasks SET year={year} WHERE todoistID='{id}'")
 
+        conn.commit()
+        conn.close()
+
         row = getTaskfromTodoist(id)
+        print(row)
 
         editEvent(row[0][13], row[0][8], row[0][1], row[0][4], row[0][3], row[0][2])
-
-    conn.commit()
-    conn.close()
 
 def deleteTask(id):
     conn = sqlite3.connect('study.db')

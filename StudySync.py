@@ -54,6 +54,7 @@ class StudySync(customtkinter.CTk):
 
         self.name = customtkinter.CTkLabel(master=self.side, text="StudySync", font=customtkinter.CTkFont(size=20, weight="bold"))
         self.name.grid(row=0, column=0, padx=15, pady=20)
+        self.name.bind("<Button-1>", lambda event: self.sync())
 
         self.infoFrame = customtkinter.CTkFrame(master=self.side, height=250, fg_color=["gray86","gray17"])
         self.infoFrame.grid_columnconfigure(0, weight=1)
@@ -127,6 +128,10 @@ class StudySync(customtkinter.CTk):
 
     def classesMain(self):
         classes(self)
+
+    def sync(self):
+        syncTodoist(self)
+        home(self)
 
 
 if __name__ == "__main__":

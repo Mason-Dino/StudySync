@@ -237,7 +237,20 @@ def syncTodoist(self):
 
         for task in makeTasks:
             parentTaskID = makeID(20)
-            addMainTask(task["content"], parentTaskID, task["className"], task["classID"], task["due"].split("-")[2], task["due"].split("-")[1], task["due"].split("-")[0], "", "", task["priority"], "", True, task["todoistID"])
+
+            if priority == 1:
+                priority = 4
+
+            elif priority == 2:
+                priority = 3
+
+            elif priority == 3:
+                priority = 2
+
+            elif priority == 4 or priority == 5:
+                priority = 1
+
+            addMainTask(task["content"], parentTaskID, task["className"], task["classID"], task["due"].split("-")[2], task["due"].split("-")[1], task["due"].split("-")[0], "", "", priority, "", True, task["todoistID"])
 
             if task["subTasks"] != {}:
                 subTaskKey = list(task["subTasks"].keys())
@@ -248,7 +261,14 @@ def syncTodoist(self):
                     addSubTask(subTask["content"], taskID, task["className"], task["classID"], task["due"].split("-")[2], task["due"].split("-")[1], task["due"].split("-")[0], parentTaskID, True, subTask["id"])
 
         for task in contentChange:
-            updateTaskTodoist(task["id"], task["location_id"], "content",task["content"])
+            updateTaskFromTodoist(task["id"], task["location_id"], "content", task["content"])
+
+        for task in priorityChange:
+            updateTaskFromTodoist(task["id"], task["location_id"], "priority", task["priority"])
+
+        for task in dueChange:
+            print(task["due"])
+            updateTaskFromTodoist(task["id"], task["location_id"], "due", task["due"])
         
         
         
@@ -356,6 +376,18 @@ def editTask(taskID, taskName, year, month, day, priority, type):
     )
 
     return task
+
+def updateTaskFromTodoist(taskID, locationID, type, content):
+    from task import updateTaskByTodoist
+
+    if type.lower() == "content":
+        updateTaskByTodoist(taskID, type, content)
+
+    if type.lower() == "priority":
+        updateTaskByTodoist(taskID, type, content)
+
+    if type.lower() == "due":
+        updateTaskByTodoist(taskID, type, content)
 
 def deleteTaskTodoist(taskID):
     api = apiCall()

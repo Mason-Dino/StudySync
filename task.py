@@ -422,6 +422,66 @@ def editTask(id, type: str, value: str):
     conn.commit()
     conn.close()
 
+def updateTaskByTodoist(id, type: str, value: str):
+    print(id, type, value)
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    if type == "content":
+        c.execute(f"UPDATE tasks SET task='{value}' WHERE todoistID='{id}'")
+
+    if type == "priority":
+        priority = int(value)
+        print(priority)
+        if priority == 1:
+            priority = 4
+
+        elif priority == 2:
+            priority = 3
+
+        elif priority == 3:
+            priority = 2
+
+        elif priority == 4 or priority == 5:
+            priority = 1
+
+        print(priority)
+
+        c.execute(f"UPDATE tasks SET importance={priority} WHERE todoistID='{id}'")
+
+    if type == "due":
+        value = value.split("-")
+        print(value)
+
+        year = int(value[0])
+        month = int(value[1])
+        day = int(value[2])
+
+        print(year, month, day)
+
+        if int(day) < 10:
+            daystr = "0" + str(day)
+
+        else:
+            daystr = str(day)
+
+        if int(month) < 10:
+            monthstr = "0" + str(month)
+
+        else:
+            monthstr = str(month)
+
+        dueDate = int(f"{monthstr}" + f"{daystr}" + f"{year}")
+
+        c.execute(f"UPDATE tasks SET date={dueDate} WHERE todoistID='{id}'")
+
+        c.execute(f"UPDATE tasks SET day={day} WHERE todoistID='{id}'")
+        c.execute(f"UPDATE tasks SET month={month} WHERE todoistID='{id}'")
+        c.execute(f"UPDATE tasks SET year={year} WHERE todoistID='{id}'")
+
+    conn.commit()
+    conn.close()
+
 def deleteTask(id):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()

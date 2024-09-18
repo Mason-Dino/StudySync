@@ -38,6 +38,15 @@ def deleteDatabase():
     if os.path.exists("study.db"):
         os.remove("study.db")
 
+    with open("studySync2.json", "r") as f:
+        studySyncTasks2 = json.load(f)
+
+    for id in studySyncTasks2["info"]["todoistID"]:
+        studySyncTasks2[id] = {}
+
+    with open("studySync2.json", "w") as f:
+        json.dump(studySyncTasks2, f, indent=4)
+
     database()
 
 def makeTestTask():

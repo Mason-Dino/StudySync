@@ -537,6 +537,16 @@ def updateTaskByTodoist(id, type: str, value: str):
 
         editEvent(row[0][13], row[0][8], row[0][1], row[0][4], row[0][3], row[0][2])
 
+def updateSubTaskfromTodoist(id, type: str, value: str):
+    conn = sqlite3.connect('study.db')
+    c = conn.cursor()
+
+    if type == "content":
+        c.execute(f"UPDATE tasks SET task='{value}' WHERE todoistID='{id}'")
+
+        conn.commit()
+        conn.close()
+
 def deleteTask(id):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()

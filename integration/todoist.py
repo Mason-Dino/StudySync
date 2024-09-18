@@ -301,6 +301,55 @@ def syncTodoist(self):
                 row = getTaskfromTodoist(task["id"])
                 deleteTask(row[0][0])
 
+        for task in subTaskChange:
+            subTaskID = list(task["subTasks"].keys())
+            print("hey12")
+            print(subTaskID)
+
+            for i in range(len(subTaskID)):
+                subTaskTodoistID = subTaskID[i]
+
+                error1 = True
+                error2 = True
+
+                try:
+                    studySyncTasks[task["location_id"]][task["id"]]["subTasks"][subTaskTodoistID]
+                    error1 = False
+                    
+                except:
+                    pass
+
+
+                try:
+                    studySyncTasks2[task["location_id"]][task["id"]]["subTasks"][subTaskTodoistID]
+                    error2 = False
+
+                except:
+                    pass
+
+                if error1 == False and error2 == False:
+                    pass
+
+                elif error1 == False and error2 == True:
+                    row = getTaskfromTodoist(task["id"])
+                    #addSubTask(taskName, taskID, className, classID, day, month, year, parentID, todoistImport=False, todoistID: str = "None"):
+                    name = studySyncTasks[task["location_id"]][task["id"]]["subTasks"][subTaskTodoistID]["content"]
+                    taskID = makeID(20)
+                    className = row[0][7]
+                    classID = row[0][8]
+                    day = studySyncTasks[task["location_id"]][task["id"]]["due"].split("-")[2]
+                    month = studySyncTasks[task["location_id"]][task["id"]]["due"].split("-")[1]
+                    year = studySyncTasks[task["location_id"]][task["id"]]["due"].split("-")[0]
+                    parentID = row[0][0]
+                    todoistImport = True
+                    todoistID = subTaskTodoistID
+                    addSubTask(name, taskID, className, classID, day, month, year, parentID, todoistImport, todoistID)
+
+                elif error1 == True and error2 == False:
+                    print("delete or complete")
+
+                
+                
         
         with open("studySync2.json", "w") as f:
             json.dump(studySyncTasks, f, indent=4)

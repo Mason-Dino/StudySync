@@ -147,7 +147,7 @@ def syncTodoist(self):
                                         )
 
         from task import addMainTask, addSubTask, checkTaskByTodoistID
-        from task import deleteTask, finishMainTask
+        from task import deleteTask, finishMainTask, updateSubTaskfromTodoist
 
         
         with open("studySync1.json", "w") as f:
@@ -328,7 +328,8 @@ def syncTodoist(self):
                     pass
 
                 if error1 == False and error2 == False:
-                    pass
+                    if studySyncTasks[task["location_id"]][task["id"]]["subTasks"][subTaskTodoistID]["content"] != studySyncTasks2[task["location_id"]][task["id"]]["subTasks"][subTaskTodoistID]["content"]:
+                        updateSubTaskfromTodoist(subTaskTodoistID, "content", studySyncTasks[task["location_id"]][task["id"]]["subTasks"][subTaskTodoistID]["content"])
 
                 elif error1 == False and error2 == True:
                     row = getTaskfromTodoist(task["id"])

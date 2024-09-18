@@ -461,7 +461,34 @@ def makeSubtask(taskID, taskName, year, month, day):
         priority=1,
     )
 
-    
+    todoistID = studySyncTasks2["info"]["todoistID"]
+
+    if task.section_id in todoistID:
+        studySyncTasks2[f"{task.section_id}"][task.parent_id]["subTasks"][task.id] = {
+            "content": task.content,
+            "description": task.description,
+            "due": task.due.date,
+            "priority": task.priority,
+            "project_id": task.project_id,
+            "section_id": task.section_id,
+            "parent_id": task.parent_id,
+            "id": task.id
+        }
+
+    elif task.project_id in todoistID:
+        studySyncTasks2[f"{task.project_id}"][task.parent_id]["subTasks"][task.id] = {
+            "content": task.content,
+            "description": task.description,
+            "due": task.due.date,
+            "priority": task.priority,
+            "project_id": task.project_id,
+            "section_id": task.section_id,
+            "parent_id": task.parent_id,
+            "id": task.id
+        }
+
+    with open("studySync2.json", "w") as f:
+        json.dump(studySyncTasks2, f, indent=4)
 
     print("make sub task")
     return task

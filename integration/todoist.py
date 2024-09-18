@@ -457,7 +457,6 @@ def makeSubtask(taskID, taskName, year, month, day):
     task = api.add_task(
         content=f"{taskName}",
         description=f"Imported from StudySync",
-        due_date=f"{year}-{month}-{day}",
         parent_id=taskID,
         priority=1,
     )
@@ -468,7 +467,7 @@ def makeSubtask(taskID, taskName, year, month, day):
         studySyncTasks2[f"{task.section_id}"][task.parent_id]["subTasks"][task.id] = {
             "content": task.content,
             "description": task.description,
-            "due": task.due.date,
+            "due": "None",
             "priority": task.priority,
             "project_id": task.project_id,
             "section_id": task.section_id,
@@ -480,7 +479,7 @@ def makeSubtask(taskID, taskName, year, month, day):
         studySyncTasks2[f"{task.project_id}"][task.parent_id]["subTasks"][task.id] = {
             "content": task.content,
             "description": task.description,
-            "due": task.due.date,
+            "due": "None",
             "priority": task.priority,
             "project_id": task.project_id,
             "section_id": task.section_id,

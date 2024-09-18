@@ -557,6 +557,16 @@ def deleteSubTask(parentID):
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
 
+    c.execute(f"SELECT * FROM tasks WHERE parentID='{parentID}'")
+
+    rows = c.fetchall()
+    print(rows)
+    try:
+        deleteTaskTodoist(rows[0][14])
+    
+    except:
+        pass
+
     c.execute(f"DELETE FROM tasks WHERE parentID='{parentID}'")
 
     conn.commit()

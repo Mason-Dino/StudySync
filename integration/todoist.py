@@ -367,6 +367,9 @@ def makeTask(taskName, year, month, day, priority, classID):
     with open("setup.json", "r") as f:
         setup = json.load(f)
 
+    with open("studySync2.json", "r") as f:
+        studySyncTasks2 = json.load(f)
+
     todoist = setup["todoist"][classID]
 
     if priority == 1:
@@ -396,6 +399,18 @@ def makeTask(taskName, year, month, day, priority, classID):
             priority=priority,
         )
 
+        studySyncTasks2[f"{task.section_id}"][task.id] = {
+            "content": task.content,
+            "description": task.description,
+            "due": f"{year}-{month}-{day}",
+            "priority": task.priority,
+            "project_id": task.project_id,
+            "section_id": task.section_id,
+            "parent_id": task.parent_id,
+            "id": task.id,
+            "subTasks": {}
+        }
+
     elif todoist["type"] == "project":
         task = api.add_task(
             content=f"{taskName}",
@@ -405,11 +420,32 @@ def makeTask(taskName, year, month, day, priority, classID):
             priority=priority,
         )
 
+        studySyncTasks2[f"{task.project_id}"][task.id] = {
+            "content": task.content,
+            "description": task.description,
+            "due": f"{year}-{month}-{day}",
+            "priority": task.priority,
+            "project_id": task.project_id,
+            "section_id": task.section_id,
+            "parent_id": task.parent_id,
+            "id": task.id,
+            "subTasks": {}
+        }
+
+    with open("studySync2.json", "w") as f:
+        json.dump(studySyncTasks2, f, indent=4)
+
     print("make task")
     return task
 
 def makeSubtask(taskID, taskName, year, month, day):
     api = apiCall()
+
+    with open("setup.json", "r") as f:
+        setup = json.load(f)
+
+    with open("studySync2.json", "r") as f:
+        studySyncTasks2 = json.load(f)
 
     if int(month) < 10:
         month = f"0{month}"
@@ -424,6 +460,9 @@ def makeSubtask(taskID, taskName, year, month, day):
         parent_id=taskID,
         priority=1,
     )
+
+    
+
     print("make sub task")
     return task
 

@@ -267,8 +267,10 @@ def syncTodoist(self):
 
             elif priority == 4 or priority == 5:
                 priority = 1
-
-            addMainTask(task["content"], parentTaskID, task["className"], task["classID"], task["due"].split("-")[2], task["due"].split("-")[1], task["due"].split("-")[0], "", "", priority, "", True, task["todoistID"])
+            try:
+                addMainTask(task["content"], parentTaskID, task["className"], task["classID"], task["due"].split("-")[2], task["due"].split("-")[1], task["due"].split("-")[0], "", "", priority, "", True, task["todoistID"])
+            except:
+                pass
 
             if task["subTasks"] != {}:
                 subTaskKey = list(task["subTasks"].keys())

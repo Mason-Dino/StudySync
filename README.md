@@ -102,8 +102,8 @@ Coming Soon:
     - Sub Tasks:
         - [ ] Add Sub task from todoist 🟩
         - [ ] change name of subtask from todoist 🟩
-        - [ ] Delete from todoist 🟥
-        - [ ] Complete from todoist 🟥
+        - [ ] Delete from todoist 🟩
+        - [ ] Complete from todoist 🟩
         - [ ] Add subTask from StudySync 🟩
         - [ ] delete from todoist 🟩
         - [ ] complete from todoist🟩

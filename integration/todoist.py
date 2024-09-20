@@ -303,21 +303,21 @@ def syncTodoist(self):
 
         from task import getTaskfromTodoist
         
-        for task in delComplete:
-            result = checkTaskByTodoistID(task["id"])
-
-            if result == "completed task":
-                row = getTaskfromTodoist(task["id"])
-                finishMainTask(self, row[0][0])
-
-            elif result == "delete task":
-                row = getTaskfromTodoist(task["id"])
-                deleteTask(row[0][0])
 
         for task in subTaskChange:
+            print(task)
             subTaskID = list(task["subTasks"].keys())
+            subTaskID2 = list(studySyncTasks2[task["location_id"]][task["id"]]["subTasks"].keys())
+            print(subTaskID2)
             print("hey12")
             print(subTaskID)
+
+            for id in subTaskID2:
+                if id not in subTaskID:
+                    delComplete.append({"id": id, "location_id": task["location_id"]})
+
+                else:
+                    pass
 
             for i in range(len(subTaskID)):
                 subTaskTodoistID = subTaskID[i]
@@ -359,9 +359,19 @@ def syncTodoist(self):
                     todoistID = subTaskTodoistID
                     addSubTask(name, taskID, className, classID, day, month, year, parentID, todoistImport, todoistID)
 
-                elif error1 == True and error2 == False:
+                elif error1 == True and error2 == True:
                     print("delete or complete")
 
+        for task in delComplete:
+            result = checkTaskByTodoistID(task["id"])
+
+            if result == "completed task":
+                row = getTaskfromTodoist(task["id"])
+                finishMainTask(self, row[0][0])
+
+            elif result == "delete task":
+                row = getTaskfromTodoist(task["id"])
+                deleteTask(row[0][0])
                 
                 
         

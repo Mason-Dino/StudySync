@@ -1,9 +1,11 @@
+from integration.googleCal import checkIfGoogleCal
+from themes.theme import topLevel, getSwitchInfo
+from integration.todoist import checkIfTodoist
 from screen.classColor import showClassColors
 from task import deleteDatabase, makeTestTask
-from integration.googleCal import checkIfGoogleCal
 from screen.classAddEdit import classAddEdit
-from themes.theme import topLevel, getSwitchInfo
 from screen.googleCalScreen import *
+from screen.todoistScreen import *
 from tkinter import messagebox
 from tkinter import filedialog
 from icon import getIcons
@@ -178,19 +180,27 @@ def settings(self):
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    self.googleCal = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
-    self.googleCal.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
-    self.googleCal.grid_columnconfigure((0), weight=1)
+    self.integration = customtkinter.CTkFrame(master=self.content, fg_color=topLevel())
+    self.integration.grid(row=RowI, column=0, sticky="nsew", padx=10, pady=overallPadyInside)
+    self.integration.grid_columnconfigure((0), weight=1)
 
     RowI += 1
 
     if checkIfGoogleCal() == True:
-        self.editGoogle = customtkinter.CTkButton(master=self.googleCal, text="Google Calendar Edit", command=lambda: googleCalEdit(self))
+        self.editGoogle = customtkinter.CTkButton(master=self.integration, text="Google Calendar Edit", command=lambda: googleCalEdit(self))
         self.editGoogle.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
     else:
-        self.googleSetup = customtkinter.CTkButton(master=self.googleCal, text="Google Calendar Setup", command=lambda: googleCalSetup(self))
+        self.googleSetup = customtkinter.CTkButton(master=self.integration, text="Google Calendar Setup", command=lambda: googleCalSetup(self))
         self.googleSetup.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    if checkIfTodoist() == True:
+        self.editTodoist = customtkinter.CTkButton(master=self.integration, text="Todoist Edit", command=lambda: todoistEdit(self))
+        self.editTodoist.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+
+    else:
+        self.todoistSetup = customtkinter.CTkButton(master=self.integration, text="Todoist Setup", command=lambda: todoistSetup(self))
+        self.todoistSetup.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

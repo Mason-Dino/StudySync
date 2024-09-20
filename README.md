@@ -86,27 +86,27 @@ Coming Soon:
 - [x] Google Calendar Integration (Google Dev portal)
 - [ ] Todoist Integration (Todoist Dev portal)
     - Test Casses: Fail: 🟥 Pass: 🟩 (each test case will get 2 test)
-    - [ ] Delete from Todoist
-    - [ ] Make from Todoist
-    - [ ] Complete from Todoist
-    - [ ] Rename from Todoist
-    - [ ] Change priority from Todoist
-    - [ ] change due from todoist
-    - [ ] Move from Todoist
-    - [ ] Delete from StudySync
-    - [ ] Complete from StudySync
-    - [ ] Rename from StudySync
-    - [ ] Due Date from StudySync
-    - [ ] Change priority from StudySync
-    - [ ] Make from StudySync
+    - [ ] Delete from Todoist 🟩
+    - [ ] Make from Todoist 🟩
+    - [ ] Complete from Todoist 🟩
+    - [ ] Rename from Todoist 🟩
+    - [ ] Change priority from Todoist 🟩
+    - [ ] change due from todoist 🟩
+    - ~~[ ] Move from Todoist~~ Later
+    - [ ] Delete from StudySync 🟩
+    - [ ] Complete from StudySync 🟩
+    - [ ] Rename from StudySync 🟩/🟥
+    - [ ] Due Date from StudySync 🟩
+    - [ ] Change priority from StudySync 🟩
+    - [ ] Make from StudySync 🟩🟩🟩
     - Sub Tasks:
-        - [ ] Add Sub task from todoist
-        - [ ] change name of subtask from todoist
-        - [ ] Delete from todoist
-        - [ ] Complete from todoist
-        - [ ] Add subTask from StudySync
-        - [ ] delete from todoist
-        - [ ] complete from todoist
+        - [ ] Add Sub task from todoist 🟩
+        - [ ] change name of subtask from todoist 🟩
+        - [ ] Delete from todoist 🟥
+        - [ ] Complete from todoist 🟥
+        - [ ] Add subTask from StudySync 🟩
+        - [ ] delete from todoist 🟩
+        - [ ] complete from todoist🟩
 
 - [ ] Little Study Dinosaur Game
     - [ ] Dinosaur is going to be an animal

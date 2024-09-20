@@ -93,22 +93,25 @@ def syncTodoist(self):
                                         )
 
                 except:
-                    studySyncTasks[f"{task.section_id}"][task.id] = {
-                        "content": task.content,
-                        "description": task.description,
-                        "due": due,
-                        "priority": task.priority,
-                        "project_id": task.project_id,
-                        "section_id": task.section_id,
-                        "parent_id": task.parent_id,
-                        "id": task.id,
-                        "subTasks": {}
-                    }
-                    todoistTaskID.append(
-                        {"id": task.id,
-                        "parent_id": task.parent_id,
-                        "location_id": task.section_id}
-                                        )
+                    if due == "None":
+                        pass
+                    else:
+                        studySyncTasks[f"{task.section_id}"][task.id] = {
+                            "content": task.content,
+                            "description": task.description,
+                            "due": due,
+                            "priority": task.priority,
+                            "project_id": task.project_id,
+                            "section_id": task.section_id,
+                            "parent_id": task.parent_id,
+                            "id": task.id,
+                            "subTasks": {}
+                        }
+                        todoistTaskID.append(
+                            {"id": task.id,
+                            "parent_id": task.parent_id,
+                            "location_id": task.section_id}
+                                            )
 
             elif task.project_id in todoistID:
                 try:
@@ -129,22 +132,25 @@ def syncTodoist(self):
                                         )
 
                 except:
-                    studySyncTasks[f"{task.project_id}"][task.id] = {
-                        "content": task.content,
-                        "description": task.description,
-                        "due": due,
-                        "priority": task.priority,
-                        "project_id": task.project_id,
-                        "section_id": task.section_id,
-                        "parent_id": task.parent_id,
-                        "id": task.id,
-                        "subTasks": {}
-                    }
-                    todoistTaskID.append(
-                        {"id": task.id,
-                        "parent_id": task.parent_id,
-                        "location_id": task.project_id}
-                                        )
+                    if due == "None":
+                        pass
+                    else:
+                        studySyncTasks[f"{task.project_id}"][task.id] = {
+                            "content": task.content,
+                            "description": task.description,
+                            "due": due,
+                            "priority": task.priority,
+                            "project_id": task.project_id,
+                            "section_id": task.section_id,
+                            "parent_id": task.parent_id,
+                            "id": task.id,
+                            "subTasks": {}
+                        }
+                        todoistTaskID.append(
+                            {"id": task.id,
+                            "parent_id": task.parent_id,
+                            "location_id": task.project_id}
+                                            )
 
         from task import addMainTask, addSubTask, checkTaskByTodoistID
         from task import deleteTask, finishMainTask, updateSubTaskfromTodoist
@@ -179,6 +185,7 @@ def syncTodoist(self):
                         delComplete.append({"id": id, "location_id": todoist1ID[i]})
 
                 elif len(list(studySyncTasks[todoist1ID[i]].keys())) != len(list(studySyncTasks2[todoist2ID[i]].keys())):
+                    print("hry")
                     listID1 = list(studySyncTasks[todoist1ID[i]].keys())
                     listID2 = list(studySyncTasks2[todoist2ID[i]].keys())
 
@@ -229,16 +236,20 @@ def syncTodoist(self):
 
                     except:
                         print("they are th same")
-                        makeTasks.append({
-                            "content": studySyncTasks[todoist1ID[i]][id]["content"],
-                            "due": studySyncTasks[todoist1ID[i]][id]["due"],
-                            "priority": studySyncTasks[todoist1ID[i]][id]["priority"],
-                            "todoistClassID": todoist1ID[i],
-                            "todoistID": id,
-                            "subTasks": studySyncTasks[todoist1ID[i]][id]["subTasks"],
-                            "classID": studySyncTasks["info"]["classID"][i],
-                            "className": studySyncTasks["info"]["className"][i]
-                            })
+                        if studySyncTasks[todoist1ID[i]][id]["due"] == "None":
+                            pass
+
+                        else:
+                            makeTasks.append({
+                                "content": studySyncTasks[todoist1ID[i]][id]["content"],
+                                "due": studySyncTasks[todoist1ID[i]][id]["due"],
+                                "priority": studySyncTasks[todoist1ID[i]][id]["priority"],
+                                "todoistClassID": todoist1ID[i],
+                                "todoistID": id,
+                                "subTasks": studySyncTasks[todoist1ID[i]][id]["subTasks"],
+                                "classID": studySyncTasks["info"]["classID"][i],
+                                "className": studySyncTasks["info"]["className"][i]
+                                })
 
             elif studySyncTasks[todoist1ID[i]] == studySyncTasks2[todoist2ID[i]]:
                 print("they are th same")

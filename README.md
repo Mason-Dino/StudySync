@@ -84,29 +84,29 @@ Coming Soon:
     - [x] Every 5 min progress bar increases by 5%
     - [x] New Tab Button
 - [x] Google Calendar Integration (Google Dev portal)
-- [ ] Todoist Integration (Todoist Dev portal)
+- [x] Todoist Integration (Todoist Dev portal)
     - Test Casses: Fail: 🟥 Pass: 🟩 (each test case will get 2 test)
-    - [ ] Delete from Todoist 🟩
-    - [ ] Make from Todoist 🟩
-    - [ ] Complete from Todoist 🟩
-    - [ ] Rename from Todoist 🟩
-    - [ ] Change priority from Todoist 🟩
-    - [ ] change due from todoist 🟩
+    - [x] Delete from Todoist 🟩
+    - [x] Make from Todoist 🟩
+    - [x] Complete from Todoist 🟩
+    - [x] Rename from Todoist 🟩
+    - [x] Change priority from Todoist 🟩
+    - [x] change due from todoist 🟩
     - ~~[ ] Move from Todoist~~ Later
-    - [ ] Delete from StudySync 🟩
-    - [ ] Complete from StudySync 🟩
-    - [ ] Rename from StudySync 🟩/🟥
-    - [ ] Due Date from StudySync 🟩
-    - [ ] Change priority from StudySync 🟩
-    - [ ] Make from StudySync 🟩🟩🟩
+    - [x] Delete from StudySync 🟩
+    - [x] Complete from StudySync 🟩
+    - [x] Rename from StudySync 🟩/🟥
+    - [x] Due Date from StudySync 🟩
+    - [x] Change priority from StudySync 🟩
+    - [x] Make from StudySync 🟩🟩🟩
     - Sub Tasks:
-        - [ ] Add Sub task from todoist 🟩
-        - [ ] change name of subtask from todoist 🟩
-        - [ ] Delete from todoist 🟩
-        - [ ] Complete from todoist 🟩
-        - [ ] Add subTask from StudySync 🟩
-        - [ ] delete from todoist 🟩
-        - [ ] complete from todoist🟩
+        - [x] Add Sub task from todoist 🟩
+        - [x] change name of subtask from todoist 🟩
+        - [x] Delete from todoist 🟩
+        - [x] Complete from todoist 🟩
+        - [x] Add subTask from StudySync 🟩
+        - [x] delete from todoist 🟩
+        - [x] complete from todoist🟩
 
 - [ ] Little Study Dinosaur Game
     - [ ] Dinosaur is going to be an animal

@@ -570,5 +570,23 @@ def completeTaskTodoist(taskID):
 
     return "done"
 
+def ProjectorSection(id):
+    api = apiCall()
+
+    try:
+        section = api.get_section(id)
+
+        return "section"
+    
+    except:
+        try:
+            project = api.get_project(id)
+
+            return "project"
+        
+        except:
+            return "None"
+
+
 if __name__ == "__main__":
     syncTodoist()

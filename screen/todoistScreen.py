@@ -44,10 +44,10 @@ def todoistEdit(self):
     self.buttonControl.grid(row=1, column=0, sticky="nsew", pady=5, padx=10)
     self.buttonControl.grid_columnconfigure((0,1), weight=1)
 
-    self.resetButton = customtkinter.CTkButton(master=self.buttonControl, text="Reset Setup", command=lambda: print("reset"))
+    self.resetButton = customtkinter.CTkButton(master=self.buttonControl, text="Reset Setup", command=lambda: reset())
     self.resetButton.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-    self.docButton = customtkinter.CTkButton(master=self.buttonControl, text="Documentation", command=lambda: print("docs"))
+    self.docButton = customtkinter.CTkButton(master=self.buttonControl, text="Documentation", command=lambda: webbrowser.open("https://dino-dev.gitbook.io/studysync/settings/todoist-setup"))
     self.docButton.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
     self.question = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
@@ -253,3 +253,13 @@ def setupFunction(self):
 
     if error == True:
         messagebox.showerror("Error", "An Error Occurred Please Try Again\nDouble Check that all ID's are correct")
+
+def reset():
+    with open("setup.json", "r") as f:
+        setup = json.load(f)
+
+    setup["todoistSetup"] = False
+    setup["todoist"] = {}
+
+    with open("setup.json", "w") as f:
+        json.dump(setup, f, indent=4)

@@ -1,3 +1,4 @@
+from unittest import result
 from integration.todoist import *
 from tkinter import messagebox
 from tabs.home import home
@@ -44,7 +45,7 @@ def todoistEdit(self):
     self.buttonControl.grid(row=1, column=0, sticky="nsew", pady=5, padx=10)
     self.buttonControl.grid_columnconfigure((0,1), weight=1)
 
-    self.resetButton = customtkinter.CTkButton(master=self.buttonControl, text="Reset Setup", command=lambda: reset())
+    self.resetButton = customtkinter.CTkButton(master=self.buttonControl, text="Reset Setup", command=lambda: reset(self))
     self.resetButton.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
     self.docButton = customtkinter.CTkButton(master=self.buttonControl, text="Documentation", command=lambda: webbrowser.open("https://dino-dev.gitbook.io/studysync/settings/todoist-setup"))
@@ -127,7 +128,7 @@ def doneToken(self):
                                                     text_color=radio["text_color"], text_color_disabled=radio["text_color_disabled"])
         self.different.grid(row=1, column=1, sticky="nsew", padx=10, pady=10)
 
-        self.continueButton = customtkinter.CTkButton(master=self.question, text="Continue", command=lambda: continueButton(self, self.calAnswer.get()))
+        self.continueButton = customtkinter.CTkButton(master=self.question, text="Continue", command=lambda: continueEdit(self, self.calAnswer.get()))
         self.continueButton.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
 
 def continueButton(self, calAnswer):
@@ -254,12 +255,23 @@ def setupFunction(self):
     if error == True:
         messagebox.showerror("Error", "An Error Occurred Please Try Again\nDouble Check that all ID's are correct")
 
-def reset():
-    with open("setup.json", "r") as f:
-        setup = json.load(f)
+def reset(self):
+    result = messagebox.showerror(title="Error", message="Are you sure you want to reset?", type="yesno")
 
-    setup["todoistSetup"] = False
-    setup["todoist"] = {}
+    if result == "yes":
+        with open("setup.json", "r") as f:
+            setup = json.load(f)
 
-    with open("setup.json", "w") as f:
-        json.dump(setup, f, indent=4)
+        setup["todoistSetup"] = False
+        setup["todoist"] = {}
+
+        with open("setup.json", "w") as f:
+            json.dump(setup, f, indent=4)
+
+        home(self)
+
+    else:
+        pass
+
+def continueEdit(self, answer):
+    pass

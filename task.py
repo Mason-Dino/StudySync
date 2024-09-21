@@ -109,9 +109,13 @@ def addMainTask(taskName, taskID, className, classID, day, month, year, subLink,
         googleCalID = "None"
 
     if checkIfTodoist() == True and todoistImport == False:
-        todoistID = makeTask(taskName, int(year), int(month), int(day), importance, classID)
+        try:
+            todoistID = makeTask(taskName, int(year), int(month), int(day), importance, classID)
 
-        todoistID = str(todoistID.id)
+            todoistID = str(todoistID.id)
+
+        except:
+            todoistID = "None"
 
     if todoistImport == True:
         todoistID = todoistID

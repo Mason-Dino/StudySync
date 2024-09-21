@@ -1,4 +1,6 @@
+from integration.todoist import *
 from tkinter import messagebox
+from tabs.home import home
 from themes.theme import *
 import customtkinter
 import webbrowser
@@ -105,6 +107,7 @@ def continueButton(self, calAnswer):
         numClasses = setup["numClasses"]
 
         className.append("None")
+        classID.append("0000000000")
 
         for i in range(numClasses):
             className.append(setup[f"class{i+1}"]["name"])
@@ -127,14 +130,15 @@ def continueButton(self, calAnswer):
         self.todoistInput = customtkinter.CTkFrame(master=self.setupFrame, corner_radius=6, fg_color=topLevel())
         self.todoistInput.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
-        for i in range(numClasses):
+        for i in range(numClasses + 1):
             self.todoistDIR[classID[i]] = {}
+            self.todoistDIR[classID[i]]["class id"] = classID[i]
 
             self.todoistDIR[classID[i]]["name"] = customtkinter.CTkLabel(master=self.classNames, text=className[i], font=customtkinter.CTkFont(size=15))
             self.todoistDIR[classID[i]]["name"].grid(row=i, column=0, sticky="nsew", padx=10, pady=10)
 
             self.todoistDIR[classID[i]]["id"] = customtkinter.CTkEntry(master=self.todoistInput, placeholder_text="Todoist ID")
-            self.todoistDIR[classID[i]]["id"](row=i, column=0, sticky="nsew", padx=10, pady=10)
+            self.todoistDIR[classID[i]]["id"].grid(row=i, column=0, sticky="nsew", padx=10, pady=10)
 
             
 
@@ -144,11 +148,66 @@ def continueButton(self, calAnswer):
         self.controlButtons.grid(row=5, column=0, sticky="nsew", padx=10, pady=10)
         self.controlButtons.grid_columnconfigure((0,1), weight=1)
 
-        self.continueButton = customtkinter.CTkButton(master=self.controlButtons, text="Setup", command=lambda: print("setup"))
+        self.continueButton = customtkinter.CTkButton(master=self.controlButtons, text="Setup", command=lambda: setupFunction(self))
         self.continueButton.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
         self.cancelButton = customtkinter.CTkButton(master=self.controlButtons, text="Cancel", command=lambda: print("cancel"))
         self.cancelButton.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
-def setup(self):
-    pass
+        setup["todoist"]["type"] = "different"
+
+        with open("setup.json", "w") as f:
+            json.dump(setup, f, indent=4)
+
+def setupFunction(self):
+    #print(self.todoistDIR)
+
+    with open("setup.json", "r") as f:
+        setup = json.load(f)
+
+    numClass = setup["numClasses"]
+
+    classID = []
+
+    classID.append("0000000000")
+
+    for i in range(numClass):
+        classID.append(setup[f"class{i+1}"]["id"])
+
+    error = False
+
+    for i in range(numClass + 1):
+        if self.todoistDIR[classID[i]]["id"].get() == "":
+            error = True
+
+    print(error)
+
+    if error == False:
+        for i in range(numClass + 1):
+            setup["todoist"][classID[i]] = {}
+
+            type = ProjectorSection(self.todoistDIR[classID[i]]["id"].get())
+
+            if type != "None":
+                try:
+                    setup["todoist"][classID[i]]["id"] = int(self.todoistDIR[classID[i]]["id"].get())
+                    setup["todoist"][classID[i]]["type"] = type
+
+                except:
+                    error = True
+                    break
+
+            elif type == "None":
+                error = True
+
+                break
+
+        if error == False:
+            with open("setup.json", "w") as f:
+                json.dump(setup, f, indent=4)
+
+            messagebox.showinfo("Success", "Setup Complete")
+            home(self)
+
+    if error == True:
+        messagebox.showerror("Error", "An Error Occurred Please Try Again\nDouble Check that all ID's are correct")

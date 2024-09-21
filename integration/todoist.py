@@ -1,3 +1,4 @@
+from tkinter import messagebox
 from todoist_api_python.api import TodoistAPI
 from id import makeID
 import sqlite3
@@ -385,6 +386,7 @@ def syncTodoist(self):
         except Exception as e:
             print(e)
             print("error")
+            messagebox.showwarning("Error", "Please update the Todoist setup!!")
 
         
 
@@ -471,6 +473,7 @@ def makeTask(taskName, year, month, day, priority, classID):
         return task
     
     except:
+        messagebox.showwarning("Error", "Please update the Todoist setup!!")
         print("error")
 
 

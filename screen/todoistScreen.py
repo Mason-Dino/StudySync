@@ -88,6 +88,8 @@ def doneToken(self):
         self.continueButton.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
 
 def continueButton(self, calAnswer):
+    self.todoistDIR = {}
+
     if calAnswer == "same":
         with open("setup.json", "r") as f:
             setup = json.load(f)
@@ -98,4 +100,55 @@ def continueButton(self, calAnswer):
         with open("setup.json", "r") as f:
             setup = json.load(f)
 
+        className = []
+        classID = []
+        numClasses = setup["numClasses"]
+
+        className.append("None")
+
+        for i in range(numClasses):
+            className.append(setup[f"class{i+1}"]["name"])
+            classID.append(setup[f"class{i+1}"]["id"])
+
+        self.continueButton.destroy()
+        self.different.configure(state="disabled")
+        self.same.configure(state="disabled")
+        self.content.grid_rowconfigure((4), weight=1)
+        self.questionLabel.destroy()
+
+        self.setupFrame = customtkinter.CTkScrollableFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+        self.setupFrame.grid(row=4, column=0, sticky="nsew", padx=10, pady=5)
+        self.setupFrame.grid_columnconfigure((0,1), weight=1)
+
+        self.classNames = customtkinter.CTkFrame(master=self.setupFrame, corner_radius=6, fg_color=topLevel())
+        self.classNames.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+        self.classNames.grid_columnconfigure((0), weight=1)
+
+        self.todoistInput = customtkinter.CTkFrame(master=self.setupFrame, corner_radius=6, fg_color=topLevel())
+        self.todoistInput.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
+        for i in range(numClasses):
+            self.todoistDIR[classID[i]] = {}
+
+            self.todoistDIR[classID[i]]["name"] = customtkinter.CTkLabel(master=self.classNames, text=className[i], font=customtkinter.CTkFont(size=15))
+            self.todoistDIR[classID[i]]["name"].grid(row=i, column=0, sticky="nsew", padx=10, pady=10)
+
+            self.todoistDIR[classID[i]]["id"] = customtkinter.CTkEntry(master=self.todoistInput, placeholder_text="Todoist ID")
+            self.todoistDIR[classID[i]]["id"](row=i, column=0, sticky="nsew", padx=10, pady=10)
+
+            
+
         pass
+
+        self.controlButtons = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+        self.controlButtons.grid(row=5, column=0, sticky="nsew", padx=10, pady=10)
+        self.controlButtons.grid_columnconfigure((0,1), weight=1)
+
+        self.continueButton = customtkinter.CTkButton(master=self.controlButtons, text="Setup", command=lambda: print("setup"))
+        self.continueButton.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+        self.cancelButton = customtkinter.CTkButton(master=self.controlButtons, text="Cancel", command=lambda: print("cancel"))
+        self.cancelButton.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
+def setup(self):
+    pass

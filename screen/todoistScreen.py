@@ -350,8 +350,44 @@ def continueEdit(self, answer):
         setup = json.load(f)
 
     if answer == "same":
+        with open("setup.json", "r") as f:
+            setup = json.load(f)
+
+        self.continueButton.destroy()
+        self.different.configure(state="disabled")
+        self.same.configure(state="disabled")
+        self.content.grid_rowconfigure((4), weight=1)
+
+        self.setupFrame = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+        self.setupFrame.grid(row=4, column=0, sticky="nsew", padx=10, pady=5)
+
+        self.centerFrame = customtkinter.CTkFrame(master=self.setupFrame, corner_radius=6, fg_color=topLevel(), width=200, height=100)
+        self.centerFrame.place(relx=0.5, rely=0.5, anchor="center")
+
+        self.label = customtkinter.CTkLabel(master=self.centerFrame, text="Project of Section ID", font=customtkinter.CTkFont(size=15))
+        self.label.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+        self.entry = customtkinter.CTkEntry(master=self.centerFrame, placeholder_text="Project of Section ID")
+        self.entry.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+
+        self.controlButtons = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+        self.controlButtons.grid(row=5, column=0, sticky="nsew", padx=10, pady=5)
+        self.controlButtons.grid_columnconfigure((0,1), weight=1)
+
+        self.continueSame = customtkinter.CTkButton(master=self.controlButtons, text="Continue", command=lambda: setupFunction(self, "same"))
+        self.continueSame.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+        self.cancel = customtkinter.CTkButton(master=self.controlButtons, text="Cancel", command=lambda: home(self))
+        self.cancel.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
         if setup["todoist"]["type"] == "same":
-            pass
+            self.entry.insert(0, setup["todoist"]["0000000000"]["id"])
+
+        else:
+            setup["todoist"]["type"] = "same"
+
+            with open("setup.json", "w") as f:
+                json.dump(setup, f, indent=4)
 
     elif answer == "different":
         className = []

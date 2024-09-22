@@ -107,6 +107,8 @@ Coming Soon:
         - [x] Add subTask from StudySync 🟩
         - [x] delete from todoist 🟩
         - [x] complete from todoist🟩
+    
+    - [ ] Add sync file button
 
 - [ ] Little Study Dinosaur Game
     - [ ] Dinosaur is going to be an animal

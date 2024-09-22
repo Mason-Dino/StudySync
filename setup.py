@@ -401,7 +401,7 @@ class setup(customtkinter.CTk):
 
                 with open("setup.json", "w") as f:
                     json.dump(setupDir, f, indent=4)
-                messagebox.showinfo(title="Success", message="Setup file loaded!")
+                messagebox.showinfo(title="Success", message="Setup file loaded!\nIf loading Todoist or Google Calendar Integration go to settings and just update them!")
 
                 database()
 

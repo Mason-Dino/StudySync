@@ -162,11 +162,16 @@ def continueButton(self, calAnswer):
         self.controlButtons.grid(row=5, column=0, sticky="nsew", padx=10, pady=5)
         self.controlButtons.grid_columnconfigure((0,1), weight=1)
 
-        self.continueSame = customtkinter.CTkButton(master=self.controlButtons, text="Continue", command=lambda: continueButton(self, self.entry.get()))
+        self.continueSame = customtkinter.CTkButton(master=self.controlButtons, text="Continue", command=lambda: setupFunction(self, "same"))
         self.continueSame.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
         self.cancel = customtkinter.CTkButton(master=self.controlButtons, text="Cancel", command=lambda: home(self))
         self.cancel.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
+        setup["todoist"]["type"] = "same"
+
+        with open("setup.json", "w") as f:
+            json.dump(setup, f, indent=4)
 
     elif calAnswer == "different":
         with open("setup.json", "r") as f:
@@ -217,10 +222,10 @@ def continueButton(self, calAnswer):
         self.controlButtons.grid(row=5, column=0, sticky="nsew", padx=10, pady=10)
         self.controlButtons.grid_columnconfigure((0,1), weight=1)
 
-        self.continueButton = customtkinter.CTkButton(master=self.controlButtons, text="Setup", command=lambda: setupFunction(self))
+        self.continueButton = customtkinter.CTkButton(master=self.controlButtons, text="Setup", command=lambda: setupFunction(self, "different"))
         self.continueButton.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-        self.cancelButton = customtkinter.CTkButton(master=self.controlButtons, text="Cancel", command=lambda: print("cancel"))
+        self.cancelButton = customtkinter.CTkButton(master=self.controlButtons, text="Cancel", command=lambda: home(self))
         self.cancelButton.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
         setup["todoist"]["type"] = "different"
@@ -228,7 +233,7 @@ def continueButton(self, calAnswer):
         with open("setup.json", "w") as f:
             json.dump(setup, f, indent=4)
 
-def setupFunction(self):
+def setupFunction(self, type):
     #print(self.todoistDIR)
 
     with open("setup.json", "r") as f:
@@ -243,45 +248,80 @@ def setupFunction(self):
     for i in range(numClass):
         classID.append(setup[f"class{i+1}"]["id"])
 
-    error = False
+    if type == "same":
+        id = self.entry.get()
+        numClasses = setup["numClasses"]
 
-    for i in range(numClass + 1):
-        if self.todoistDIR[classID[i]]["id"].get() == "":
+        error = False
+
+        if id == "" or ProjectorSection(int(id)) == "None":
             error = True
 
-    print(error)
+        if error == False:
+            result = ProjectorSection(int(id))
 
-    if error == False:
-        for i in range(numClass + 1):
-            setup["todoist"][classID[i]] = {}
+            for calID in classID:
+                setup["todoist"][calID] = {}
 
-            type = ProjectorSection(self.todoistDIR[classID[i]]["id"].get())
-
-            if type != "None":
                 try:
-                    setup["todoist"][classID[i]]["id"] = int(self.todoistDIR[classID[i]]["id"].get())
-                    setup["todoist"][classID[i]]["type"] = type
+                    setup["todoist"][calID]["id"] = int(id)
+                    setup["todoist"][calID]["type"] = result
 
                 except:
                     error = True
                     break
 
-            elif type == "None":
-                error = True
+        if error == True:
+            messagebox.showerror("Error", "Invalid Todoist ID\nDouble Check the ID and Try Again")
 
-                break
-
-        if error == False:
+        elif error == False:
             setup["todoistSetup"] = True
 
             with open("setup.json", "w") as f:
                 json.dump(setup, f, indent=4)
 
             messagebox.showinfo("Success", "Setup Complete")
-            home(self)
 
-    if error == True:
-        messagebox.showerror("Error", "An Error Occurred Please Try Again\nDouble Check that all ID's are correct")
+    elif type == "different":
+        error = False
+
+        for i in range(numClass + 1):
+            if self.todoistDIR[classID[i]]["id"].get() == "":
+                error = True
+
+        print(error)
+
+        if error == False:
+            for i in range(numClass + 1):
+                setup["todoist"][classID[i]] = {}
+
+                type = ProjectorSection(self.todoistDIR[classID[i]]["id"].get())
+
+                if type != "None":
+                    try:
+                        setup["todoist"][classID[i]]["id"] = int(self.todoistDIR[classID[i]]["id"].get())
+                        setup["todoist"][classID[i]]["type"] = type
+
+                    except:
+                        error = True
+                        break
+
+                elif type == "None":
+                    error = True
+
+                    break
+
+            if error == False:
+                setup["todoistSetup"] = True
+
+                with open("setup.json", "w") as f:
+                    json.dump(setup, f, indent=4)
+
+                messagebox.showinfo("Success", "Setup Complete")
+                home(self)
+
+        if error == True:
+            messagebox.showerror("Error", "An Error Occurred Please Try Again\nDouble Check that all ID's are correct")
 
 def reset(self):
     result = messagebox.showerror(title="Error", message="Are you sure you want to reset?", type="yesno")

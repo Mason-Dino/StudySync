@@ -51,7 +51,6 @@ def syncTodoist(self):
         notTheSame = {}
 
         try:
-
             for i in range(numClass):
                 classID.append(setup[f"class{i+1}"]["id"])
                 className.append(setup[f"class{i+1}"]["name"])

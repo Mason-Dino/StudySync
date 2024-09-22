@@ -219,7 +219,7 @@ def continueButton(self, calAnswer):
         pass
 
         self.controlButtons = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
-        self.controlButtons.grid(row=5, column=0, sticky="nsew", padx=10, pady=10)
+        self.controlButtons.grid(row=5, column=0, sticky="nsew", padx=10, pady=5)
         self.controlButtons.grid_columnconfigure((0,1), weight=1)
 
         self.continueButton = customtkinter.CTkButton(master=self.controlButtons, text="Setup", command=lambda: setupFunction(self, "different"))
@@ -277,6 +277,8 @@ def setupFunction(self, type):
         elif error == False:
             setup["todoistSetup"] = True
 
+            setupSyncFile()
+
             with open("setup.json", "w") as f:
                 json.dump(setup, f, indent=4)
 
@@ -317,6 +319,8 @@ def setupFunction(self, type):
                 with open("setup.json", "w") as f:
                     json.dump(setup, f, indent=4)
 
+                setupSyncFile()
+
                 messagebox.showinfo("Success", "Setup Complete")
                 home(self)
 
@@ -342,5 +346,121 @@ def reset(self):
         pass
 
 def continueEdit(self, answer):
-    if answer == "different":
-        pass
+    with open("setup.json", "r") as f:
+        setup = json.load(f)
+
+    if answer == "same":
+        if setup["todoist"]["type"] == "same":
+            pass
+
+    elif answer == "different":
+        className = []
+        classID = []
+        numClasses = setup["numClasses"]
+
+        className.append("None")
+        classID.append("0000000000")
+
+        for i in range(numClasses):
+            className.append(setup[f"class{i+1}"]["name"])
+            classID.append(setup[f"class{i+1}"]["id"])
+
+        self.continueButton.destroy()
+        self.different.configure(state="disabled")
+        self.same.configure(state="disabled")
+        self.content.grid_rowconfigure((4), weight=1)
+
+        self.setupFrame = customtkinter.CTkScrollableFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+        self.setupFrame.grid(row=4, column=0, sticky="nsew", padx=10, pady=5)
+        self.setupFrame.grid_columnconfigure((0,1), weight=1)
+
+        self.classNames = customtkinter.CTkFrame(master=self.setupFrame, corner_radius=6, fg_color=topLevel())
+        self.classNames.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+        self.classNames.grid_columnconfigure((0), weight=1)
+
+        self.todoistInput = customtkinter.CTkFrame(master=self.setupFrame, corner_radius=6, fg_color=topLevel())
+        self.todoistInput.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
+        self.todoistDIR = {}
+
+        for i in range(numClasses + 1):
+            self.todoistDIR[classID[i]] = {}
+            self.todoistDIR[classID[i]]["class id"] = classID[i]
+
+            self.todoistDIR[classID[i]]["name"] = customtkinter.CTkLabel(master=self.classNames, text=className[i], font=customtkinter.CTkFont(size=15))
+            self.todoistDIR[classID[i]]["name"].grid(row=i, column=0, sticky="nsew", padx=10, pady=10)
+
+            self.todoistDIR[classID[i]]["id"] = customtkinter.CTkEntry(master=self.todoistInput, placeholder_text="Todoist ID")
+            self.todoistDIR[classID[i]]["id"].grid(row=i, column=0, sticky="nsew", padx=10, pady=10)
+
+        self.controlButtons = customtkinter.CTkFrame(master=self.content, corner_radius=6, fg_color=topLevel())
+        self.controlButtons.grid(row=5, column=0, sticky="nsew", padx=10, pady=5)
+        self.controlButtons.grid_columnconfigure((0,1), weight=1)
+
+        self.continueButton = customtkinter.CTkButton(master=self.controlButtons, text="Setup", command=lambda: setupFunction(self, "different"))
+        self.continueButton.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+        self.cancelButton = customtkinter.CTkButton(master=self.controlButtons, text="Cancel", command=lambda: home(self))
+        self.cancelButton.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
+
+        if setup["todoist"]["type"] == "different":
+            print("hey")
+            for i in range(len(classID)):
+                try:
+                    self.todoistDIR[classID[i]]["id"].insert(0, setup["todoist"][classID[i]]["id"])
+
+                except:
+                    pass
+
+        else:
+            setup["todoist"]["type"] = "different"
+
+            with open("setup.json", "w") as f:
+                json.dump(setup, f, indent=4)
+
+def setupSyncFile():
+    with open("studySync1.json", "r") as f:
+        studySync = json.load(f)
+
+    with open("studySync2.json", "r") as f:
+        studySync2 = json.load(f)
+
+    with open("setup.json", "r") as f:
+        setup = json.load(f)
+        
+    classID = []
+    className = []
+    todoistID = []
+    numClasses = setup["numClasses"]
+
+    for i in range(numClasses):
+        classID.append(setup[f"class{i+1}"]["id"])
+        className.append(setup[f"class{i+1}"]["name"])
+        todoistID.append(str(setup["todoist"][setup[f"class{i+1}"]["id"]]["id"]))
+
+    todoistID.append(str(setup["todoist"]["0000000000"]["id"]))
+    classID.append("0000000000")
+    className.append("None")
+
+    studySync["info"]["classID"] = classID
+    studySync["info"]["className"] = className
+    studySync["info"]["todoistID"] = todoistID
+
+    studySync2["info"]["classID"] = classID
+    studySync2["info"]["className"] = className
+    studySync2["info"]["todoistID"] = todoistID
+
+    for i in range(numClasses):
+        try:
+            studySync2[str(todoistID[i])]
+
+        except:
+            studySync2[str(todoistID[i])] = {}
+
+    with open("studySync1.json", "w") as f:
+        json.dump(studySync, f, indent=4)
+
+    with open("studySync2.json", "w") as f:
+        json.dump(studySync2, f, indent=4)
+

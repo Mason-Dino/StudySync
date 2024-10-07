@@ -14,6 +14,7 @@ def getIcons():
     icons.remove("settings")
     icons.remove("Other")
     icons.remove("flag")
+    icons.remove("sync")
 
     icons.append("Other")
 

@@ -448,7 +448,24 @@ def resetStudySync(self):
 
         os.remove("study.db")
 
+        with open("studySync2.json", "r") as f:
+            studySync2 = json.load(f)
+
+        with open("studySync1.json", "r") as f:
+            studySync1 = json.load(f)
+
+        studySync1 = {}
+        studySync2 = {}
+
+        with open("studySync1.json", "w") as f:
+            json.dump(studySync1, f, indent=4)
+
+        with open("studySync2.json", "w") as f:
+            json.dump(studySync2, f, indent=4)
+
         messagebox.showinfo("Success", "StudySync has been reset!\nRestart StudySync to apply changes.")
+
+        self.destroy()
 
 def deleteAllTasks(self):
     question = pause()

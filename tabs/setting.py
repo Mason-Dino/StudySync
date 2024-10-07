@@ -367,6 +367,52 @@ def loadFile():
                 color = setupDir[f"class{i+1}"]["color"]
                 icon =  setupDir[f"class{i+1}"]["icon"]
 
+            try:
+                print(setupDir["todoistSetup"])
+                if setupDir["todoistSetup"] == True:
+                    with open("studySync2.json", "r") as f:
+                        studySync2 = json.load(f)
+
+                    with open("studySync1.json", "r") as f:
+                        studySync1 = json.load(f)
+
+                    studySync2 = {}
+                    studySync1 = {}
+
+                    info = {}
+                    info["classID"] = []
+                    info["className"] = []
+                    info["todoistID"] = []
+
+                    studySync1["info"] = {}
+                    studySync2["info"] = {}
+
+                    for i in range(numClass):
+                        info["classID"].append(setupDir[f"class{i+1}"]["id"])
+                        info["className"].append(setupDir[f"class{i+1}"]["name"])
+                        info["todoistID"].append(str(setupDir["todoist"][setupDir[f"class{i+1}"]["id"]]["id"]))
+
+                    info["todoistID"].append(str(setupDir["todoist"]["0000000000"]["id"]))
+                    info["classID"].append("0000000000")
+                    info["className"].append("None")
+
+                    studySync1["info"] = info
+                    studySync2["info"] = info
+
+                    for i in range(len(info["todoistID"])):
+                        studySync1[info["todoistID"][i]] = {}
+                        studySync2[info["todoistID"][i]] = {}
+
+                    with open("studySync1.json", "w") as f:
+                        json.dump(studySync1, f, indent=4)
+
+                    with open("studySync2.json", "w") as f:
+                        json.dump(studySync2, f, indent=4)
+
+
+            except:
+                setupDir["todoistSetup"] = False
+
             with open("setup.json", "w") as f:
                 json.dump(setupDir, f, indent=4)
             messagebox.showinfo(title="Success", message="Setup file loaded!")

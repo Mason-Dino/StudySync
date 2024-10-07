@@ -191,6 +191,8 @@ def syncTodoist(self):
                         listID1 = list(studySyncTasks[todoist1ID[i]].keys())
                         listID2 = list(studySyncTasks2[todoist2ID[i]].keys())
 
+                        print("asdfasdf")
+
                         for id in listID1:
                             if id not in listID2:
                                 delComplete.append({"id": id, "location_id": todoist1ID[i]})

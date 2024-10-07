@@ -83,7 +83,7 @@ def addMainTask(taskName, taskID, className, classID, day, month, year, subLink,
         daystr = "0" + str(day)
 
     else:
-        daystr = str(day)
+        daystr = "0" +str(day)
 
     if int(month) < 10:
         monthstr = "0" + str(month)
@@ -92,6 +92,7 @@ def addMainTask(taskName, taskID, className, classID, day, month, year, subLink,
         monthstr = str(month)
 
     dateNum = int(f"{monthstr}" + f"{daystr}" + f"{year}")
+    print(dateNum)
 
     conn = sqlite3.connect('study.db')
     c = conn.cursor()
@@ -144,7 +145,7 @@ def addSubTask(taskName, taskID, className, classID, day, month, year, parentID,
         daystr = "0" + str(day)
 
     else:
-        daystr = str(day)
+        daystr = "0" +str(day)
 
     if int(month) < 10:
         monthstr = "0" + str(month)
@@ -418,7 +419,7 @@ def editTask(id, type: str, value: str):
             daystr = "0" + str(day)
 
         else:
-            daystr = str(day)
+            daystr = "0" +str(day)
 
         if int(month) < 10:
             monthstr = "0" + str(month)
@@ -517,7 +518,7 @@ def updateTaskByTodoist(id, type: str, value: str):
             daystr = "0" + str(day)
 
         else:
-            daystr = str(day)
+            daystr = "0" +str(day)
 
         if int(month) < 10:
             monthstr = "0" + str(month)

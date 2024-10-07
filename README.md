@@ -110,6 +110,7 @@ Coming Soon:
     
     - ~~[ ] Add sync file button~~
     - [x] Added synced them right away when a new file is loaded
+    - [ ] Add a normal sync button
 
 - [ ] Little Study Dinosaur Game
     - [ ] Dinosaur is going to be an animal

@@ -108,7 +108,8 @@ Coming Soon:
         - [x] delete from todoist 🟩
         - [x] complete from todoist🟩
     
-    - [ ] Add sync file button
+    - ~~[ ] Add sync file button~~
+    - [x] Added synced them right away when a new file is loaded
 
 - [ ] Little Study Dinosaur Game
     - [ ] Dinosaur is going to be an animal

@@ -41,27 +41,6 @@ def home(self):
     self.addTask = customtkinter.CTkButton(master=self.content, text="Add Task", command=lambda: makeTask(self))
     self.addTask.grid(row=2, column=2, sticky="nsew", padx=10, pady=10)
 
-    """
-    for i in range(self.classNum):
-        classNameValues.append(self.setupDir[f"class{i+1}"]["name"])
-
-    self.className = customtkinter.CTkOptionMenu(master=self.content, values=classNameValues, variable=customtkinter.StringVar(value="Pick Class"))
-    self.className.grid(row=2, column=2, sticky="nsew", padx=10, pady=10)
-
-    self.day = customtkinter.CTkEntry(master=self.content, placeholder_text="Day")
-    self.day.grid(row=3, column=0, sticky="nsew", padx=10, pady=10)
-
-    self.month = customtkinter.CTkEntry(master=self.content, placeholder_text="Month")
-    self.month.grid(row=3, column=1, sticky="nsew", padx=10, pady=10)
-
-    self.year = customtkinter.CTkEntry(master=self.content, placeholder_text="Year", textvariable=customtkinter.StringVar(value=datetime.datetime.now().year))
-    self.year.grid(row=3, column=2, sticky="nsew", padx=10, pady=10)
-
-
-    self.button = customtkinter.CTkButton(master=self.content, text="Add Task", command=lambda: makeTask(self))
-    self.button.grid(row=4, column=1, sticky="nsew", padx=10, pady=10)
-
-    """
 
     self.task = customtkinter.CTkScrollableFrame(master=self.content, corner_radius=6, fg_color="transparent")
     self.task.grid(row=5, column=0, columnspan=3, sticky="nsew", padx=3)
